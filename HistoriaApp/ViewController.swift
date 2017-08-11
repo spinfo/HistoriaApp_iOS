@@ -12,7 +12,13 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        // use the file service to install the example data
+        if FileService.installExampleTour() {
+            print("Examples installed.")
+        } else {
+            print("Error installing examples.")
+        }
     }
 
     override func didReceiveMemoryWarning() {
