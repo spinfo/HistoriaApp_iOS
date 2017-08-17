@@ -11,6 +11,9 @@ import Foundation
 import UIKit
 import os.log
 
+// TODO: Remove
+import Yams
+
 class FileService {
 
     
@@ -35,20 +38,23 @@ class FileService {
         // Remove the input file, failure to do so does not affect the return status
         do {
             try FileManager().removeItem(at: file)
-            
-            // TODO: Remove
-            let list = try FileManager().contentsOfDirectory(atPath: docsFolderPath!)
-            for f in list {
-                print("f: " + f)
-            }
-            let tourFile = getDocumentsFolder().appendingPathComponent("shtm-tour-0-0.yaml")
-            let content = read(fileAtUrl: tourFile!)
-            print(content)
-            
         } catch {
+            print(error)
             os_log("Removing the installed tour file failed. Caught: %s",
                    log: OSLog.default, type: .fault, error.localizedDescription)
         }
+        
+        // Construct a tour from the content file
+        // TODO: Put somewhere else once this is not meant for the example tour
+        let content = read(fileAtUrl: getDocumentsFolder().appendingPathComponent("shtm-tour-0-0.yaml")!)
+        guard let tour = ServerResponseReader.parseTourYAML(content) else {
+            fatalError("no tour present")
+        }
+        print("name: \(tour.name)")
+        for stop in tour.mapstops {
+            print("stop: \(stop.name)")
+        }
+        
         return true
     }
     
