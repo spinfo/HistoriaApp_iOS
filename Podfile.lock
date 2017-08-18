@@ -1,0 +1,18 @@
+PODS:
+  - GRDB.swift (1.0)
+  - SSZipArchive (2.0.3)
+  - Yams (0.3.5)
+
+DEPENDENCIES:
+  - GRDB.swift (= 1.0)
+  - SSZipArchive (~> 2.0.3)
+  - Yams (~> 0.3.5)
+
+SPEC CHECKSUMS:
+  GRDB.swift: d2613b2a4c07270d91c8589d94f8b237776e6473
+  SSZipArchive: b6648b70a36303ca5be9f0351174b347e1886236
+  Yams: 2822e8b2a8c2b532c4a8d94ede9485ec2be7992d
+
+PODFILE CHECKSUM: ca037ab676676578f2d46071bcdf47bfb20fe87e
+
+COCOAPODS: 1.2.1

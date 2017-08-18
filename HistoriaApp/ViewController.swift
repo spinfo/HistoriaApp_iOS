@@ -8,6 +8,8 @@
 
 import UIKit
 
+import GRDB
+
 class ViewController: UIViewController {
 
     override func viewDidLoad() {
@@ -19,6 +21,18 @@ class ViewController: UIViewController {
         } else {
             print("Error installing examples.")
         }
+        
+        // try to set up a database
+        // TODO: remove the test code
+        do {
+            let dbFile = FileService.getDBFile()!
+            let dbQueue = try DatabaseQueue(path: dbFile.path)
+            
+            print(dbQueue.configuration)
+        } catch {
+            print("Failed to set up database: \(error)")
+        }
+        
     }
 
     override func didReceiveMemoryWarning() {

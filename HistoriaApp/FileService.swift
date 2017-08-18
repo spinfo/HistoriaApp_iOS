@@ -11,7 +11,7 @@ import Foundation
 import UIKit
 import os.log
 
-import ZipArchive
+import SSZipArchive
 
 class FileService {
 
@@ -70,6 +70,11 @@ class FileService {
         }
         
         return installTour(fromZipFile: tempUrl)
+    }
+    
+    // return the file url that should be used for database access
+    public class func getDBFile() -> URL? {
+        return getDocumentsFolder().appendingPathComponent("db.sqlite")
     }
     
     //MARK: Private methods

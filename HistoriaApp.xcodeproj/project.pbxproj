@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		636164C41F43418000B7DE28 /* Area.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636164C31F43418000B7DE28 /* Area.swift */; };
-		63AF214A1F47276900DD2973 /* ZipArchive.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63AF21491F47276900DD2973 /* ZipArchive.framework */; };
-		63AF214B1F4727C600DD2973 /* ZipArchive.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 63AF21491F47276900DD2973 /* ZipArchive.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		63D1810B1F3C5B29004A2036 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D1810A1F3C5B29004A2036 /* AppDelegate.swift */; };
 		63D1810D1F3C5B29004A2036 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D1810C1F3C5B29004A2036 /* ViewController.swift */; };
 		63D181101F3C5B29004A2036 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 63D1810E1F3C5B29004A2036 /* Main.storyboard */; };
@@ -17,15 +15,13 @@
 		63D181151F3C5B29004A2036 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 63D181131F3C5B29004A2036 /* LaunchScreen.storyboard */; };
 		63D181201F3C5B29004A2036 /* HistoriaAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D1811F1F3C5B29004A2036 /* HistoriaAppTests.swift */; };
 		63D1812B1F3C6CF5004A2036 /* FileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D1812A1F3C6CF5004A2036 /* FileService.swift */; };
-		63D1812E1F3C74B4004A2036 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 63D1812D1F3C74B4004A2036 /* libz.tbd */; };
 		63F8C70E1F41E26300691559 /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F8C70D1F41E26300691559 /* Page.swift */; };
 		63F8C7161F41E56300691559 /* Mediaitem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F8C7151F41E56300691559 /* Mediaitem.swift */; };
 		63F8C71B1F41E90400691559 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F8C71A1F41E90400691559 /* Place.swift */; };
 		63F8C71E1F41EB9600691559 /* Tour.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F8C71D1F41EB9600691559 /* Tour.swift */; };
 		63F8C7221F41F23C00691559 /* ServerResponseReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F8C7211F41F23C00691559 /* ServerResponseReader.swift */; };
 		63F8C7261F41F7CB00691559 /* Mapstop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F8C7251F41F7CB00691559 /* Mapstop.swift */; };
-		63FC6EB91F3E07A6000CB70D /* Yams.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63FC6EAF1F3E0394000CB70D /* Yams.framework */; };
-		63FC6EBA1F3E07A6000CB70D /* Yams.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 63FC6EAF1F3E0394000CB70D /* Yams.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		CF1CC6EE2EA693A90CF39D66 /* Pods_HistoriaApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD96C74FD6D32ED29DB3956C /* Pods_HistoriaApp.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,22 +34,10 @@
 		};
 /* End PBXContainerItemProxy section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		63FC6EBB1F3E07A6000CB70D /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				63AF214B1F4727C600DD2973 /* ZipArchive.framework in Embed Frameworks */,
-				63FC6EBA1F3E07A6000CB70D /* Yams.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
+		21F82B0400D6EF908341CC22 /* Pods-HistoriaApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HistoriaApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HistoriaApp/Pods-HistoriaApp.debug.xcconfig"; sourceTree = "<group>"; };
+		49BA23F5D32E9ABAEB130A53 /* Pods-HistoriaApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HistoriaApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-HistoriaApp/Pods-HistoriaApp.release.xcconfig"; sourceTree = "<group>"; };
+		635A138E1F47369100A86A62 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		636164C31F43418000B7DE28 /* Area.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Area.swift; sourceTree = "<group>"; };
 		63AF21491F47276900DD2973 /* ZipArchive.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ZipArchive.framework; path = Carthage/Build/iOS/ZipArchive.framework; sourceTree = "<group>"; };
 		63D181071F3C5B29004A2036 /* HistoriaApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HistoriaApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -77,6 +61,7 @@
 		63F8C7251F41F7CB00691559 /* Mapstop.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mapstop.swift; sourceTree = "<group>"; };
 		63FC6EAF1F3E0394000CB70D /* Yams.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Yams.framework; path = Carthage/Build/iOS/Yams.framework; sourceTree = "<group>"; };
 		63FC6EB21F3E05CA000CB70D /* Yams */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = Yams; path = Carthage/Build/iOS/Yams.framework/Yams; sourceTree = "<group>"; };
+		AD96C74FD6D32ED29DB3956C /* Pods_HistoriaApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HistoriaApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,9 +69,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				63FC6EB91F3E07A6000CB70D /* Yams.framework in Frameworks */,
-				63D1812E1F3C74B4004A2036 /* libz.tbd in Frameworks */,
-				63AF214A1F47276900DD2973 /* ZipArchive.framework in Frameworks */,
+				CF1CC6EE2EA693A90CF39D66 /* Pods_HistoriaApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -107,6 +90,7 @@
 				63D1811E1F3C5B29004A2036 /* HistoriaAppTests */,
 				63D181081F3C5B29004A2036 /* Products */,
 				63D1812C1F3C74B4004A2036 /* Frameworks */,
+				DA70395C2E23D49549799D9A /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -147,10 +131,12 @@
 		63D1812C1F3C74B4004A2036 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				635A138E1F47369100A86A62 /* libsqlite3.tbd */,
 				63AF21491F47276900DD2973 /* ZipArchive.framework */,
 				63FC6EB21F3E05CA000CB70D /* Yams */,
 				63FC6EAF1F3E0394000CB70D /* Yams.framework */,
 				63D1812D1F3C74B4004A2036 /* libz.tbd */,
+				AD96C74FD6D32ED29DB3956C /* Pods_HistoriaApp.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -177,6 +163,15 @@
 			name = service;
 			sourceTree = "<group>";
 		};
+		DA70395C2E23D49549799D9A /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				21F82B0400D6EF908341CC22 /* Pods-HistoriaApp.debug.xcconfig */,
+				49BA23F5D32E9ABAEB130A53 /* Pods-HistoriaApp.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -184,11 +179,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 63D181241F3C5B29004A2036 /* Build configuration list for PBXNativeTarget "HistoriaApp" */;
 			buildPhases = (
+				0934B365D9F2739A08B4D9DA /* [CP] Check Pods Manifest.lock */,
 				63D181031F3C5B29004A2036 /* Sources */,
 				63D181041F3C5B29004A2036 /* Frameworks */,
 				63D181051F3C5B29004A2036 /* Resources */,
-				63FC6EAD1F3DF6A2000CB70D /* ShellScript */,
-				63FC6EBB1F3E07A6000CB70D /* Embed Frameworks */,
+				AE1FEEFB58656285CDD06CCB /* [CP] Embed Pods Frameworks */,
+				1CA5A0875A94B4FD59106EB6 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -280,21 +276,50 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		63FC6EAD1F3DF6A2000CB70D /* ShellScript */ = {
+		0934B365D9F2739A08B4D9DA /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/Yams.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/ZipArchive.framework",
 			);
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
-				"",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		1CA5A0875A94B4FD59106EB6 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-HistoriaApp/Pods-HistoriaApp-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		AE1FEEFB58656285CDD06CCB /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-HistoriaApp/Pods-HistoriaApp-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -449,6 +474,7 @@
 		};
 		63D181251F3C5B29004A2036 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 21F82B0400D6EF908341CC22 /* Pods-HistoriaApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 9B7QDZ2A48;
@@ -471,6 +497,7 @@
 		};
 		63D181261F3C5B29004A2036 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 49BA23F5D32E9ABAEB130A53 /* Pods-HistoriaApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 9B7QDZ2A48;
