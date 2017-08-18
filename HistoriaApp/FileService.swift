@@ -11,8 +11,7 @@ import Foundation
 import UIKit
 import os.log
 
-// TODO: Remove
-import Yams
+import ZipArchive
 
 class FileService {
 
