@@ -11,7 +11,7 @@ import Foundation
 class Place {
     
     // the place's id as given by the backend
-    var id: UInt64 = 0
+    var id: Int64 = 0
     
     // the geographical latitude (WGS 84)
     var lat: Double = 0

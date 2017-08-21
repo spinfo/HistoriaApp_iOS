@@ -32,7 +32,7 @@ class ServerResponseReader {
             }
             
             // the tour values
-            tour.id = try dict.safeGetUint64("id")
+            tour.id = try dict.safeGetInt64("id")
             tour.name = try dict.safeGetString("name")
             tour.type = try dict.safeGetTourType("type")
             tour.walkLength = try dict.safeGetInt("walkLength")
@@ -48,7 +48,7 @@ class ServerResponseReader {
             // create the area and link it
             let areaDict = try dict.safeGetObjectDict("area")
             let area = Area()
-            area.id = try areaDict.safeGetUint64("id")
+            area.id = try areaDict.safeGetInt64("id")
             area.name = try areaDict.safeGetString("name")
             area.tours.append(tour)
             tour.area = area
@@ -59,14 +59,14 @@ class ServerResponseReader {
                 let mapstop = Mapstop()
                 
                 // mapstop values
-                mapstop.id = try stopDict.safeGetUint64("id")
+                mapstop.id = try stopDict.safeGetInt64("id")
                 mapstop.name = try stopDict.safeGetString("name")
                 mapstop.description = try stopDict.safeGetString("description")
                 
                 // create and link the place
                 let placeDict = try stopDict.safeGetObjectDict("place")
                 let place = Place()
-                place.id = try placeDict.safeGetUint64("id")
+                place.id = try placeDict.safeGetInt64("id")
                 place.lat = try placeDict.safeGetDouble("lat")
                 place.lon = try placeDict.safeGetDouble("lon")
                 place.name = try placeDict.safeGetString("name")
@@ -77,7 +77,7 @@ class ServerResponseReader {
                 let pageDicts = try stopDict.safeGetObjectDictArray("pages")
                 for pageDict in pageDicts {
                     let page = Page()
-                    page.id = try pageDict.safeGetUint64("id")
+                    page.id = try pageDict.safeGetInt64("id")
                     page.guid = try pageDict.safeGetString("guid")
                     page.pos = try pageDict.safeGetInt("pos")
                     page.content = try pageDict.safeGetString("content")
@@ -158,10 +158,10 @@ fileprivate extension Dictionary where Value: Any {
         return result
     }
     
-    func safeGetUint64(_ key: Key) throws -> UInt64 {
+    func safeGetInt64(_ key: Key) throws -> Int64 {
         // Yams parses all integer values as ints (sad)
         let asInt = try self.safeGetInt(key)
-        return UInt64(asInt)
+        return Int64(asInt)
     }
     
     func safeGetObjectDict(_ key: Key) throws -> Dictionary<String, Any> {

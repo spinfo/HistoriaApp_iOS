@@ -15,6 +15,7 @@
 		63D181151F3C5B29004A2036 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 63D181131F3C5B29004A2036 /* LaunchScreen.storyboard */; };
 		63D181201F3C5B29004A2036 /* HistoriaAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D1811F1F3C5B29004A2036 /* HistoriaAppTests.swift */; };
 		63D1812B1F3C6CF5004A2036 /* FileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D1812A1F3C6CF5004A2036 /* FileService.swift */; };
+		63DAB1441F4B2D50005C69B4 /* DatabaseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DAB1431F4B2D50005C69B4 /* DatabaseHelper.swift */; };
 		63F8C70E1F41E26300691559 /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F8C70D1F41E26300691559 /* Page.swift */; };
 		63F8C7161F41E56300691559 /* Mediaitem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F8C7151F41E56300691559 /* Mediaitem.swift */; };
 		63F8C71B1F41E90400691559 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F8C71A1F41E90400691559 /* Place.swift */; };
@@ -53,6 +54,7 @@
 		63D1812A1F3C6CF5004A2036 /* FileService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileService.swift; sourceTree = "<group>"; };
 		63D1812D1F3C74B4004A2036 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		63D181FF1F3C909A004A2036 /* ObjectiveC-Bridge-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ObjectiveC-Bridge-Header.h"; sourceTree = "<group>"; };
+		63DAB1431F4B2D50005C69B4 /* DatabaseHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseHelper.swift; sourceTree = "<group>"; };
 		63F8C70D1F41E26300691559 /* Page.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Page.swift; sourceTree = "<group>"; };
 		63F8C7151F41E56300691559 /* Mediaitem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mediaitem.swift; sourceTree = "<group>"; };
 		63F8C71A1F41E90400691559 /* Place.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
@@ -159,6 +161,7 @@
 			children = (
 				63D1812A1F3C6CF5004A2036 /* FileService.swift */,
 				63F8C7211F41F23C00691559 /* ServerResponseReader.swift */,
+				63DAB1431F4B2D50005C69B4 /* DatabaseHelper.swift */,
 			);
 			name = service;
 			sourceTree = "<group>";
@@ -331,6 +334,7 @@
 				63F8C7161F41E56300691559 /* Mediaitem.swift in Sources */,
 				63F8C70E1F41E26300691559 /* Page.swift in Sources */,
 				63F8C71E1F41EB9600691559 /* Tour.swift in Sources */,
+				63DAB1441F4B2D50005C69B4 /* DatabaseHelper.swift in Sources */,
 				63D1810D1F3C5B29004A2036 /* ViewController.swift in Sources */,
 				63F8C7261F41F7CB00691559 /* Mapstop.swift in Sources */,
 				63D1810B1F3C5B29004A2036 /* AppDelegate.swift in Sources */,

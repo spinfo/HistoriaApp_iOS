@@ -13,7 +13,7 @@ import Foundation
 public class Area {
     
     // the backend's id for this area
-    var id: UInt64 = 0
+    var id: Int64 = 0
     
     // the name of the area as displayed to the user
     var name: String = ""

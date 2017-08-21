@@ -29,10 +29,10 @@ public class Tour {
     }
     
     // the tour's id given by the backend
-    var id: UInt64 = 0
+    var id: Int64 = 0
     
     // the backends publishing timestamp
-    var version: UInt64 = 0
+    var version: Int64 = 0
     
     // the tour's name
     var name: String = ""

@@ -49,10 +49,12 @@ class FileService {
         guard let tour = ServerResponseReader.parseTourYAML(content) else {
             fatalError("no tour present")
         }
+        // TODO: Temove this test code
         print("name: \(tour.name)")
         for stop in tour.mapstops {
             print("stop: \(stop.name)")
         }
+        DatabaseHelper.testRun(tour: tour)
         
         return true
     }

@@ -8,12 +8,14 @@
 
 import Foundation
 
+import GRDB
+
 // A page is a piece of html optionally linking to mediaitems, shown for
 // a mapstop (together with other pages)
-public class Page {
+public class Page : Record {
     
     // the backend's id value for this page
-    var id: UInt64 = 0
+    var id: Int64 = 0
     
     // the unique url that identifies this page on the backend
     var guid: String = ""
@@ -30,5 +32,37 @@ public class Page {
     // the mapstop this page is meant for
     var mapstop: Mapstop?
     
+    // MARK: Record interface
     
+    /// The table name
+    override public class var databaseTableName: String {
+        return "page"
+    }
+    
+    /// Allow blank initialization
+    public override init() {
+        super.init()
+    }
+    
+    /// Initialize from a database row
+    public required init(row: Row) {
+        id = row.value(named: "id")
+        guid = row.value(named: "guid")
+        pos = row.value(named: "pos")
+        content = row.value(named: "content")
+        super.init(row: row)
+    }
+    
+    /// The values persisted in the database
+    override public func encode(to container: inout PersistenceContainer) {
+        container["id"] = id
+        container["guid"] = guid
+        container["pos"] = pos
+        container["content"] = content
+    }
+    
+    /// Update id after a successful insert
+    override public func didInsert(with rowID: Int64, for column: String?) {
+        id = rowID
+    }
 }

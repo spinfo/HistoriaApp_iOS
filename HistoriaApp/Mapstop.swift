@@ -11,7 +11,7 @@ import Foundation
 public class Mapstop {
     
     // the backend's id for this mapstop
-    var id: UInt64 = 0
+    var id: Int64 = 0
     
     // the place this mapstop is displayed on
     var place: Place?
