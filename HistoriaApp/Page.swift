@@ -32,6 +32,7 @@ public class Page : Record {
     // the mapstop this page is meant for
     var mapstop: Mapstop?
     
+    
     // MARK: Record interface
     
     /// The table name
@@ -56,13 +57,9 @@ public class Page : Record {
     /// The values persisted in the database
     override public func encode(to container: inout PersistenceContainer) {
         container["id"] = id
+        container["mapstop_id"] = mapstop?.id
         container["guid"] = guid
         container["pos"] = pos
         container["content"] = content
-    }
-    
-    /// Update id after a successful insert
-    override public func didInsert(with rowID: Int64, for column: String?) {
-        id = rowID
     }
 }

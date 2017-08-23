@@ -8,7 +8,9 @@
 
 import Foundation
 
-public class Tour {
+import GRDB
+
+public class Tour : Record {
     
     enum TourType : String {
         case RoundTour = "round-tour"
@@ -81,4 +83,52 @@ public class Tour {
     // TODO: Check if necessary
     // a tour might have Lexicon entries associated during installation
     // the connection to those is however not persisted
+    
+    
+    // MARK: Record interface
+    
+    /// The table name
+    override public class var databaseTableName: String {
+        return "tour"
+    }
+    
+    /// Allow blank initialization
+    public override init() {
+        super.init()
+    }
+    
+    /// Initialize from a database row
+    public required init(row: Row) {
+        id = row.value(named: "id")
+        version = row.value(named: "version")
+        name = row.value(named: "name")
+        type = TourType(rawValue: row.value(named: "type"))!
+        walkLength = row.value(named: "walkLength")
+        duration = row.value(named: "duration")
+        tagWhat = row.value(named: "tagWhat")
+        tagWhen = row.value(named: "tagWhen")
+        tagWhere = row.value(named: "tagWhere")
+        accessibility = row.value(named: "accessibility")
+        author = row.value(named: "author")
+        intro = row.value(named: "intro")
+        super.init(row: row)
+    }
+    
+    /// The values persisted in the database
+    override public func encode(to container: inout PersistenceContainer) {
+        container["id"] = id
+        container["area_id"] = area?.id
+        container["version"] = version
+        container["name"] = name
+        container["type"] = type.rawValue
+        container["walkLength"] = walkLength
+        container["duration"] = duration
+        container["tagWhat"] = tagWhat
+        container["tagWhen"] = tagWhen
+        container["tagWhere"] = tagWhere
+        container["accessibility"] = accessibility
+        container["author"] = author
+        container["intro"] = intro
+    }
+
 }

@@ -146,12 +146,12 @@
 		63F8C7191F41E8C600691559 /* data */ = {
 			isa = PBXGroup;
 			children = (
-				63F8C70D1F41E26300691559 /* Page.swift */,
-				63F8C7151F41E56300691559 /* Mediaitem.swift */,
+				636164C31F43418000B7DE28 /* Area.swift */,
 				63F8C71A1F41E90400691559 /* Place.swift */,
 				63F8C71D1F41EB9600691559 /* Tour.swift */,
 				63F8C7251F41F7CB00691559 /* Mapstop.swift */,
-				636164C31F43418000B7DE28 /* Area.swift */,
+				63F8C70D1F41E26300691559 /* Page.swift */,
+				63F8C7151F41E56300691559 /* Mediaitem.swift */,
 			);
 			name = data;
 			sourceTree = "<group>";

@@ -8,9 +8,11 @@
 
 import Foundation
 
+import GRDB
+
 // An area basically is a name connected to a geographic rectangle.
 // Tours take place in an area.
-public class Area {
+public class Area : Record {
     
     // the backend's id for this area
     var id: Int64 = 0
@@ -28,6 +30,30 @@ public class Area {
     
     // Another corner of the areas rectangle
     // TODO
+
+    // MARK: Record interface
     
+    /// The table name
+    override public class var databaseTableName: String {
+        return "area"
+    }
+    
+    /// Allow blank initialization
+    public override init() {
+        super.init()
+    }
+    
+    /// Initialize from a database row
+    public required init(row: Row) {
+        id = row.value(named: "id")
+        name = row.value(named: "name")
+        super.init(row: row)
+    }
+    
+    /// The values persisted in the database
+    override public func encode(to container: inout PersistenceContainer) {
+        container["id"] = id
+        container["name"] = name
+    }
     
 }

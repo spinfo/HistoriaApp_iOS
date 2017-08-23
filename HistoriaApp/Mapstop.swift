@@ -8,7 +8,9 @@
 
 import Foundation
 
-public class Mapstop {
+import GRDB
+
+public class Mapstop : Record {
     
     // the backend's id for this mapstop
     var id: Int64 = 0
@@ -27,5 +29,36 @@ public class Mapstop {
     
     // the mapstops main content: (html) pages
     var pages: Array<Page> = Array()
+
     
+    
+    // MARK: Record interface
+    
+    /// The table name
+    override public class var databaseTableName: String {
+        return "mapstop"
+    }
+    
+    /// Allow blank initialization
+    public override init() {
+        super.init()
+    }
+    
+    /// Initialize from a database row
+    public required init(row: Row) {
+        id = row.value(named: "id")
+        name = row.value(named: "name")
+        description = row.value(named: "description")
+        // pages = Page.filter( == id)
+        super.init(row: row)
+    }
+    
+    /// The values persisted in the database
+    override public func encode(to container: inout PersistenceContainer) {
+        container["id"] = id
+        container["place_id"] = place?.id
+        container["tour_id"] = tour?.id
+        container["name"] = name
+        container["description"] = description
+    }
 }
