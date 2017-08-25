@@ -18,7 +18,7 @@ class FileService {
 
     // put all a tour's files into their destination, return true on success, false on error
     // will attempt to remove the input file if everything goes ok.
-    public class func installTour(fromZipFile file: URL) -> Bool {
+    public class func installTour(fromZipFile file: URL) -> Tour? {
 
         // everything goes straight to our app's document folder
         let docsFolderPath = getDocumentsFolder().path
@@ -27,11 +27,11 @@ class FileService {
         if FileManager().fileExists(atPath: file.path) {
             if !(SSZipArchive.unzipFile(atPath: file.path, toDestination: docsFolderPath!)) {
                 os_log("Could not extract example tour to: %s", log: OSLog.default, type: .error, docsFolderPath!)
-                return false
+                return nil
             }
         } else {
             os_log("No zip file to extract at: %s", log: OSLog.default, type: .error, file.path)
-            return false
+            return nil
         }
 
         // Remove the input file, failure to do so does not affect the return status
@@ -47,7 +47,8 @@ class FileService {
         // TODO: Put somewhere else once this is not meant for the example tour
         let content = read(fileAtUrl: getDocumentsFolder().appendingPathComponent("shtm-tour-0-0.yaml")!)
         guard let tour = ServerResponseReader.parseTourYAML(content) else {
-            fatalError("no tour present")
+            os_log("Empty response on parsing the input tour.", log: OSLog.default, type: .fault)
+            return nil
         }
         // TODO: Temove this test code
         print("name: \(tour.name)")
@@ -56,19 +57,19 @@ class FileService {
         }
         DatabaseHelper.testRun(tour: tour)
 
-        return true
+        return tour
     }
 
 
     // installs the example tour included in the app's assets
-    public class func installExampleTour() -> Bool {
+    public class func installExampleTour() -> Tour? {
 
         // read the example tour's zip file as binary data from the assets
         let data = getExampleTourData()
 
         // write the zip file into a temporary container
         guard let tempUrl = FileService.writeToTempFile(data) else {
-            return false
+            return nil
         }
 
         return installTour(fromZipFile: tempUrl)
@@ -131,5 +132,5 @@ class FileService {
             return ""
         }
     }
-
+    
 }

@@ -16,6 +16,7 @@ public class Mapstop : Record {
     var id: Int64 = 0
 
     // the place this mapstop is displayed on
+    var placeId: Int64 = 0
     var place: Place?
 
     // the tour this mapstop belongs to
@@ -29,7 +30,6 @@ public class Mapstop : Record {
 
     // the mapstops main content: (html) pages
     var pages: Array<Page> = Array()
-
 
 
     // MARK: Record interface
@@ -49,6 +49,7 @@ public class Mapstop : Record {
         id = row.value(named: "id")
         name = row.value(named: "name")
         description = row.value(named: "description")
+        placeId = row.value(named: "place_id")
         // pages = Page.filter( == id)
         super.init(row: row)
     }

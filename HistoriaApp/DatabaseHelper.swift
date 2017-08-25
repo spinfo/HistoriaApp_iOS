@@ -14,13 +14,14 @@ import GRDB
 // e.g. setting up the database or tearing it down
 class DatabaseHelper {
 
+    // TODO: Remove this
     public class func testRun(tour: Tour) {
         do {
 
             let dbFileURL = FileService.getDBFile()!
 
             // reset by deleting db file
-            // try FileManager().removeItem(at: dbFileURL)
+            try FileManager().removeItem(at: dbFileURL)
 
             let dbQueue = try DatabaseQueue(path: dbFileURL.path)
 
@@ -82,10 +83,9 @@ class DatabaseHelper {
                 for mediaitem in page.media {
                     // a mediaitem only needs to be inserted if it is not present already
                     // for it's page
-                    let present = try Mediaitem.fetchAll(db,
-                                                         "SELECT * FROM mediaitem WHERE guid = ? AND page_id = ?",
-                                                         arguments: [mediaitem.guid, page.id])
-                    // do the insert
+                    let sql = "SELECT * FROM mediaitem WHERE guid = ? AND page_id = ?"
+                    let present = try Mediaitem.fetchAll(db, sql, arguments: [mediaitem.guid, page.id])
+                    // do the insert if neccessary
                     if present.isEmpty {
                         try mediaitem.insert(db)
                     }

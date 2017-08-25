@@ -9,6 +9,7 @@
 import UIKit
 
 import WhirlyGlobe
+import os.log
 
 class ViewController: UIViewController, MaplyViewControllerDelegate {
 
@@ -18,10 +19,9 @@ class ViewController: UIViewController, MaplyViewControllerDelegate {
         super.viewDidLoad()
 
         // use the file service to install the example data
-        if FileService.installExampleTour() {
-            print("Examples installed.")
-        } else {
+        guard let tour = FileService.installExampleTour() else {
             print("Error installing examples.")
+            return
         }
 
         // map stuff
@@ -68,8 +68,38 @@ class ViewController: UIViewController, MaplyViewControllerDelegate {
         layer.enable = true
         mapViewC!.add(layer)
 
-        mapViewC!.height = 0.5
-        mapViewC!.animate(toPosition: MaplyCoordinateMakeWithDegrees(-3.6704803, 40.5023056), time: 1.0)
+        // display some mapstops
+        let dao = MasterDao()
+        let mapstops = dao.getMapstops(forTour: tour.id)
+        let mapstopLocations = mapstops.map({ m -> MaplyCoordinate in
+            let place = dao.getPlace(id: m.placeId)
+            return place!.getLocation()
+        })
+
+        // marker creation
+        let bundle = Bundle(for: type(of: self))
+        let markerIcon = UIImage(named: "MarkerIconBlue", in: bundle, compatibleWith: self.traitCollection)
+        let markers = mapstopLocations.map { stop -> MaplyScreenMarker in
+            let marker = MaplyScreenMarker()
+            marker.image = markerIcon
+            marker.loc = stop
+            marker.size = CGSize(width: 40, height: 40)
+            marker.offset = CGPoint(x: 0, y: 20)
+
+            // set the mapstop here later
+            // marker.userObject = stop
+
+            return marker
+        }
+
+        // position the map to the markers
+        let box = MapUtil.makeBbox(mapstopLocations)
+        let center = MapUtil.bboxCenter(box)
+        let height = mapViewC!.myFindHeight(bbox: box)
+
+        mapViewC!.height = height
+        mapViewC!.animate(toPosition: center, time: 0.0)
+        let _ = mapViewC?.addScreenMarkers(markers, desc: nil)
     }
 
     override func didReceiveMemoryWarning() {
@@ -77,6 +107,48 @@ class ViewController: UIViewController, MaplyViewControllerDelegate {
         // Dispose of any resources that can be recreated.
     }
 
-    
+
 }
 
+fileprivate extension MaplyViewController {
+
+    func myFindHeight(bbox: MaplyBoundingBox) -> Float {
+
+        // calculate distance in meters
+        let distance = MaplyGreatCircleDistance(bbox.ll, bbox.ur)
+
+        // calculate screen diagonal in pixels
+        let screenDist = Double(sqrt(pow(self.view.frame.height, 2) + pow(self.view.frame.width, 2)))
+
+        // the equator has about 40 million meters
+        let eqFrac = distance / 40000000
+
+        // note the min and max highest zoom level, the latter will be halved to get a fit
+        // TODO: Set these to self.getMinZoom() and self.getMaxZoom() once we are on WhirlyGlobe 2.5
+        let minHeight = Float(0.000001)
+        var zoomHeight = Float(5.0)
+
+        for i in stride(from: 1.0, to: 20.0, by: 1.0) {
+
+            let tilesAmount = pow(2.0, i)
+
+            // how many pixels would a map for that distance have at the given zoom level
+            // assume 256 pixels per tile
+            let pixels = (256.0 *  eqFrac * tilesAmount)
+
+            // if the map's pixels are more than the screen diagonal, we have gone too far
+            // so return the last correct height
+            // also break if we got below the minimum height
+            if (pixels > screenDist || zoomHeight < minHeight) {
+                return (zoomHeight * 2)
+            }
+
+            // halve the height for the next iteration
+            zoomHeight /= 2
+            
+        }
+        
+        os_log("Calculating the zoom height did not terminate.", log: OSLog.default, type: .fault)
+        return zoomHeight * 4
+    }
+}

@@ -9,6 +9,7 @@
 import Foundation
 
 import GRDB
+import WhirlyGlobe
 
 class Place : Record {
 
@@ -27,8 +28,10 @@ class Place : Record {
     // the place's area
     var area: Area?
 
-    // TODO: Method to get a geographical point, maybe as a "computed property" (cf. swift guide)
-
+    // Method to get a geographical point from the place's lat/lon
+    public func getLocation() -> MaplyCoordinate {
+        return MaplyCoordinateMakeWithDegrees(Float(self.lon), Float(self.lat))
+    }
 
     // MARK: Record interface
 
