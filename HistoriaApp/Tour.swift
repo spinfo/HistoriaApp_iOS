@@ -11,13 +11,13 @@ import Foundation
 import GRDB
 
 public class Tour : Record {
-    
+
     enum TourType : String {
         case RoundTour = "round-tour"
         case Tour = "tour"
         case PublicTransportTour = "public-transport-tour"
         case BikeTour = "bike-tour"
-        
+
         var representation: String {
             get {
                 switch self {
@@ -29,48 +29,48 @@ public class Tour : Record {
             }
         }
     }
-    
+
     // the tour's id given by the backend
     var id: Int64 = 0
-    
+
     // the backends publishing timestamp
     var version: Int64 = 0
-    
+
     // the tour's name
     var name: String = ""
-    
+
     // the mapstops, the tour consists of
     var mapstops: Array<Mapstop> = Array()
-    
+
     // the area the tour is taking place in
     var area: Area?
-    
+
     // which type of tour is this
     var type: TourType = .Tour
-    
+
     // the tour's length in meters
     var walkLength: Int = 0
-    
+
     // the tour's duration in minutes
     var duration: Int = 0
-    
+
     // a few short strings describing the tour
     var tagWhat: String = ""
     var tagWhen: String = ""
     var tagWhere: String = ""
-    
+
     // how easy is it to access the places in this tour
     var accessibility: String = ""
-    
+
     // a string identifying the tour's creator(s)
     var author: String = ""
-    
+
     // a short introduction to the tour
     var intro: String = ""
-    
+
     // the tour's track as a series of geo coordinates
     // TODO
-    
+
     // point of creation in the backend's db assumed to be in GMT+2
     var createdAt: Date = Date()
     static let creationDateFormatter = { () -> DateFormatter in
@@ -79,24 +79,24 @@ public class Tour : Record {
         formatter.timeZone = TimeZone(secondsFromGMT: 60 * 60 * 2)
         return formatter
     }
-    
+
     // TODO: Check if necessary
     // a tour might have Lexicon entries associated during installation
     // the connection to those is however not persisted
-    
-    
+
+
     // MARK: Record interface
-    
+
     /// The table name
     override public class var databaseTableName: String {
         return "tour"
     }
-    
+
     /// Allow blank initialization
     public override init() {
         super.init()
     }
-    
+
     /// Initialize from a database row
     public required init(row: Row) {
         id = row.value(named: "id")
@@ -113,7 +113,7 @@ public class Tour : Record {
         intro = row.value(named: "intro")
         super.init(row: row)
     }
-    
+
     /// The values persisted in the database
     override public func encode(to container: inout PersistenceContainer) {
         container["id"] = id

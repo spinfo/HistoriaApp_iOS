@@ -13,24 +13,24 @@ import os.log
 
 // A service class parsing YAML responses sent by the backend
 class ServerResponseReader {
-    
+
     enum Fail: Error {
         case ParseError
         case CastError
     }
-    
+
     public static func parseTourYAML(_ input: String) -> Tour? {
         let tour = Tour()
-        
+
         do {
             // parse the yaml input into a YAMS node
             let node = try Parser(yaml: input).singleRoot()
-            
+
             // this uses a dictionary extension (defined in: Yams/Constructor.swift)
             guard let dict = Dictionary<String, Any>.construct_mapping(from: node!) as? Dictionary<String, Any> else {
                 throw ParseError.General(msg: "Cannot construct mapping from input.")
             }
-            
+
             // the tour values
             tour.id = try dict.safeGetInt64("id")
             tour.name = try dict.safeGetString("name")
@@ -44,7 +44,7 @@ class ServerResponseReader {
             tour.author = try dict.safeGetString("author")
             tour.intro = try dict.safeGetString("intro")
             tour.createdAt = try dict.safeGetDate("createdAt", formatter: Tour.creationDateFormatter())
-            
+
             // create the area and link it
             let areaDict = try dict.safeGetObjectDict("area")
             let area = Area()
@@ -52,17 +52,17 @@ class ServerResponseReader {
             area.name = try areaDict.safeGetString("name")
             area.tours.append(tour)
             tour.area = area
-            
+
             // creaete and link the tour's mapstops
             let mapstopDicts = try dict.safeGetObjectDictArray("mapstops")
             for stopDict in mapstopDicts {
                 let mapstop = Mapstop()
-                
+
                 // mapstop values
                 mapstop.id = try stopDict.safeGetInt64("id")
                 mapstop.name = try stopDict.safeGetString("name")
                 mapstop.description = try stopDict.safeGetString("description")
-                
+
                 // create and link the place
                 let placeDict = try stopDict.safeGetObjectDict("place")
                 let place = Place()
@@ -72,7 +72,7 @@ class ServerResponseReader {
                 place.name = try placeDict.safeGetString("name")
                 place.area = tour.area
                 mapstop.place = place
-                
+
                 // create and link the pages
                 let pageDicts = try stopDict.safeGetObjectDictArray("pages")
                 for pageDict in pageDicts {
@@ -81,7 +81,7 @@ class ServerResponseReader {
                     page.guid = try pageDict.safeGetString("guid")
                     page.pos = try pageDict.safeGetInt("pos")
                     page.content = try pageDict.safeGetString("content")
-                    
+
                     // create and link the page's mediaitems
                     if pageDict["media"] != nil {
                         let mediaitemDicts = try pageDict.safeGetObjectDictArray("media")
@@ -96,13 +96,13 @@ class ServerResponseReader {
                     mapstop.pages.append(page)
                     page.mapstop = mapstop
                 }
-                
+
                 // link stop to tour and vice versa
                 mapstop.tour = tour
                 tour.mapstops.append(mapstop)
-                
+
             }
-            
+
         } catch let error as ParseError {
             print("ParseError: \(error.message)")
             return nil
@@ -110,18 +110,18 @@ class ServerResponseReader {
             print("Unknown error in tour parsing: " + String(describing: error))
             return nil
         }
-        
+
         return tour
     }
-    
+
 }
 
 // An error class used to handle errors while parsing a server response
 fileprivate enum ParseError: Error {
-    
+
     case General(msg: String)
     case CastError(key: String, type: String)
-    
+
     var message: String {
         get {
             switch self {
@@ -130,54 +130,54 @@ fileprivate enum ParseError: Error {
             }
         }
     }
-    
+
 }
 
 // we extend the Dictionary class to (type-) safe retrieve values from a
 // Dictionary<String, Any> (the result of YAML parsing)
 fileprivate extension Dictionary where Value: Any {
-    
+
     func safeGetString(_ key: Key) throws -> String {
         guard let result = self[key] as? String else {
             throw ParseError.CastError(key: String(describing: key), type: "String")
         }
         return result
     }
-    
+
     func safeGetInt(_ key: Key) throws -> Int {
         guard let result = self[key] as? Int else {
             throw ParseError.CastError(key: String(describing: key), type: "Int")
         }
         return result
     }
-    
+
     func safeGetDouble(_ key: Key) throws -> Double {
         guard let result = self[key] as? Double else {
             throw ParseError.CastError(key: String(describing: key), type: "Double")
         }
         return result
     }
-    
+
     func safeGetInt64(_ key: Key) throws -> Int64 {
         // Yams parses all integer values as ints (sad)
         let asInt = try self.safeGetInt(key)
         return Int64(asInt)
     }
-    
+
     func safeGetObjectDict(_ key: Key) throws -> Dictionary<String, Any> {
         guard let result = self[key] as? Dictionary<String, Any> else {
             throw ParseError.CastError(key: String(describing: key), type: "Dictionary<String, Any>")
         }
         return result
     }
-    
+
     func safeGetObjectDictArray(_ key: Key) throws -> Array<Dictionary<String, Any>> {
         guard let result = self[key] as? Array<Dictionary<String, Any>> else {
             throw ParseError.CastError(key: String(describing: key), type: "Array<Dictionary<String, Any>>")
         }
         return result
     }
-    
+
     // NOTE: This assumes the input's time to be in GMT+2
     func safeGetDate(_ key: Key, formatter: DateFormatter) throws -> Date {
         let dateDescription = try self.safeGetString(key)
@@ -186,7 +186,7 @@ fileprivate extension Dictionary where Value: Any {
         }
         return result
     }
-    
+
     func safeGetTourType(_ key: Key) throws -> Tour.TourType {
         let typeDescription = try self.safeGetString(key)
         guard let result = Tour.TourType(rawValue: typeDescription) else {
