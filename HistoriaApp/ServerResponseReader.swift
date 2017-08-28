@@ -9,7 +9,7 @@
 import Foundation
 
 import Yams
-import os.log
+import SpeedLog
 
 // A service class parsing YAML responses sent by the backend
 class ServerResponseReader {
@@ -104,10 +104,10 @@ class ServerResponseReader {
             }
 
         } catch let error as ParseError {
-            print("ParseError: \(error.message)")
+            SpeedLog.print("ERROR", "ParseError: \(error)")
             return nil
         } catch {
-            print("Unknown error in tour parsing: " + String(describing: error))
+            SpeedLog.print("ERROR", "Unknown error in tour parsing: \(error)")
             return nil
         }
 

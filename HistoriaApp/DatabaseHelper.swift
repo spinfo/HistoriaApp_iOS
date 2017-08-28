@@ -9,6 +9,7 @@
 import Foundation
 
 import GRDB
+import SpeedLog
 
 // This performs basic operations having to do with the database in general,
 // e.g. setting up the database or tearing it down
@@ -24,8 +25,6 @@ class DatabaseHelper {
             try FileManager().removeItem(at: dbFileURL)
 
             let dbQueue = try DatabaseQueue(path: dbFileURL.path)
-
-            print(dbQueue.configuration)
 
             try dbQueue.inDatabase({ db in
 
@@ -48,19 +47,19 @@ class DatabaseHelper {
                                    Page.fetchCount(db),
                                    Mediaitem.fetchCount(db) ]
 
-                print("page: \(page2!.guid)")
-                print("page: \(page.id) == \(page2?.id)")
-                print("stop: \(mapstop2?.name)")
-                print("area: \(area2?.name)")
-                print("tour: \(tour2?.name)")
+                SpeedLog.print("page: \(page2!.guid)")
+                SpeedLog.print("page: \(page.id) == \(page2?.id)")
+                SpeedLog.print("stop: \(mapstop2?.name)")
+                SpeedLog.print("area: \(area2?.name)")
+                SpeedLog.print("tour: \(tour2?.name)")
 
-                print("count: \(counts)")
+                SpeedLog.print("count: \(counts)")
 
 
             })
 
         } catch {
-            print("Failed to test database: \(error)")
+            SpeedLog.print("ERROR", "Failed to test database: \(error)")
         }
     }
 

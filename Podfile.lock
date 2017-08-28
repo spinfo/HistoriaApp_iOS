@@ -34,6 +34,7 @@ PODS:
   - libjson (7.6.1)
   - proj4 (4.8.0)
   - SMCalloutView (2.1.5)
+  - SpeedLog (0.3.0)
   - SSZipArchive (2.0.3)
   - tinyxml (2.1.0)
   - WhirlyGlobe (2.4):
@@ -74,6 +75,7 @@ PODS:
 
 DEPENDENCIES:
   - GRDB.swift (= 1.0)
+  - SpeedLog
   - SSZipArchive (~> 2.0.3)
   - WhirlyGlobe (= 2.4)
   - WhirlyGlobeResources
@@ -89,12 +91,13 @@ SPEC CHECKSUMS:
   libjson: 1a065ca64704a5d1b51c3754268998942d57ac6f
   proj4: 234525105d05a33b2ae9a90a6fe3935f7a246f7e
   SMCalloutView: 5c0ee363dc8e7204b2fda17dfad38c93e9e23481
+  SpeedLog: 7d4413adbbaef1894dd264516707b57f30f06515
   SSZipArchive: b6648b70a36303ca5be9f0351174b347e1886236
   tinyxml: 41d718babd106ac5d39d4e98b43c835d3b9080d8
   WhirlyGlobe: 2849f458220be42d92d814ba04377586cadbf7f1
   WhirlyGlobeResources: d7b3e929e828f958a8477ff6797f962fdb165472
   Yams: 2822e8b2a8c2b532c4a8d94ede9485ec2be7992d
 
-PODFILE CHECKSUM: d3e77d129e217c63cd70c93735eb0be7729042e2
+PODFILE CHECKSUM: 96212e33eefb3d4ade5f35055dd7c2a3b7ee9316
 
 COCOAPODS: 1.3.1

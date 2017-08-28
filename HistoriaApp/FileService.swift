@@ -9,9 +9,9 @@
 import Foundation
 
 import UIKit
-import os.log
 
 import SSZipArchive
+import SpeedLog
 
 class FileService {
 
@@ -26,11 +26,11 @@ class FileService {
         // unzip the archive doing some checks
         if FileManager().fileExists(atPath: file.path) {
             if !(SSZipArchive.unzipFile(atPath: file.path, toDestination: docsFolderPath!)) {
-                os_log("Could not extract example tour to: %s", log: OSLog.default, type: .error, docsFolderPath!)
+                SpeedLog.print("ERROR", "Could not extract example tour to: \(docsFolderPath)")
                 return nil
             }
         } else {
-            os_log("No zip file to extract at: %s", log: OSLog.default, type: .error, file.path)
+            SpeedLog.print("ERROR", "No zip file to extract at: \(file.path)")
             return nil
         }
 
@@ -38,22 +38,20 @@ class FileService {
         do {
             try FileManager().removeItem(at: file)
         } catch {
-            print(error)
-            os_log("Removing the installed tour file failed. Caught: %s",
-                   log: OSLog.default, type: .fault, error.localizedDescription)
+            SpeedLog.print("WARN", "Removing the installed tour file failed. Caught: \(error)")
         }
 
         // Construct a tour from the content file
         // TODO: Put somewhere else once this is not meant for the example tour
-        let content = read(fileAtUrl: getDocumentsFolder().appendingPathComponent("shtm-tour-0-0.yaml")!)
+        let content = read(url: getDocumentsFolder().appendingPathComponent("shtm-tour-0-0.yaml")!)
         guard let tour = ServerResponseReader.parseTourYAML(content) else {
-            os_log("Empty response on parsing the input tour.", log: OSLog.default, type: .fault)
+            SpeedLog.print("ERROR", "Empty response on parsing the input tour.")
             return nil
         }
         // TODO: Temove this test code
-        print("name: \(tour.name)")
+        SpeedLog.print("name: \(tour.name)")
         for stop in tour.mapstops {
-            print("stop: \(stop.name)")
+            SpeedLog.print("stop: \(stop.name)")
         }
         DatabaseHelper.testRun(tour: tour)
 
@@ -115,20 +113,18 @@ class FileService {
         do {
             try data.write(to: fileUrl)
         } catch {
-            os_log("Failed to write file to: %s, caught: %s", log: OSLog.default, type: .error,
-                   fileUrl.path, error.localizedDescription)
+            SpeedLog.print("ERROR", "Failed to write file to: \(fileUrl.path), caught: \(error)")
             return nil
         }
         return fileUrl
     }
 
     // read a file, return an empty string on error
-    private class func read(fileAtUrl: URL) -> String {
+    private class func read(url: URL) -> String {
         do {
-            return try NSString(contentsOf: fileAtUrl, encoding: String.Encoding.utf8.rawValue) as String
+            return try NSString(contentsOf: url, encoding: String.Encoding.utf8.rawValue) as String
         } catch {
-            os_log("Could not read file at: %s, caught: %s", log: OSLog.default, type: .error,
-                   fileAtUrl.path, error.localizedDescription)
+            SpeedLog.print("ERROR", "Could not read file at: \(url.path), caught: \(error)")
             return ""
         }
     }

@@ -9,6 +9,7 @@
 import Foundation
 
 import GRDB
+import SpeedLog
 
 class MasterDao {
 
@@ -29,7 +30,7 @@ class MasterDao {
                 return try Mapstop.filter(Column("tour_id") == id).fetchAll(db)
             })
         } catch {
-            print("Unable to retrieve mapstops for tour (id: '\(id)'): \(error)")
+            SpeedLog.print("ERROR", "Unable to retrieve mapstops for tour (id: '\(id)'): \(error)")
             return []
         }
     }
@@ -40,7 +41,7 @@ class MasterDao {
                 return try Place.fetchOne(db, key: id)
             })
         } catch {
-            print("Unable to retrieve place (id: \(id): \(error)")
+            SpeedLog.print("ERROR", "Unable to retrieve place (id: \(id): \(error)")
             return nil
         }
     }

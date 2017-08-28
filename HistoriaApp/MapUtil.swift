@@ -27,8 +27,6 @@ class MapUtil {
             let lat = rad2deg(coord.y)
             let lon = rad2deg(coord.x)
 
-            print("\(lat), \(lon)")
-
             minLat = (lat < minLat) ? lat : minLat
             minLon = (lon < minLon) ? lon : minLon
             maxLat = (lat > maxLat) ? lat : maxLat

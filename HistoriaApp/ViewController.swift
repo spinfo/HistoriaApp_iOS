@@ -9,7 +9,7 @@
 import UIKit
 
 import WhirlyGlobe
-import os.log
+import SpeedLog
 
 class ViewController: UIViewController, MaplyViewControllerDelegate {
 
@@ -20,7 +20,7 @@ class ViewController: UIViewController, MaplyViewControllerDelegate {
 
         // use the file service to install the example data
         guard let tour = FileService.installExampleTour() else {
-            print("Error installing examples.")
+            SpeedLog.print("ERROR", "Error installing examples.")
             return
         }
 
@@ -100,6 +100,8 @@ class ViewController: UIViewController, MaplyViewControllerDelegate {
         mapViewC!.height = height
         mapViewC!.animate(toPosition: center, time: 0.0)
         let _ = mapViewC?.addScreenMarkers(markers, desc: nil)
+
+        SpeedLog.print("DBG", "Totally")
     }
 
     override func didReceiveMemoryWarning() {
@@ -148,7 +150,7 @@ fileprivate extension MaplyViewController {
             
         }
         
-        os_log("Calculating the zoom height did not terminate.", log: OSLog.default, type: .fault)
+        SpeedLog.print("WARN", "Calculating the zoom height did not terminate.")
         return zoomHeight * 4
     }
 }
