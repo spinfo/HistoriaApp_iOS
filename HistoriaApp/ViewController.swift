@@ -71,37 +71,34 @@ class ViewController: UIViewController, MaplyViewControllerDelegate {
         // display some mapstops
         let dao = MasterDao()
         let mapstops = dao.getMapstops(forTour: tour.id)
-        let mapstopLocations = mapstops.map({ m -> MaplyCoordinate in
-            let place = dao.getPlace(id: m.placeId)
-            return place!.getLocation()
-        })
 
         // marker creation
         let bundle = Bundle(for: type(of: self))
         let markerIcon = UIImage(named: "MarkerIconBlue", in: bundle, compatibleWith: self.traitCollection)
-        let markers = mapstopLocations.map { stop -> MaplyScreenMarker in
+        let markers = mapstops.map { mapstop -> MaplyScreenMarker in
+            // retrieve the mapstops place
+            let place = dao.getPlace(id: mapstop.placeId)
+            let location = place!.getLocation()
+
+            // actual marker creation
             let marker = MaplyScreenMarker()
             marker.image = markerIcon
-            marker.loc = stop
+            marker.loc = location
             marker.size = CGSize(width: 40, height: 40)
             marker.offset = CGPoint(x: 0, y: 20)
-
-            // set the mapstop here later
-            // marker.userObject = stop
+            marker.userObject = mapstop
 
             return marker
         }
 
         // position the map to the markers
-        let box = MapUtil.makeBbox(mapstopLocations)
+        let box = MapUtil.makeBbox(markers.map({ m in return m.loc }))
         let center = MapUtil.bboxCenter(box)
         let height = mapViewC!.myFindHeight(bbox: box)
 
         mapViewC!.height = height
         mapViewC!.animate(toPosition: center, time: 0.0)
         let _ = mapViewC?.addScreenMarkers(markers, desc: nil)
-
-        SpeedLog.print("DBG", "Totally")
     }
 
     override func didReceiveMemoryWarning() {
@@ -109,6 +106,54 @@ class ViewController: UIViewController, MaplyViewControllerDelegate {
         // Dispose of any resources that can be recreated.
     }
 
+
+    // MARK: -- Map Interaction
+
+    // A tap made directly to the map
+    func maplyViewController(_ viewC: MaplyViewController!, didTapAt coord: MaplyCoordinate) {
+        mapViewC?.clearAnnotations()
+    }
+
+    // A tap to a marker (or possibly another object)
+    func maplyViewController(_ viewC: MaplyViewController!, didSelect selectedObj: NSObject!) {
+        if let marker = selectedObj as? MaplyScreenMarker {
+            guard let mapstop = marker.userObject as? Mapstop else {
+                SpeedLog.print("WARN", "Marker without associated mapstop.")
+                return
+            }
+
+            self.addAnnotationWithTitle(title: mapstop.name, subtitle: mapstop.description, loc: marker.loc)
+        } else {
+            SpeedLog.print("INFO", "Click to other object: \(selectedObj)")
+        }
+    }
+
+    //MARK: -- Private Methods
+
+    // Handle taps made to the next area of an annotation (for demonstration purposes atm)
+    func handleInfowindowNextClick(recognizer: UITapGestureRecognizer) {
+        SpeedLog.print("Got click to next.")
+    }
+
+    private func addAnnotationWithTitle(title: String, subtitle: String, loc: MaplyCoordinate) {
+        mapViewC?.clearAnnotations()
+
+        let a = MaplyAnnotation()
+        a.title = title
+        a.subTitle = subtitle
+
+        // Add a small clickable icon to the right
+        let nextButton = UILabel(frame: CGRect(x: 0, y: 0, width: 10, height: 20))
+        nextButton.text = ">"
+        nextButton.backgroundColor = UIColor.white
+        nextButton.textColor = UIColor.black
+        nextButton.isUserInteractionEnabled = true
+        let labelTap = UITapGestureRecognizer(target: self, action: #selector(handleInfowindowNextClick(recognizer:)))
+        nextButton.addGestureRecognizer(labelTap)
+        a.rightAccessoryView = nextButton
+
+        mapViewC?.addAnnotation(a, forPoint: loc, offset: CGPoint.zero)
+    }
 
 }
 
