@@ -19,8 +19,14 @@ class ViewController: UIViewController, MaplyViewControllerDelegate {
         super.viewDidLoad()
 
         // use the file service to install the example data
-        guard let tour = FileService.installExampleTour() else {
+        guard let tourAfterInstall = FileService.installExampleTour() else {
             SpeedLog.print("ERROR", "Error installing examples.")
+            return
+        }
+
+        let dao = MasterDao()
+        guard let tour = dao.getTourWithAssociationsForMapping(id: tourAfterInstall.id) else {
+            SpeedLog.print("ERROR", "Unable to retrieve tour with associations.")
             return
         }
 
@@ -68,27 +74,9 @@ class ViewController: UIViewController, MaplyViewControllerDelegate {
         layer.enable = true
         mapViewC!.add(layer)
 
-        // display some mapstops
-        let dao = MasterDao()
-        let mapstops = dao.getMapstops(forTour: tour.id)
-
         // marker creation
-        let bundle = Bundle(for: type(of: self))
-        let markerIcon = UIImage(named: "MarkerIconBlue", in: bundle, compatibleWith: self.traitCollection)
-        let markers = mapstops.map { mapstop -> MaplyScreenMarker in
-            // retrieve the mapstops place
-            let place = dao.getPlace(id: mapstop.placeId)
-            let location = place!.getLocation()
-
-            // actual marker creation
-            let marker = MaplyScreenMarker()
-            marker.image = markerIcon
-            marker.loc = location
-            marker.size = CGSize(width: 40, height: 40)
-            marker.offset = CGPoint(x: 0, y: 20)
-            marker.userObject = mapstop
-
-            return marker
+        let markers = tour.mapstops.map { mapstop -> MaplyScreenMarker in
+            return MapUtil.buildDefaultMarker(for: mapstop)
         }
 
         // position the map to the markers
