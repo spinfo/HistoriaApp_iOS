@@ -1,0 +1,104 @@
+---
+id: 1
+area:
+  id: 1
+  name: "Düsseldorf"
+  point1: [51.120817, 6.514893]
+  point2: [51.376924, 7.087898]
+name: "Heinrich-Heine-Denkmäler der Universität Düsseldorf"
+author: "David Neugebauer"
+intro: "Sie stehen tagein tagaus unbeweglich an derselben Stelle. Jeden Tag gehen wir an ihnen vorbei, bis wir sie kaum noch wahrnehmen, wie ein Sitzbank, eine Mauer oder ein Hinweisschild. Dabei haben Denkmäler allerhand zu erzählen: über die Geschichte der Heinrich-Heine-Universität und die Person, der sie gewidmet sind. Diese Tour zeigt Dir, was Du sonst jeden Tag übersiehst."
+type: "tour"
+walkLength: 280
+duration: 10
+tagWhen: "01.01.1994 00:00:00 - 01.01.2012 00:00:00"
+tagWhat: "Heinrich Heine"
+tagWhere: "Campus Universität"
+accessibility: "barrierefrei"
+track: [[51.188801, 6.794488], [51.189071, 6.794514], [51.189433, 6.79436], [51.189768, 6.794192], [51.190129, 6.794021], [51.190454, 6.793881], [51.190663, 6.793877], [51.190947, 6.793751], [51.19118, 6.793582], ]
+mapstops:
+- id: 1
+  name: "Ein Posten ist vakant"
+  description: "Gedenksteine Heinrich Heine"
+  place:
+    id: 1
+    name: "HHU-Campus 1"
+    lat: 51.19118
+    lon: 6.793582
+  pages:
+    - id: 5
+      pos: 1
+      guid: "http://smarthistory.philo-fachschaft-koeln.de/?p=5"
+      content: "<h1>Ein Posten ist vakant</h1><p>An der Außenseite des Hörsaals 3A findet sich ein Gedenkstein, der an Heinrich Heine erinnert. Die Zeilen stammen aus dem Gedicht „Enfant Perdu“. Heinrich Heine wurde am 13. Dezember 1797 in Düsseldorf geboren, der „letzte Dichter der Romantik“ wurde wegen seiner jüdischen Herkunft in Deutschland über Jahrzehnte angefeindet. Die 1965 gegründete Düsseldorfer Universität stritt von 1968 bis 1988 um die Benennung nach dem Dichter. Die folgende Seite zitiert das Gedicht vollständig:</p>"
+    - id: 6
+      pos: 2
+      guid: "http://smarthistory.philo-fachschaft-koeln.de/?p=6"
+      content: "<p>Verlorner Posten in dem Freiheitskriege,<br>Hielt ich seit dreißig Jahren treulich aus.<br>Ich kämpfte ohne Hoffnung, daß ich siege,<br>Ich wußte, nie komm ich gesund nach Haus.<br></p><p>Ich wachte Tag und Nacht – Ich konnt nicht schlafen,<br>Wie in dem Lagerzelt der Freunde Schar – <br>(Auch hielt das laute Schnarchen dieser Braven<br>Mich wach, wenn ich ein bißchen schlummrig war).<br></p><p>In jenen Nächten hat Langweil ergriffen<br>Mich oft, auch Furcht – (nur Narren fürchten nichts) –<br>Sie zu verscheuchen, hab ich dann gepfiffen<br>Die frechen Reime eines Spottgedichts.<br></p><p>Ja, wachsam stand ich, das Gewehr im Arme,<br>Und nahte irgendein verdächtger Gauch,<br>So schoß ich gut und jagt ihm eine warme,<br>Brühwarme Kugel in den schnöden Bauch.<br></p><p>Mitunter freilich mocht es sich ereignen,<br>Daß solch ein schlechter Gauch gleichfalls sehr gut<br>Zu schießen wußte – ach, ich kann’s nicht leugnen – <br>Die Wunden klaffen – es verströmt mein Blut.<br></p><p>Ein Posten ist vakant! …</p>"
+    - id: 7
+      pos: 3
+      guid: "http://smarthistory.philo-fachschaft-koeln.de/?p=7"
+      content: "<img class=\"aligncenter wp-image-25 size-full\" src=\"http://smarthistory.philo-fachschaft-koeln.de/wp-content/uploads/2017/04/lossy-page1-800px-Campus_bau_zentrum_1973.jpg\" alt=\"\" width=\"800\" height=\"592\" />
+
+<img class=\"aligncenter wp-image-26 size-full\" src=\"http://smarthistory.philo-fachschaft-koeln.de/wp-content/uploads/2017/04/philfak_bau_um_1973.jpg\" alt=\"\" width=\"1024\" height=\"727\" />"
+      media:
+        - guid: "http://smarthistory.philo-fachschaft-koeln.de/wp-content/uploads/2017/04/lossy-page1-800px-Campus_bau_zentrum_1973.jpg"
+        - guid: "http://smarthistory.philo-fachschaft-koeln.de/wp-content/uploads/2017/04/philfak_bau_um_1973.jpg"
+- id: 2
+  name: "Heine-Denkmal (2012)"
+  description: "Das Heine-Denkmal des ..."
+  place:
+    id: 2
+    name: "HHU-Campus 2"
+    lat: 51.19043
+    lon: 6.793775
+  pages:
+    - id: 8
+      pos: 1
+      guid: "http://smarthistory.philo-fachschaft-koeln.de/?p=8"
+      content: "<h1>Heine-Denkmal (2012)</h1>
+[audio wav=\"http://smarthistory.philo-fachschaft-koeln.de/wp-content/uploads/2017/04/rec_20170123-1542.wav\"][/audio]
+
+Das Heinrich-Heine-Denkmal des renommierten Künstlers Bert Gerresheim wurde 2012 auf dem Campus der<a href=\"lexicon://1\">Heinrich-Heine-Universität</a>aufgestellt. Es ist vier Meter hoch und wiegt drei Tonnen. Die Schere erinnert daran, dass Heines Schriften lange Zeit in Deutschland zensiert wurden. Die Schelle ist eine Narrenschelle und nimmt die Selbstbezeichnung Heines als „Narr des Glücks“ auf. Gerresheim fasziniert an Heine, dass dieser ein Symbol für die Gespaltenheit der Moderne ist, er irritiere und verletze.
+
+Gestiftet wurde das Denkmal von Lutz Aengevelt, seinem Bruder Wulff und der Rheinische Post Mediengruppe."
+      media:
+        - guid: "http://smarthistory.philo-fachschaft-koeln.de/wp-content/uploads/2017/04/rec_20170123-1542.wav"
+- id: 3
+  name: "Heinrich-Heine-Denkmal (1994)"
+  description: "Ein nachdenklicher Mann"
+  place:
+    id: 3
+    name: "HHU-Campus 3"
+    lat: 51.188801
+    lon: 6.794488
+  pages:
+    - id: 9
+      pos: 1
+      guid: "http://smarthistory.philo-fachschaft-koeln.de/?p=9"
+      content: "<h1>Ein nachdenklicher Mann</h1>
+<img class=\"wp-image-28 aligncenter\" src=\"http://smarthistory.philo-fachschaft-koeln.de/wp-content/uploads/2017/04/Heinrich-heine_1.jpg\" alt=\"\" width=\"155\" height=\"258\" />
+
+&nbsp;
+
+Seit 1994 steht auf dem Campus der<a href=\"lexicon://1\">Heinrich-Heine-Universität</a>vor dem Gebäude der Universitäts- und Landesbibliothek ein Denkmal für Heinrich Heine. Es ist eine vergrößerte Nachbildung eines Werkstattmodells des Bildhauers Hugo Lederer. Dieser hatte das Modell für ein Heine-Denkmal der Stadt Hamburg entworfen. Nachdem das 1926 aufgestellte Denkmal 1933 von den Nationalsozialisten demontiert wurde, wurde es 1943 für die Rüstungsproduktion verschrottet und eingeschmolzen. Das Werkstattmodell, das nun als Vorbild für die Vergrößerung diente, gehörte ursprünglich dem Düsseldorfer Rechtsanwalt Friedrich Maase. Das Denkmal stellt Heine im Alter von 21 Jahren dar, als ihm der Zugang zur Promotion aufgrund seines jüdischen Glaubens verwehrt wurde."
+      media:
+        - guid: "http://smarthistory.philo-fachschaft-koeln.de/wp-content/uploads/2017/04/Heinrich-heine_1.jpg"
+    - id: 10
+      pos: 2
+      guid: "http://smarthistory.philo-fachschaft-koeln.de/?p=10"
+      content: "<p>Die Geschichte Düsseldorfer Denkmäler und Skulpturen findet sich in der Publikation:<i>Ars Publica Düsseldorf : Geschichte der Kunstwerke und kulturellen Zeichen im öffentlichen Raum der Landeshauptstadt von Wolfgang Funken (Essen 2012)</i></p>"
+- id: 4
+  name: "Mahn- und Gedenkstätte"
+  description: "Beispieltext"
+  place:
+    id: 3
+    name: "HHU-Campus 3"
+    lat: 51.188801
+    lon: 6.794488
+  pages:
+    - id: 16
+      pos: 1
+      guid: "http://smarthistory.philo-fachschaft-koeln.de/?p=16"
+      content: "Beispieltext"
+createdAt: "05.04.2017 18:37:42"
+...

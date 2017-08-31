@@ -15,7 +15,7 @@ target 'HistoriaApp' do
   # Unzipping files
   pod 'SSZipArchive', '~> 2.0.3'
 
-  # a sqlite library
+  # an sqlite library
   pod 'GRDB.swift', '1.0'
 
   # a minimal logging library

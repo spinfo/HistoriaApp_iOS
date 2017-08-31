@@ -18,29 +18,6 @@ import CoreLocation
 // some static methods to extract map functionality
 class MapUtil {
 
-    public static func buildDefaultMarker(for mapstop: Mapstop?) -> MaplyScreenMarker {
-        // create an empty marker
-        let marker = MaplyScreenMarker()
-
-        // set the image
-        let markerIcon = UIImage(named: "MarkerIconBlue")
-        marker.image = markerIcon
-
-        // set other default values
-        marker.size = CGSize(width: 40, height: 40)
-        marker.offset = CGPoint(x: 0, y: 20)
-        marker.userObject = mapstop
-
-        // set the location if possible
-        guard let location = mapstop?.place?.getLocation() else {
-            SpeedLog.print("WARN", "Not setting location for marker.")
-            return marker
-        }
-        marker.loc = location
-
-        return marker
-    }
-
     // construct a bounding box for a number of coordinates
     public static func makeBbox(_ coords: [MaplyCoordinate]) -> MaplyBoundingBox {
         // extrema to compare against

@@ -13,7 +13,11 @@ import SpeedLog
 
 class ViewController: UIViewController, MaplyViewControllerDelegate {
 
+    // the controller used for manipulating the map
     private var mapViewC: MaplyViewController?
+
+    // This saves handles for the currently drawn objects for later removal
+    private var currentlyDrawn: [MaplyComponentObject] = Array()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -75,9 +79,8 @@ class ViewController: UIViewController, MaplyViewControllerDelegate {
         mapViewC!.add(layer)
 
         // marker creation
-        let markers = tour.mapstops.map { mapstop -> MaplyScreenMarker in
-            return MapUtil.buildDefaultMarker(for: mapstop)
-        }
+        let tourCollectionOnMap = TourCollectionOnMap(tours: [tour])
+        let markers = tourCollectionOnMap.placesOnMap.map { p in return p.createMarker() }
 
         // position the map to the markers
         let box = MapUtil.makeBbox(markers.map({ m in return m.loc }))
@@ -86,7 +89,11 @@ class ViewController: UIViewController, MaplyViewControllerDelegate {
 
         mapViewC!.height = height
         mapViewC!.animate(toPosition: center, time: 0.0)
-        let _ = mapViewC?.addScreenMarkers(markers, desc: nil)
+        guard let markersHandle = mapViewC?.addScreenMarkers(markers, desc: nil) else {
+            SpeedLog.print("WARN", "No components created on creating markers")
+            return
+        }
+        currentlyDrawn.append(markersHandle)
     }
 
     override func didReceiveMemoryWarning() {
@@ -105,12 +112,11 @@ class ViewController: UIViewController, MaplyViewControllerDelegate {
     // A tap to a marker (or possibly another object)
     func maplyViewController(_ viewC: MaplyViewController!, didSelect selectedObj: NSObject!) {
         if let marker = selectedObj as? MaplyScreenMarker {
-            guard let mapstop = marker.userObject as? Mapstop else {
-                SpeedLog.print("WARN", "Marker without associated mapstop.")
+            guard let placeOnMap = marker.userObject as? PlaceOnMap else {
+                SpeedLog.print("WARN", "Marker without associated PlaceOnMap.")
                 return
             }
-
-            self.addAnnotationWithTitle(title: mapstop.name, subtitle: mapstop.description, loc: marker.loc)
+            placeOnMap.onSelect(with: mapViewC!)
         } else {
             SpeedLog.print("INFO", "Click to other object: \(selectedObj)")
         }
@@ -118,29 +124,24 @@ class ViewController: UIViewController, MaplyViewControllerDelegate {
 
     //MARK: -- Private Methods
 
-    // Handle taps made to the next area of an annotation (for demonstration purposes atm)
-    func handleInfowindowNextClick(recognizer: UITapGestureRecognizer) {
-        SpeedLog.print("Got click to next.")
+    // clear the map of all objects we might have added
+    private func clearTheMap() {
+        // remove everything drawn so far
+        for handle in currentlyDrawn {
+            mapViewC?.remove(handle)
+        }
+        currentlyDrawn = Array()
+
+        // remove annotations
+        mapViewC?.clearAnnotations()
     }
 
-    private func addAnnotationWithTitle(title: String, subtitle: String, loc: MaplyCoordinate) {
-        mapViewC?.clearAnnotations()
+    // Remove all other content on the map and only display the given
+    // collection of tours
+    private func switchTo(tourCollection: TourCollectionOnMap?) {
+        self.clearTheMap()
 
-        let a = MaplyAnnotation()
-        a.title = title
-        a.subTitle = subtitle
 
-        // Add a small clickable icon to the right
-        let nextButton = UILabel(frame: CGRect(x: 0, y: 0, width: 10, height: 20))
-        nextButton.text = ">"
-        nextButton.backgroundColor = UIColor.white
-        nextButton.textColor = UIColor.black
-        nextButton.isUserInteractionEnabled = true
-        let labelTap = UITapGestureRecognizer(target: self, action: #selector(handleInfowindowNextClick(recognizer:)))
-        nextButton.addGestureRecognizer(labelTap)
-        a.rightAccessoryView = nextButton
-
-        mapViewC?.addAnnotation(a, forPoint: loc, offset: CGPoint.zero)
     }
 
 }
@@ -177,7 +178,7 @@ fileprivate extension MaplyViewController {
             if (pixels > screenDist || zoomHeight < minHeight) {
                 return (zoomHeight * 2)
             }
-
+            
             // halve the height for the next iteration
             zoomHeight /= 2
             
