@@ -75,7 +75,14 @@ class FileService {
 
     // return the file url that should be used for database access
     public class func getDBFile() -> URL? {
-        return getDocumentsFolder().appendingPathComponent("db.sqlite")
+        guard let url = getDocumentsFolder().appendingPathComponent("db.sqlite") else {
+            SpeedLog.print("ERROR", "Unable to determine db file.")
+            return nil
+        }
+        if !FileManager.default.fileExists(atPath: url.path) {
+            FileManager.default.createFile(atPath: url.path, contents: nil, attributes: nil)
+        }
+        return url
     }
 
     //MARK: Private methods

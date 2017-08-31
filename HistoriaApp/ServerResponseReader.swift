@@ -20,6 +20,11 @@ class ServerResponseReader {
     }
 
     public static func parseTourYAML(_ input: String) -> Tour? {
+        guard input.characters.count > 0 else {
+            SpeedLog.print("ERROR", "Empty input on tour parsing.")
+            return nil
+        }
+
         let tour = Tour()
 
         do {
