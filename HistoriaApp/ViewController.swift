@@ -19,6 +19,9 @@ class ViewController: UIViewController, MaplyViewControllerDelegate {
     // This saves handles for the currently drawn objects for later removal
     private var currentlyDrawn: [MaplyComponentObject] = Array()
 
+    // The placeOnMap currently selected
+    private var selectedPlaceOnMap: PlaceOnMap?
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -80,20 +83,7 @@ class ViewController: UIViewController, MaplyViewControllerDelegate {
 
         // marker creation
         let tourCollectionOnMap = TourCollectionOnMap(tours: [tour])
-        let markers = tourCollectionOnMap.placesOnMap.map { p in return p.createMarker() }
-
-        // position the map to the markers
-        let box = MapUtil.makeBbox(markers.map({ m in return m.loc }))
-        let center = MapUtil.bboxCenter(box)
-        let height = mapViewC!.myFindHeight(bbox: box)
-
-        mapViewC!.height = height
-        mapViewC!.animate(toPosition: center, time: 0.0)
-        guard let markersHandle = mapViewC?.addScreenMarkers(markers, desc: nil) else {
-            SpeedLog.print("WARN", "No components created on creating markers")
-            return
-        }
-        currentlyDrawn.append(markersHandle)
+        self.switchTo(tourCollection: tourCollectionOnMap)
     }
 
     override func didReceiveMemoryWarning() {
@@ -102,11 +92,13 @@ class ViewController: UIViewController, MaplyViewControllerDelegate {
     }
 
 
-    // MARK: -- Map Interaction
+    // MARK: -- Map Interaction (and MaplyViewControllerDelegate)
 
     // A tap made directly to the map
     func maplyViewController(_ viewC: MaplyViewController!, didTapAt coord: MaplyCoordinate) {
+        // clear annotations for a selected place on map and remove the selection
         mapViewC?.clearAnnotations()
+        self.selectedPlaceOnMap = nil
     }
 
     // A tap to a marker (or possibly another object)
@@ -116,11 +108,21 @@ class ViewController: UIViewController, MaplyViewControllerDelegate {
                 SpeedLog.print("WARN", "Marker without associated PlaceOnMap.")
                 return
             }
-            placeOnMap.onSelect(with: mapViewC!)
+            self.showAnnotation(for: placeOnMap)
         } else {
             SpeedLog.print("INFO", "Click to other object: \(selectedObj)")
         }
     }
+
+    // handle a click to the "next" label inside a mapstop annotation
+    func onNextMapstopPreviewClick() {
+        guard self.selectedPlaceOnMap != nil else {
+            SpeedLog.print("ERROR", "No place on map selected.")
+            return
+        }
+        showAnnotation(for: self.selectedPlaceOnMap!)
+    }
+
 
     //MARK: -- Private Methods
 
@@ -138,10 +140,41 @@ class ViewController: UIViewController, MaplyViewControllerDelegate {
 
     // Remove all other content on the map and only display the given
     // collection of tours
-    private func switchTo(tourCollection: TourCollectionOnMap?) {
+    private func switchTo(tourCollection: TourCollectionOnMap) {
+        // remove the old markers and setup new ones
         self.clearTheMap()
+        let markers = tourCollection.placesOnMap.map { p in return p.createMarker() }
+        guard let markersHandle = mapViewC?.addScreenMarkers(markers, desc: nil) else {
+            SpeedLog.print("WARN", "No components created on creating markers")
+            return
+        }
+        currentlyDrawn.append(markersHandle)
 
+        // position the map to the markers
+        let box = MapUtil.makeBbox(markers.map({ m in return m.loc }))
+        let center = MapUtil.bboxCenter(box)
+        let height = mapViewC!.myFindHeight(bbox: box)
+        mapViewC!.height = height
+        mapViewC!.animate(toPosition: center, time: 0.0)
+    }
 
+    // Show an annotation view for a place on the map
+    private func showAnnotation(for placeOnMap: PlaceOnMap) {
+        let annotation = placeOnMap.nextAnnotation()
+
+        // If the placeOnMap has multiple mapstops, set it up to switch through those
+        if placeOnMap.mapstopsOnMap.count > 1 {
+            let nextLabel = placeOnMap.createNextMapstopPreviewLabel()
+            let labelTap = UITapGestureRecognizer(target: self, action: #selector(onNextMapstopPreviewClick))
+            nextLabel.addGestureRecognizer(labelTap)
+            annotation.rightAccessoryView = nextLabel
+        }
+
+        // only one annotation is shown at any time
+        mapViewC?.clearAnnotations()
+        mapViewC?.addAnnotation(annotation, forPoint: placeOnMap.place.getLocation(),
+                                offset: PlaceOnMap.ANNOTATION_OFFSET)
+        self.selectedPlaceOnMap = placeOnMap
     }
 
 }

@@ -42,7 +42,7 @@ class PlaceOnMap {
     private static let MARKER_ICON_DEFAULT = UIImage(named: "MarkerIconBlue")
     private static let MARKER_SIZE = CGSize(width: 40, height: 40)
     private static let MARKER_OFFSET = CGPoint(x: 0, y: 20)
-    private static let ANNOTATION_OFFSET = CGPoint(x: 0, y: -20)
+    public static let ANNOTATION_OFFSET = CGPoint(x: 0, y: -20)
 
     // a handle to the marker, that this mapstop represents on the map
     private var marker: MaplyScreenMarker?
@@ -52,7 +52,7 @@ class PlaceOnMap {
     private var annotation: MaplyAnnotation?
 
     // we keep an index to the currently previewed mapstop
-    private var currentStopPreviewIdx = 0
+    private var stopPreviewIdx = -1
 
     // create a marker to show this place on the map
     func createMarker() -> MaplyScreenMarker {
@@ -76,46 +76,28 @@ class PlaceOnMap {
         return marker
     }
 
-
-    // when a place is selected, it shows a preview of it's mapstop(s)
-    func onSelect(with mapViewC: MaplyViewController) {
+    // when a place is selected, it shows a preview of it's mapstop(s) in
+    // an annotation, this selects the next mapstop to preview and returns
+    // a MaplyAnnotation to do the preview with
+    func nextAnnotation() -> MaplyAnnotation {
         // initialize the annotation for this mapstop if need be
         if annotation == nil {
             annotation = MaplyAnnotation()
         }
 
         // get the current mapstop to display
-        let idx = currentStopPreviewIdx % self.mapstopsOnMap.count
-        let mapstop = self.mapstopsOnMap[idx].mapstop
+        stopPreviewIdx = (stopPreviewIdx + 1) % self.mapstopsOnMap.count
+        let mapstop = self.mapstopsOnMap[stopPreviewIdx].mapstop
 
         // fill fields
         annotation!.title = mapstop.name
         annotation!.subTitle = mapstop.description
-
-        // Add an icon with which to switch through Mapstop previews
-        if self.mapstopsOnMap.count > 1 {
-            let nextLabel = createNextMapstopPreviewLabel()
-            let labelTap = UITapGestureRecognizer(target: self, action: #selector(onNextMapstop))
-            nextLabel.addGestureRecognizer(labelTap)
-            annotation!.rightAccessoryView = nextLabel
-        }
-
-        // only one place is selected at any time
-        mapViewC.clearAnnotations()
-        mapViewC.addAnnotation(annotation, forPoint: self.place.getLocation(),
-                               offset: PlaceOnMap.ANNOTATION_OFFSET)
+        return annotation!
     }
 
-    @objc func onNextMapstop(_ sender: UITapGestureRecognizer) {
-        self.currentStopPreviewIdx = (self.currentStopPreviewIdx + 1) % self.mapstopsOnMap.count
-        // self.onSelect(with: self.mapViewC!)
-        SpeedLog.print("Got click to next: \(currentStopPreviewIdx)")
-    }
-
-
-    // MARK: Private methods
-
-    private func createNextMapstopPreviewLabel() -> UILabel {
+    // an optional label, that the client may add to the annotation to switch
+    // throgh multiple mapstop previews
+    func createNextMapstopPreviewLabel() -> UILabel {
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: 10, height: 20))
         label.text = ">"
         label.backgroundColor = UIColor.white
