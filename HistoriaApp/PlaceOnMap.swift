@@ -49,7 +49,7 @@ class PlaceOnMap {
 
     // the annotation used to show information about the mapstops located at
     // this place
-    private var annotation: MaplyAnnotation?
+    private var annotation: MapstopAnnotation?
 
     // we keep an index to the currently previewed mapstop
     private var stopPreviewIdx = -1
@@ -79,15 +79,16 @@ class PlaceOnMap {
     // when a place is selected, it shows a preview of it's mapstop(s) in
     // an annotation, this selects the next mapstop to preview and returns
     // a MaplyAnnotation to do the preview with
-    func nextAnnotation() -> MaplyAnnotation {
+    func nextAnnotation() -> MapstopAnnotation {
         // initialize the annotation for this mapstop if need be
         if annotation == nil {
-            annotation = MaplyAnnotation()
+            annotation = MapstopAnnotation()
         }
 
-        // get the current mapstop to display
+        // get the current mapstop to display and linkt it to the annotation
         stopPreviewIdx = (stopPreviewIdx + 1) % self.mapstopsOnMap.count
         let mapstop = self.mapstopsOnMap[stopPreviewIdx].mapstop
+        annotation?.mapstop = mapstop
 
         // fill fields
         annotation!.title = mapstop.name

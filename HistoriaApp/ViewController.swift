@@ -11,7 +11,7 @@ import UIKit
 import WhirlyGlobe
 import SpeedLog
 
-class ViewController: UIViewController, MaplyViewControllerDelegate {
+class ViewController: UIViewController, MaplyViewControllerDelegate, UIPageViewControllerDataSource {
 
     // the controller used for manipulating the map
     private var mapViewC: MaplyViewController?
@@ -21,6 +21,12 @@ class ViewController: UIViewController, MaplyViewControllerDelegate {
 
     // The placeOnMap currently selected
     private var selectedPlaceOnMap: PlaceOnMap?
+
+    // A controller showing a mapstop's pages if one is selected
+    private var pageViewController: UIPageViewController?
+
+    // The currently selected mapstops pages
+    private var pages: [Page]?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -108,7 +114,7 @@ class ViewController: UIViewController, MaplyViewControllerDelegate {
                 SpeedLog.print("WARN", "Marker without associated PlaceOnMap.")
                 return
             }
-            self.showAnnotation(for: placeOnMap)
+            self.showNextAnnotation(for: placeOnMap)
         } else {
             SpeedLog.print("INFO", "Click to other object: \(selectedObj)")
         }
@@ -120,11 +126,104 @@ class ViewController: UIViewController, MaplyViewControllerDelegate {
             SpeedLog.print("ERROR", "No place on map selected.")
             return
         }
-        showAnnotation(for: self.selectedPlaceOnMap!)
+        showNextAnnotation(for: self.selectedPlaceOnMap!)
+    }
+
+    // handle a tap to an annotation: show that mapstop's pages
+    // TODO: Can we move all this stuff into an adapter class, please?
+    func maplyViewController(_ viewC: MaplyViewController!, didTap annotation: MaplyAnnotation!) {
+        print("Tapped annotation: \(annotation)")
+
+        guard let mapstop = (annotation as? MapstopAnnotation)?.mapstop else {
+            SpeedLog.print("ERROR", "No mapstop for annotation")
+            return
+        }
+
+        // set the current pages
+        let theDao = MasterDao()
+        self.pages = theDao.getPages(forMapstop: mapstop.id)
+        print("-- page count: \(self.pages?.count) for id: \(mapstop.id)")
+
+        // initialise a page view controller to manage the mapstop's places
+        self.pageViewController = self.storyboard?.instantiateViewController(withIdentifier: "MapstopPageViewController") as? UIPageViewController
+        self.pageViewController?.dataSource = self
+
+        guard let startingViewController = self.mapstopPageContentViewController(at: 0) else {
+            SpeedLog.print("ERROR", "Could not get page content controller for start index.")
+            return
+        }
+        self.pageViewController?.setViewControllers([startingViewController], direction: .forward, animated: false, completion: nil)
+
+        // actually display the page view controller
+        self.pageViewController?.view.frame = CGRect(x: 0, y: 0,
+                                                     width: self.view.frame.width,
+                                                     height: self.view.frame.height - 30)
+        self.addChildViewController(self.pageViewController!)
+        self.view.addSubview((self.pageViewController?.view)!)
+        self.pageViewController?.didMove(toParentViewController: self)
+    }
+
+    // MARK: UIPageViewControllerDataSource
+
+    // prepare the mastops page before the current one
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
+        guard let pageViewC = viewController as? MapstopPageContentViewController else {
+            SpeedLog.print("ERROR", "Wrong page content view controller type")
+            return nil
+        }
+
+        if (pageViewC.pageIndex == nil || pageViewC.pageIndex! <= 0) {
+            return nil
+        }
+
+        pageViewC.pageIndex! -= 1
+        return self.mapstopPageContentViewController(at: pageViewC.pageIndex!)
+    }
+
+    // prepare the mastops page after the current one
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
+        guard let pageViewC = viewController as? MapstopPageContentViewController else {
+            SpeedLog.print("ERROR", "Wrong page content view controller type")
+            return nil
+        }
+
+        if (pageViewC.pageIndex == nil) {
+            return nil
+        }
+
+        pageViewC.pageIndex! += 1
+        return self.mapstopPageContentViewController(at: pageViewC.pageIndex!)
+    }
+
+    private func mapstopPageContentViewController(at idx: Int) -> MapstopPageContentViewController? {
+        guard self.pages != nil && idx >= 0 && idx < self.pages!.count  else {
+            SpeedLog.print("WARN", "No pages")
+            return nil
+        }
+
+        let controller = self.storyboard?.instantiateViewController(withIdentifier: "MapstopPageContentViewController") as! MapstopPageContentViewController
+
+        controller.pageIndex = idx
+        controller.page = pages?[idx]
+        return controller
+    }
+
+    // tell the caller how many pages the currently selected mapstop has
+    func presentationCount(for pageViewController: UIPageViewController) -> Int {
+        guard self.pages != nil else {
+            SpeedLog.print("ERROR", "Can't get page count for current mapstop.")
+            return 0
+        }
+        return self.pages!.count
+    }
+
+    // tell the caller that we always start at the first mapstop page
+    func presentationIndex(for pageViewController: UIPageViewController) -> Int {
+        return 0
     }
 
 
-    //MARK: -- Private Methods
+    // MARK: -- Private Methods
 
     // clear the map of all objects we might have added
     private func clearTheMap() {
@@ -159,7 +258,7 @@ class ViewController: UIViewController, MaplyViewControllerDelegate {
     }
 
     // Show an annotation view for a place on the map
-    private func showAnnotation(for placeOnMap: PlaceOnMap) {
+    private func showNextAnnotation(for placeOnMap: PlaceOnMap) {
         let annotation = placeOnMap.nextAnnotation()
 
         // If the placeOnMap has multiple mapstops, set it up to switch through those

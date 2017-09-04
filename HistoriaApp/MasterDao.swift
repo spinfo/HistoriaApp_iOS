@@ -60,6 +60,17 @@ class MasterDao {
         }
     }
 
+    public func getPages(forMapstop id: Int64) -> [Page] {
+        do {
+            return try dbQueue.inDatabase({ db in
+                return try Page.filter(Column("mapstop_id") == id).fetchAll(db)
+            })
+        } catch {
+            SpeedLog.print("ERROR", "Unable to retrieve pages for mapstop (id: '\(id)'): \(error)")
+            return []
+        }
+    }
+
     // MARK: Private unsafe fetches
     // These fetch GRDB records, but might throw and thus are not exposed
 
