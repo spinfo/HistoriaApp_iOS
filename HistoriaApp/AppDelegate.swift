@@ -21,6 +21,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Set logging options for the app
         SpeedLog.mode = [ .FullCodeLocation ]
 
+        // Set thea appearence of page view indicators
+        let pageControl = UIPageControl.appearance()
+        pageControl.pageIndicatorTintColor = UIColor.lightGray
+        pageControl.currentPageIndicatorTintColor = UIColor.blue
+        pageControl.backgroundColor = UIColor.white
+
         // Override point for customization after application launch.
         return true
     }

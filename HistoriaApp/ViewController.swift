@@ -11,7 +11,8 @@ import UIKit
 import WhirlyGlobe
 import SpeedLog
 
-class ViewController: UIViewController, MaplyViewControllerDelegate, UIPageViewControllerDataSource {
+class ViewController: UIViewController, MaplyViewControllerDelegate, UIPageViewControllerDataSource,
+                        MapPopupDelegate {
 
     // the controller used for manipulating the map
     private var mapViewC: MaplyViewController?
@@ -27,6 +28,9 @@ class ViewController: UIViewController, MaplyViewControllerDelegate, UIPageViewC
 
     // The currently selected mapstops pages
     private var pages: [Page]?
+
+    // a controller for poups over the map
+    private var mapPopupController: MapPopupController?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -130,7 +134,6 @@ class ViewController: UIViewController, MaplyViewControllerDelegate, UIPageViewC
     }
 
     // handle a tap to an annotation: show that mapstop's pages
-    // TODO: Can we move all this stuff into an adapter class, please?
     func maplyViewController(_ viewC: MaplyViewController!, didTap annotation: MaplyAnnotation!) {
         print("Tapped annotation: \(annotation)")
 
@@ -142,7 +145,6 @@ class ViewController: UIViewController, MaplyViewControllerDelegate, UIPageViewC
         // set the current pages
         let theDao = MasterDao()
         self.pages = theDao.getPages(forMapstop: mapstop.id)
-        print("-- page count: \(self.pages?.count) for id: \(mapstop.id)")
 
         // initialise a page view controller to manage the mapstop's places
         self.pageViewController = self.storyboard?.instantiateViewController(withIdentifier: "MapstopPageViewController") as? UIPageViewController
@@ -154,13 +156,12 @@ class ViewController: UIViewController, MaplyViewControllerDelegate, UIPageViewC
         }
         self.pageViewController?.setViewControllers([startingViewController], direction: .forward, animated: false, completion: nil)
 
-        // actually display the page view controller
-        self.pageViewController?.view.frame = CGRect(x: 0, y: 0,
-                                                     width: self.view.frame.width,
-                                                     height: self.view.frame.height - 30)
-        self.addChildViewController(self.pageViewController!)
-        self.view.addSubview((self.pageViewController?.view)!)
-        self.pageViewController?.didMove(toParentViewController: self)
+        // actually display the page view controller as a popup
+        self.mapPopupController = self.storyboard?.instantiateViewController(withIdentifier: "MapPopupController") as? MapPopupController
+        self.view.addSubview(self.mapPopupController!.view)
+        self.mapPopupController!.didMove(toParentViewController: self)
+        self.mapPopupController!.setPopup(byController: self.pageViewController!)
+        self.mapPopupController!.delegate = self
     }
 
     // MARK: UIPageViewControllerDataSource
@@ -220,6 +221,15 @@ class ViewController: UIViewController, MaplyViewControllerDelegate, UIPageViewC
     // tell the caller that we always start at the first mapstop page
     func presentationIndex(for pageViewController: UIPageViewController) -> Int {
         return 0
+    }
+
+
+    // MARK: -- MapPopupDelegate
+
+    func requestedPopupClose(sender: MapPopupController) {
+        sender.willMove(toParentViewController: nil)
+        sender.view.removeFromSuperview()
+        sender.removeFromParentViewController()
     }
 
 
