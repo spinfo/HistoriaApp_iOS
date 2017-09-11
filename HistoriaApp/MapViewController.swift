@@ -11,7 +11,7 @@ import UIKit
 import WhirlyGlobe
 import SpeedLog
 
-class ViewController: UIViewController, MaplyViewControllerDelegate, UIPageViewControllerDataSource,
+class MapViewController: UIViewController, MaplyViewControllerDelegate, UIPageViewControllerDataSource,
                         MapPopupDelegate {
 
     // the controller used for manipulating the map
