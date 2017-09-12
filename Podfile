@@ -20,4 +20,7 @@ target 'HistoriaApp' do
 
   # a minimal logging library
   pod 'SpeedLog'
+
+  # support for our navigation drawer menu
+  pod 'MMDrawerController', '~> 0.5.7'
 end

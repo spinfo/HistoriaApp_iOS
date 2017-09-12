@@ -9,12 +9,14 @@
 import UIKit
 
 import SpeedLog
+import MMDrawerController
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
+    public var centerContainer: MMDrawerController?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
@@ -26,6 +28,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         pageControl.pageIndicatorTintColor = UIColor.lightGray
         pageControl.currentPageIndicatorTintColor = UIColor.blue
         pageControl.backgroundColor = UIColor.white
+
+
+        // setup the navigation drawer
+        // let rootViewC = self.window!.rootViewController
+        let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+
+        let centerViewC = mainStoryboard.instantiateViewController(withIdentifier: "MapViewController") as! MapViewController
+        let navDrawerC = mainStoryboard.instantiateViewController(withIdentifier: "NavDrawerController") as! NavDrawerController
+
+        let centerNav = UINavigationController(rootViewController: centerViewC)
+        let leftSideNav = UINavigationController(rootViewController: navDrawerC)
+        self.centerContainer = MMDrawerController(center: centerNav, leftDrawerViewController: leftSideNav)
+        self.centerContainer?.openDrawerGestureModeMask = .bezelPanningCenterView
+        self.centerContainer?.closeDrawerGestureModeMask = .panningDrawerView
+        self.centerContainer?.centerHiddenInteractionMode = .navigationBarOnly
+        self.centerContainer?.shouldStretchDrawer = false
+        self.centerContainer?.showsShadow = true
+
+        window!.rootViewController = centerContainer
+        window!.makeKeyAndVisible()
 
         // Override point for customization after application launch.
         return true

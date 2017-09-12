@@ -10,6 +10,8 @@
 		636164C41F43418000B7DE28 /* Area.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636164C31F43418000B7DE28 /* Area.swift */; };
 		6377AC5F1F5085F8003D729B /* MasterDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6377AC5E1F5085F8003D729B /* MasterDao.swift */; };
 		6377AC611F509387003D729B /* MapUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6377AC601F509387003D729B /* MapUtil.swift */; };
+		63ABDDCC1F682D7A008AE47A /* NavDrawerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63ABDDCB1F682D7A008AE47A /* NavDrawerTableViewCell.swift */; };
+		63ABDDCE1F683BD6008AE47A /* ReadingModeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63ABDDCD1F683BD6008AE47A /* ReadingModeViewController.swift */; };
 		63C8F0EC1F56E8D100F90F7C /* MapstopOnMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C8F0EB1F56E8D100F90F7C /* MapstopOnMap.swift */; };
 		63C8F0EE1F56E8EA00F90F7C /* PlaceOnMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C8F0ED1F56E8EA00F90F7C /* PlaceOnMap.swift */; };
 		63C8F0F01F56E8FD00F90F7C /* TourCollectionOnMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C8F0EF1F56E8FD00F90F7C /* TourCollectionOnMap.swift */; };
@@ -23,6 +25,7 @@
 		63D181201F3C5B29004A2036 /* HistoriaAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D1811F1F3C5B29004A2036 /* HistoriaAppTests.swift */; };
 		63D1812B1F3C6CF5004A2036 /* FileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D1812A1F3C6CF5004A2036 /* FileService.swift */; };
 		63DAB1441F4B2D50005C69B4 /* DatabaseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DAB1431F4B2D50005C69B4 /* DatabaseHelper.swift */; };
+		63E2EB8D1F66DDC300D66F41 /* NavDrawerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E2EB8C1F66DDC300D66F41 /* NavDrawerController.swift */; };
 		63F8C70E1F41E26300691559 /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F8C70D1F41E26300691559 /* Page.swift */; };
 		63F8C7161F41E56300691559 /* Mediaitem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F8C7151F41E56300691559 /* Mediaitem.swift */; };
 		63F8C71B1F41E90400691559 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F8C71A1F41E90400691559 /* Place.swift */; };
@@ -50,6 +53,8 @@
 		636164C31F43418000B7DE28 /* Area.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Area.swift; sourceTree = "<group>"; };
 		6377AC5E1F5085F8003D729B /* MasterDao.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MasterDao.swift; sourceTree = "<group>"; };
 		6377AC601F509387003D729B /* MapUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapUtil.swift; sourceTree = "<group>"; };
+		63ABDDCB1F682D7A008AE47A /* NavDrawerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NavDrawerTableViewCell.swift; path = ../NavDrawerTableViewCell.swift; sourceTree = "<group>"; };
+		63ABDDCD1F683BD6008AE47A /* ReadingModeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadingModeViewController.swift; sourceTree = "<group>"; };
 		63AF21491F47276900DD2973 /* ZipArchive.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ZipArchive.framework; path = Carthage/Build/iOS/ZipArchive.framework; sourceTree = "<group>"; };
 		63C8F0EB1F56E8D100F90F7C /* MapstopOnMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapstopOnMap.swift; sourceTree = "<group>"; };
 		63C8F0ED1F56E8EA00F90F7C /* PlaceOnMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceOnMap.swift; sourceTree = "<group>"; };
@@ -69,6 +74,7 @@
 		63D1812A1F3C6CF5004A2036 /* FileService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileService.swift; sourceTree = "<group>"; };
 		63D1812D1F3C74B4004A2036 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		63DAB1431F4B2D50005C69B4 /* DatabaseHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseHelper.swift; sourceTree = "<group>"; };
+		63E2EB8C1F66DDC300D66F41 /* NavDrawerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavDrawerController.swift; sourceTree = "<group>"; };
 		63F8C70D1F41E26300691559 /* Page.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Page.swift; sourceTree = "<group>"; };
 		63F8C7151F41E56300691559 /* Mediaitem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mediaitem.swift; sourceTree = "<group>"; };
 		63F8C71A1F41E90400691559 /* Place.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
@@ -135,10 +141,13 @@
 			children = (
 				63D1810A1F3C5B29004A2036 /* AppDelegate.swift */,
 				63D1810C1F3C5B29004A2036 /* MapViewController.swift */,
+				63E2EB8C1F66DDC300D66F41 /* NavDrawerController.swift */,
+				63ABDDCB1F682D7A008AE47A /* NavDrawerTableViewCell.swift */,
 				63CFE6291F5D87B100D6F5E0 /* MapstopPageContentViewController.swift */,
 				63CFE62B1F5DA3DC00D6F5E0 /* MapstopAnnotation.swift */,
 				6377AC601F509387003D729B /* MapUtil.swift */,
 				63FFA2611F604E9F0090A32A /* MapPopupController.swift */,
+				63ABDDCD1F683BD6008AE47A /* ReadingModeViewController.swift */,
 				63D1810E1F3C5B29004A2036 /* Main.storyboard */,
 				63D181111F3C5B29004A2036 /* Assets.xcassets */,
 				63D181131F3C5B29004A2036 /* LaunchScreen.storyboard */,
@@ -741,6 +750,7 @@
 				"${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework",
 				"${BUILT_PRODUCTS_DIR}/FMDB/FMDB.framework",
 				"${BUILT_PRODUCTS_DIR}/GRDB.swift/GRDB.framework",
+				"${BUILT_PRODUCTS_DIR}/MMDrawerController/MMDrawerController.framework",
 				"${BUILT_PRODUCTS_DIR}/SMCalloutView/SMCalloutView.framework",
 				"${BUILT_PRODUCTS_DIR}/SSZipArchive/SSZipArchive.framework",
 				"${BUILT_PRODUCTS_DIR}/SpeedLog/SpeedLog.framework",
@@ -756,6 +766,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AFNetworking.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FMDB.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GRDB.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MMDrawerController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SMCalloutView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SSZipArchive.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SpeedLog.framework",
@@ -784,7 +795,9 @@
 				63FFA2621F604E9F0090A32A /* MapPopupController.swift in Sources */,
 				6377AC5F1F5085F8003D729B /* MasterDao.swift in Sources */,
 				63F8C71E1F41EB9600691559 /* Tour.swift in Sources */,
+				63E2EB8D1F66DDC300D66F41 /* NavDrawerController.swift in Sources */,
 				63DAB1441F4B2D50005C69B4 /* DatabaseHelper.swift in Sources */,
+				63ABDDCE1F683BD6008AE47A /* ReadingModeViewController.swift in Sources */,
 				63C8F0F01F56E8FD00F90F7C /* TourCollectionOnMap.swift in Sources */,
 				63D1810D1F3C5B29004A2036 /* MapViewController.swift in Sources */,
 				63C8F0EC1F56E8D100F90F7C /* MapstopOnMap.swift in Sources */,
@@ -793,6 +806,7 @@
 				6377AC611F509387003D729B /* MapUtil.swift in Sources */,
 				63C8F0EE1F56E8EA00F90F7C /* PlaceOnMap.swift in Sources */,
 				63CFE62A1F5D87B100D6F5E0 /* MapstopPageContentViewController.swift in Sources */,
+				63ABDDCC1F682D7A008AE47A /* NavDrawerTableViewCell.swift in Sources */,
 				63F8C71B1F41E90400691559 /* Place.swift in Sources */,
 				636164C41F43418000B7DE28 /* Area.swift in Sources */,
 				63F8C7221F41F23C00691559 /* ServerResponseReader.swift in Sources */,
@@ -937,10 +951,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 9B7QDZ2A48;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				HEADER_SEARCH_PATHS = (
 					"\"${PODS_ROOT}/boost\"",
 					"\"${PODS_ROOT}/eigen\"",
@@ -957,10 +968,7 @@
 				);
 				INFOPLIST_FILE = HistoriaApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS/Yams.framework",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = "de.historia-app.HistoriaApp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_INCLUDE_PATHS = "";
@@ -975,10 +983,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 9B7QDZ2A48;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				HEADER_SEARCH_PATHS = (
 					"\"${PODS_ROOT}/boost\"",
 					"\"${PODS_ROOT}/eigen\"",
@@ -995,10 +1000,7 @@
 				);
 				INFOPLIST_FILE = HistoriaApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS/Yams.framework",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = "de.historia-app.HistoriaApp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_INCLUDE_PATHS = "";

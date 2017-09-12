@@ -232,6 +232,13 @@ class MapViewController: UIViewController, MaplyViewControllerDelegate, UIPageVi
         sender.removeFromParentViewController()
     }
 
+    // MARK: -- Drawer Navigation
+
+    @IBAction func leftDrawerButtonTapped(_ sender: Any) {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        appDelegate.centerContainer?.toggle(.left, animated: true, completion: nil)
+    }
+
 
     // MARK: -- Private Methods
 
