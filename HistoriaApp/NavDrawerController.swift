@@ -60,6 +60,8 @@ class NavDrawerController: UIViewController, UITableViewDataSource, UITableViewD
             appDelegate.switchToCenterController("MapViewController")
         case 2:
             appDelegate.switchToCenterController("ReadingModeViewController")
+        case 3:
+            appDelegate.switchToCenterController("TourDownloadViewController")
 
         default:
             SpeedLog.print("Tapped: \(indexPath)")
