@@ -20,6 +20,11 @@ class NavDrawerController: UIViewController, UITableViewDataSource, UITableViewD
         "Über uns"
     ]
 
+    // keep references to the view controllers that we switched back from
+    var previousCenterViewCs = {}
+
+    var currentMenuItem = 0
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -47,20 +52,20 @@ class NavDrawerController: UIViewController, UITableViewDataSource, UITableViewD
     // MARK: -- UITableViewDelegate
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+
         switch indexPath.row {
         case 0:
-            SpeedLog.print("Karte wechseln")
+            appDelegate.switchToCenterController("MapViewController")
         case 2:
-            let readingModeViewC = self.storyboard?.instantiateViewController(withIdentifier: "ReadingModeViewController") as! ReadingModeViewController
-            let centerNavC = UINavigationController(rootViewController: readingModeViewC)
-            let appDelegate = UIApplication.shared.delegate as! AppDelegate
-
-            appDelegate.centerContainer?.centerViewController = centerNavC
-            appDelegate.centerContainer?.toggle(.left, animated: true, completion: nil)
+            appDelegate.switchToCenterController("ReadingModeViewController")
 
         default:
             SpeedLog.print("Tapped: \(indexPath)")
         }
+
+        // if everything wen
     }
 
 }

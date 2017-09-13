@@ -14,9 +14,17 @@ import MMDrawerController
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    var window: UIWindow?
+    // MARK: Properties for Navigation
 
-    public var centerContainer: MMDrawerController?
+    private var centerContainer: MMDrawerController?
+
+    private let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+
+    private var centerViewControllers = Dictionary<String, UIViewController>()
+
+    // MARK: Normal AppDelegate stuff
+
+    var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
@@ -29,27 +37,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         pageControl.currentPageIndicatorTintColor = UIColor.blue
         pageControl.backgroundColor = UIColor.white
 
-
-        // setup the navigation drawer
-        // let rootViewC = self.window!.rootViewController
-        let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
-
-        let centerViewC = mainStoryboard.instantiateViewController(withIdentifier: "MapViewController") as! MapViewController
-        let navDrawerC = mainStoryboard.instantiateViewController(withIdentifier: "NavDrawerController") as! NavDrawerController
-
-        let centerNav = UINavigationController(rootViewController: centerViewC)
-        let leftSideNav = UINavigationController(rootViewController: navDrawerC)
-        self.centerContainer = MMDrawerController(center: centerNav, leftDrawerViewController: leftSideNav)
-        self.centerContainer?.openDrawerGestureModeMask = .bezelPanningCenterView
-        self.centerContainer?.closeDrawerGestureModeMask = .panningDrawerView
-        self.centerContainer?.centerHiddenInteractionMode = .navigationBarOnly
-        self.centerContainer?.shouldStretchDrawer = false
-        self.centerContainer?.showsShadow = true
-
-        window!.rootViewController = centerContainer
+        // setup the Main container with navigation with a navigation and the map
+        // as first view
+        self.centerContainer = setupCenterContainer()
+        self.switchToCenterController("MapViewController")
+        window!.rootViewController = self.centerContainer
         window!.makeKeyAndVisible()
 
-        // Override point for customization after application launch.
         return true
     }
 
@@ -75,6 +69,51 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
+    // -- MARK: Navigation
+
+    // switch the center view controller to the one identified by the storyboard id
+    // re-using an old one or instantiating a new one as needed
+    func switchToCenterController(_ identifier: String) {
+        var viewController: UIViewController?
+
+        if (self.centerViewControllers[identifier] != nil) {
+            viewController = self.centerViewControllers[identifier]
+        } else {
+            viewController = self.mainStoryboard.instantiateViewController(withIdentifier: identifier)
+        }
+
+        guard viewController != nil else {
+            SpeedLog.print("ERROR", "Cannot instantiate center view controller: \(identifier)")
+            return
+        }
+
+        let centerNavC = UINavigationController(rootViewController: viewController!)
+        self.centerContainer?.centerViewController = centerNavC
+        self.centerContainer?.closeDrawer(animated: true, completion: nil)
+        self.centerViewControllers[identifier] = viewController
+    }
+
+    // open or close the left navigation drawer
+    func toggleNavDrawer() {
+        centerContainer?.toggle(.left, animated: true, completion: nil)
+    }
+
+    // -- MARK: Private methods
+
+    // setup the main view container with a left drawer for navigation
+    private func setupCenterContainer() -> MMDrawerController {
+        let navDrawerC = mainStoryboard.instantiateViewController(withIdentifier: "NavDrawerController") as! NavDrawerController
+        let leftSideNav = UINavigationController(rootViewController: navDrawerC)
+
+        let container = MMDrawerController()
+        container.leftDrawerViewController = leftSideNav
+        container.openDrawerGestureModeMask = .bezelPanningCenterView
+        container.closeDrawerGestureModeMask = .panningDrawerView
+        container.centerHiddenInteractionMode = .navigationBarOnly
+        container.shouldStretchDrawer = false
+        container.showsShadow = true
+        return container
+    }
 
 }
 
