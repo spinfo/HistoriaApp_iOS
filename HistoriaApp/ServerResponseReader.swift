@@ -19,22 +19,39 @@ class ServerResponseReader {
         case CastError
     }
 
-    public static func parseTourYAML(_ input: String) -> Tour? {
-        guard input.characters.count > 0 else {
-            SpeedLog.print("ERROR", "Empty input on tour parsing.")
+    public static func parseTourRecordsYAML(_ input: String) -> [TourRecord]? {
+        var result = Array<TourRecord>()
+
+        do {
+            let dicts = try parseToArray(input)
+            result = try dicts.map({ (dict: Dictionary<String, Any>) -> TourRecord in
+                let record = TourRecord()
+                record.id = try dict.safeGetInt64("id")
+                record.name = try dict.safeGetString("name")
+                record.areaId = try dict.safeGetInt64("areaId")
+                record.tourId = try dict.safeGetInt64("tourId")
+                record.areaName = try dict.safeGetString("areaName")
+                record.version = try dict.safeGetInt("version")
+                record.downloadSize = try dict.safeGetInt("downloadSize")
+                record.downloadUrl = try dict.safeGetString("mediaUrl")
+                return record
+            })
+        } catch let error as ParseError {
+            SpeedLog.print("ERROR", "ParseError on tour records parsing: \(error)")
+            return nil
+        } catch {
+            SpeedLog.print("ERROR", "Unknown error in tour records parsing: \(error)")
             return nil
         }
 
+        return result
+    }
+
+    public static func parseTourYAML(_ input: String) -> Tour? {
         let tour = Tour()
 
         do {
-            // parse the yaml input into a YAMS node
-            let node = try Parser(yaml: input).singleRoot()
-
-            // this uses a dictionary extension (defined in: Yams/Constructor.swift)
-            guard let dict = Dictionary<String, Any>.construct_mapping(from: node!) as? Dictionary<String, Any> else {
-                throw ParseError.General(msg: "Cannot construct mapping from input.")
-            }
+            let dict = try parseToDict(input)
 
             // the tour values
             tour.id = try dict.safeGetInt64("id")
@@ -105,11 +122,10 @@ class ServerResponseReader {
                 // link stop to tour and vice versa
                 mapstop.tour = tour
                 tour.mapstops.append(mapstop)
-
             }
 
         } catch let error as ParseError {
-            SpeedLog.print("ERROR", "ParseError: \(error)")
+            SpeedLog.print("ERROR", "ParseError on tour parsing: \(error)")
             return nil
         } catch {
             SpeedLog.print("ERROR", "Unknown error in tour parsing: \(error)")
@@ -117,6 +133,37 @@ class ServerResponseReader {
         }
 
         return tour
+    }
+
+    // wrap Yams' basic parsing into a throwing function for convenience
+    private static func parseToDict(_ input: String) throws -> Dictionary<String, Any> {
+        guard input.characters.count > 0 else {
+            throw ParseError.General(msg: "Empty input on yaml parsing.")
+        }
+        // parse the yaml input into a YAMS node and use YAMS' dictionary extension to get a mapping
+        let node = try Parser(yaml: input).singleRoot()
+        return try parseToDict(node: node)
+    }
+
+    // wrap Yams' basic parsing into a throwing function for convenience
+    private static func parseToArray(_ input: String) throws -> Array<Dictionary<String, Any>> {
+        guard input.characters.count > 0 else {
+            throw ParseError.General(msg: "Empty input on yaml parsing.")
+        }
+        var result = Array<Dictionary<String, Any>>()
+        let parser = try Parser(yaml: input)
+        while let node = try parser.nextRoot() {
+            result.append(try parseToDict(node: node))
+        }
+        return result
+    }
+
+    // wrap Yams' basic parsing into a throwing function for convenience
+    private static func parseToDict(node: Node?) throws -> Dictionary<String, Any> {
+        guard let dict = Dictionary<String, Any>.construct_mapping(from: node!) as? Dictionary<String, Any> else {
+            throw ParseError.General(msg: "Cannot construct mapping from input.")
+        }
+        return dict
     }
 
 }
@@ -138,8 +185,8 @@ fileprivate enum ParseError: Error {
 
 }
 
-// we extend the Dictionary class to (type-) safe retrieve values from a
-// Dictionary<String, Any> (the result of YAML parsing)
+// we extend the Dictionary class to (type-) safely retrieve values from a
+// Dictionary<String, Any>
 fileprivate extension Dictionary where Value: Any {
 
     func safeGetString(_ key: Key) throws -> String {
@@ -183,7 +230,7 @@ fileprivate extension Dictionary where Value: Any {
         return result
     }
 
-    // NOTE: This assumes the input's time to be in GMT+2
+    // NOTE: This assumes the input's time to be in GMT+2...
     func safeGetDate(_ key: Key, formatter: DateFormatter) throws -> Date {
         let dateDescription = try self.safeGetString(key)
         guard let result = formatter.date(from: dateDescription) else {
