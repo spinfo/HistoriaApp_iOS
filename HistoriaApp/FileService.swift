@@ -18,7 +18,7 @@ class FileService {
 
     // put all a tour's files into their destination, return true on success, false on error
     // will attempt to remove the input file if everything goes ok.
-    public class func installTour(fromZipFile file: URL) -> Tour? {
+    public class func installTour(fromZipFile file: URL, tourRecord: TourRecord) -> Tour? {
 
         // everything goes straight to our app's document folder
         let docsFolderPath = getDocumentsFolder().path
@@ -43,7 +43,8 @@ class FileService {
 
         // Construct a tour from the content file
         // TODO: Put somewhere else once this is not meant for the example tour
-        let content = read(url: getDocumentsFolder().appendingPathComponent("shtm-tour-0-0.yaml")!)
+        let fileName = self.tourFileName(record: tourRecord)
+        let content = read(url: getDocumentsFolder().appendingPathComponent(fileName)!)
         guard let tour = ServerResponseReader.parseTourYAML(content) else {
             SpeedLog.print("ERROR", "Empty response on parsing the input tour.")
             return nil
@@ -70,7 +71,12 @@ class FileService {
             return nil
         }
 
-        return installTour(fromZipFile: tempUrl)
+        // we need a fake tour record to install the tour, tourId and version
+        // are 0 according to convention and necessary to find the tour file
+        let record = TourRecord()
+        record.tourId = 0
+        record.version = 0
+        return installTour(fromZipFile: tempUrl, tourRecord: record)
     }
 
     // return the file url that should be used for database access
@@ -134,6 +140,11 @@ class FileService {
             SpeedLog.print("ERROR", "Could not read file at: \(url.path), caught: \(error)")
             return ""
         }
+    }
+
+    // construct a filename for a future tour file from a tour record
+    private class func tourFileName(record: TourRecord) -> String {
+        return "shtm-tour-\(record.tourId)-\(record.version).yaml"
     }
     
 }

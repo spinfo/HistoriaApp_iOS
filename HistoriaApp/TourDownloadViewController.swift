@@ -58,20 +58,18 @@ class TourDownloadViewController: UIViewController, UITableViewDataSource, UITab
         let cell = tableView.dequeueReusableCell(withIdentifier: "TourDownloadTableViewCell", for: indexPath) as! TourDownloadTableViewCell
 
         let record = tourRecords[indexPath.row]
-        cell.tourName.text = record.name
-        cell.areaName.text = record.areaName
-        cell.progress.text = "(ca. \(record.downloadSize / 1000000) MB)"
+        cell.setTourRecord(record)
         return cell
     }
 
     // MARK: -- UITableViewDelegate
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
-        let record = tourRecords[indexPath.row]
-
-        SpeedLog.print("Requested tour download: \(record.name)")
-
+        guard let cell = tableView.cellForRow(at: indexPath) as? TourDownloadTableViewCell else {
+            SpeedLog.print("ERROR", "Can't get cell at \(indexPath)")
+            return
+        }
+        cell.toggleTourDownload()
     }
 
     // MARK: -- Private methods
@@ -85,6 +83,7 @@ class TourDownloadViewController: UIViewController, UITableViewDataSource, UITab
         }
         let urlRequest = URLRequest(url: url)
         let session = URLSession.shared
+
         let task = session.dataTask(with: urlRequest) { data, response, error in
             // check for errors
             guard error == nil else {
