@@ -41,22 +41,21 @@ class FileService {
             SpeedLog.print("WARN", "Removing the installed tour file failed. Caught: \(error)")
         }
 
-        // Construct a tour from the content file
-        // TODO: Put somewhere else once this is not meant for the example tour
+        // Construct a tour from the now readable content file and hand it to the db installer
         let fileName = self.tourFileName(record: tourRecord)
         let content = read(url: getDocumentsFolder().appendingPathComponent(fileName)!)
         guard let tour = ServerResponseReader.parseTourYAML(content) else {
             SpeedLog.print("ERROR", "Empty response on parsing the input tour.")
             return nil
         }
-        // TODO: Temove this test code
-        SpeedLog.print("name: \(tour.name)")
-        for stop in tour.mapstops {
-            SpeedLog.print("stop: \(stop.name)")
+        // Save to db or fail
+        if DatabaseHelper.save(tour: tour) {
+            return tour
+        } else {
+            SpeedLog.print("ERROR", "Tour could not be saved to db.")
+            // TODO: Remove all the unzipped files, that were meant for the tour
+            return nil
         }
-        DatabaseHelper.testRun(tour: tour)
-
-        return tour
     }
 
 
@@ -71,8 +70,8 @@ class FileService {
             return nil
         }
 
-        // we need a fake tour record to install the tour, tourId and version
-        // are 0 according to convention and necessary to find the tour file
+        // we need a fake tour record to install the example (tourId and version
+        // are 0 per convention for the example)
         let record = TourRecord()
         record.tourId = 0
         record.version = 0

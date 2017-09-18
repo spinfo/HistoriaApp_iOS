@@ -37,8 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         pageControl.currentPageIndicatorTintColor = UIColor.blue
         pageControl.backgroundColor = UIColor.white
 
-        // setup the Main container with navigation with a navigation and the map
-        // as first view
+        // setup the Main container with navigation and the map as first view
         self.centerContainer = setupCenterContainer()
         self.switchToCenterController("MapViewController")
         window!.rootViewController = self.centerContainer

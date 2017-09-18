@@ -35,14 +35,14 @@ class MapViewController: UIViewController, MaplyViewControllerDelegate, UIPageVi
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // use the file service to install the example data
-        guard let tourAfterInstall = FileService.installExampleTour() else {
-            SpeedLog.print("ERROR", "Error installing examples.")
+        guard DatabaseHelper.initDB() else {
+            SpeedLog.print("Database init failed. Nothing to show.")
             return
         }
 
         let dao = MasterDao()
-        guard let tour = dao.getTourWithAssociationsForMapping(id: tourAfterInstall.id) else {
+        let firstTour = dao.getFirstTour()!
+        guard let tour = dao.getTourWithAssociationsForMapping(id: firstTour.id) else {
             SpeedLog.print("ERROR", "Unable to retrieve tour with associations.")
             return
         }

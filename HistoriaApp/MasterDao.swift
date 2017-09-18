@@ -18,12 +18,10 @@ class MasterDao {
     private let dbQueue: DatabaseQueue
 
     init() {
-        do {
-            self.dbQueue = try DatabaseQueue(path: FileService.getDBFile()!.path)
-        } catch {
-            fatalError("Unable to build a database connection: \(error)")
-
+        guard let queue = DatabaseHelper.getQueue() else {
+            fatalError("Unable to establish a database connection.")
         }
+        self.dbQueue = queue
     }
 
     public func getMapstops(forTour id: Int64) -> [Mapstop] {
@@ -40,6 +38,17 @@ class MasterDao {
             return try unsafeGetPlace(id: id)
         } catch {
             SpeedLog.print("ERROR", "Unable to retrieve place (id: '\(id)'): \(error)")
+            return nil
+        }
+    }
+
+    public func getFirstTour() -> Tour? {
+        do {
+            return try self.dbQueue.inDatabase({ db in
+                return try Tour.fetchOne(db)
+            })
+        } catch {
+            SpeedLog.print("ERROR", "Unable to retrieve a single tour: \(error)")
             return nil
         }
     }
