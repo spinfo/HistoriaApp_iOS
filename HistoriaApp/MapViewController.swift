@@ -297,6 +297,9 @@ class MapViewController: UIViewController, MaplyViewControllerDelegate, UIPageVi
 
 fileprivate extension MaplyViewController {
 
+    // finds a good height to display all of the given bounding box on the current
+    // map view
+    // (Implemented here because WhirlyGlobes findHeight() did not really work for small boxes)
     func myFindHeight(bbox: MaplyBoundingBox) -> Float {
 
         // calculate distance in meters
@@ -313,6 +316,9 @@ fileprivate extension MaplyViewController {
         let minHeight = Float(0.000001)
         var zoomHeight = Float(5.0)
 
+        // an additional factor to use when zooming out (1.0 would mean one additional zoom level)
+        let plusZoom = Float(0.25)
+
         for i in stride(from: 1.0, to: 20.0, by: 1.0) {
 
             let tilesAmount = pow(2.0, i)
@@ -322,15 +328,14 @@ fileprivate extension MaplyViewController {
             let pixels = (256.0 *  eqFrac * tilesAmount)
 
             // if the map's pixels are more than the screen diagonal, we have gone too far
-            // so return the last correct height
+            // so return the last correct height plus plus added offset
             // also break if we got below the minimum height
             if (pixels > screenDist || zoomHeight < minHeight) {
-                return (zoomHeight * 2)
+                return (zoomHeight * (2 + (2 * plusZoom)))
             }
             
             // halve the height for the next iteration
             zoomHeight /= 2
-            
         }
         
         SpeedLog.print("WARN", "Calculating the zoom height did not terminate.")
