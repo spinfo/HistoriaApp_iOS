@@ -12,7 +12,7 @@ import SpeedLog
 
 class TourDownloadViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
-    let recordsEndpoint = "https://historia-app.de/wp-content/uploads/smart-history-tours/tours.yaml"
+    let recordsEndpoint = "http://smarthistory.spinfo.uni-koeln.de/wp-content/uploads/smart-history-tours/tours.yaml"
 
     private var tourRecords = Array<TourRecord>()
 

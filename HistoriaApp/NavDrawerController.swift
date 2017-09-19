@@ -14,6 +14,7 @@ class NavDrawerController: UIViewController, UITableViewDataSource, UITableViewD
 
     let menuItems = [
         "Karte wechseln",
+        " - Zur Karte",
         "Touren wählen",
         "Lesemodus",
         "Touren laden",
@@ -58,16 +59,17 @@ class NavDrawerController: UIViewController, UITableViewDataSource, UITableViewD
         switch indexPath.row {
         case 0:
             appDelegate.switchToCenterController("MapViewController")
+        case 1:
+            appDelegate.switchToCenterController("MapViewController")
         case 2:
-            appDelegate.switchToCenterController("ReadingModeViewController")
+            appDelegate.switchToTourSelection()
         case 3:
+            appDelegate.switchToCenterController("ReadingModeViewController")
+        case 4:
             appDelegate.switchToCenterController("TourDownloadViewController")
-
         default:
-            SpeedLog.print("Tapped: \(indexPath)")
+            SpeedLog.print("WARN", "Unknown menu item index: \(indexPath)")
         }
-
-        // if everything wen
     }
 
 }

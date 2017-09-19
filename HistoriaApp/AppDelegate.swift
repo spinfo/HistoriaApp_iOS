@@ -22,6 +22,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private var centerViewControllers = Dictionary<String, UIViewController>()
 
+    private var currentCenterController: UIViewController?
+
     // MARK: Normal AppDelegate stuff
 
     var window: UIWindow?
@@ -31,7 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Set logging options for the app
         SpeedLog.mode = [ .FullCodeLocation ]
 
-        // Set thea appearence of page view indicators
+        // Set the appearence of page view indicators
         let pageControl = UIPageControl.appearance()
         pageControl.pageIndicatorTintColor = UIColor.lightGray
         pageControl.currentPageIndicatorTintColor = UIColor.blue
@@ -70,26 +72,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // -- MARK: Navigation
 
+    // a controller may request to be put in center view and will be so put, if it isn't there already
+    func requestCenter(for controller: UIViewController) {
+        if (self.currentCenterController != nil && self.currentCenterController! == controller) {
+            SpeedLog.print("INFO", "Controller \(type(of: controller)) already in center.")
+            return
+        }
+        // setup the new center controller and correctly linkt it to the navigation drawer
+        let centerNavC = UINavigationController(rootViewController: controller)
+        self.centerContainer?.centerViewController = centerNavC
+        self.centerContainer?.closeDrawer(animated: true, completion: nil)
+        self.currentCenterController = controller
+    }
+
     // switch the center view controller to the one identified by the storyboard id
     // re-using an old one or instantiating a new one as needed
     func switchToCenterController(_ identifier: String) {
-        var viewController: UIViewController?
+        // retrieve the new center
+        let viewController = self.getCenterController(identifier)
+        self.requestCenter(for: viewController)
+    }
 
-        if (self.centerViewControllers[identifier] != nil) {
-            viewController = self.centerViewControllers[identifier]
-        } else {
-            viewController = self.mainStoryboard.instantiateViewController(withIdentifier: identifier)
-        }
-
-        guard viewController != nil else {
-            SpeedLog.print("ERROR", "Cannot instantiate center view controller: \(identifier)")
-            return
-        }
-
-        let centerNavC = UINavigationController(rootViewController: viewController!)
-        self.centerContainer?.centerViewController = centerNavC
-        self.centerContainer?.closeDrawer(animated: true, completion: nil)
-        self.centerViewControllers[identifier] = viewController
+    func switchToTourSelection() {
+        // the tour selection view needs a delegate to respond to tour selections
+        // so we will set this up here
+        let tourSelectionC = self.getCenterController("TourSelectionViewController") as! TourSelectionViewController
+        let mapViewC = self.getCenterController("MapViewController") as! MapViewController
+        tourSelectionC.tourSelectionDelegate = mapViewC
+        self.requestCenter(for: tourSelectionC)
     }
 
     // open or close the left navigation drawer
@@ -112,6 +122,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         container.shouldStretchDrawer = false
         container.showsShadow = true
         return container
+    }
+
+    // fetch the controller identified by the storyboard id from our little cache or
+    // instantiate a new one and save it in the caches
+    private func getCenterController(_ identifier: String) -> UIViewController {
+        let result: UIViewController
+        if (self.centerViewControllers[identifier] != nil) {
+            result = self.centerViewControllers[identifier]!
+        } else {
+            result = self.mainStoryboard.instantiateViewController(withIdentifier: identifier)
+            self.centerViewControllers[identifier] = result
+        }
+        return result
     }
 
 }

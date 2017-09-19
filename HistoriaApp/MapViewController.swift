@@ -12,7 +12,7 @@ import WhirlyGlobe
 import SpeedLog
 
 class MapViewController: UIViewController, MaplyViewControllerDelegate, UIPageViewControllerDataSource,
-                        MapPopupDelegate {
+                        MapPopupDelegate, ModelSelectionDelegate {
 
     // the controller used for manipulating the map
     private var mapViewC: MaplyViewController?
@@ -40,14 +40,6 @@ class MapViewController: UIViewController, MaplyViewControllerDelegate, UIPageVi
             return
         }
 
-        let dao = MasterDao()
-        let firstTour = dao.getFirstTour()!
-        guard let tour = dao.getTourWithAssociationsForMapping(id: firstTour.id) else {
-            SpeedLog.print("ERROR", "Unable to retrieve tour with associations.")
-            return
-        }
-
-        // map stuff
         // Create an empty map and add it to the view
         mapViewC = MaplyViewController(asFlatMap: ())
         self.view.addSubview(mapViewC!.view)
@@ -91,9 +83,10 @@ class MapViewController: UIViewController, MaplyViewControllerDelegate, UIPageVi
         layer.enable = true
         mapViewC!.add(layer)
 
-        // marker creation
-        let tourCollectionOnMap = TourCollectionOnMap(tours: [tour])
-        self.switchTo(tourCollection: tourCollectionOnMap)
+        // actually display a tour
+        let dao = MasterDao()
+        let firstTour = dao.getFirstTour()!
+        self.tourSelected(firstTour)
     }
 
     override func didReceiveMemoryWarning() {
@@ -223,6 +216,31 @@ class MapViewController: UIViewController, MaplyViewControllerDelegate, UIPageVi
         return 0
     }
 
+    // MARK: -- ModelSelectionDelegate
+
+    func tourSelected(_ tour: Tour) {
+        SpeedLog.print("INFO", "Request to select tour: \(tour.name)")
+        // we need to re-retrieve the tour here because we don't know if all connections are
+        // present. (We could test, but they won't be in all current cases anyway.)
+        let dao = MasterDao()
+        guard let tourAssoc = dao.getTourWithAssociationsForMapping(id: tour.id) else {
+            SpeedLog.print("ERROR", "Unable to retrieve tour (id: \(tour.id)) with associations.")
+            return
+        }
+        let tourCollectionOnMap = TourCollectionOnMap(tours: [tourAssoc])
+
+        // the map view should always request to be the center view when a tour is selected
+        SpeedLog.print("--- requesting center view for map")
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        appDelegate.requestCenter(for: self)
+
+        // initiate the switch only after we are on center so that the animation works
+        self.switchTo(tourCollection: tourCollectionOnMap)
+    }
+
+    func areaSelected(_ area: Area) {
+        // Do nothing for now
+    }
 
     // MARK: -- MapPopupDelegate
 
@@ -292,7 +310,6 @@ class MapViewController: UIViewController, MaplyViewControllerDelegate, UIPageVi
                                 offset: PlaceOnMap.ANNOTATION_OFFSET)
         self.selectedPlaceOnMap = placeOnMap
     }
-
 }
 
 fileprivate extension MaplyViewController {
@@ -300,6 +317,9 @@ fileprivate extension MaplyViewController {
     // finds a good height to display all of the given bounding box on the current
     // map view
     // (Implemented here because WhirlyGlobes findHeight() did not really work for small boxes)
+    // TODO: This seems not to work for some tours
+    //      * not at all: "Judendeportation etc."
+    //      * a little to narrow: "Auswirkungen und Folgen etc."
     func myFindHeight(bbox: MaplyBoundingBox) -> Float {
 
         // calculate distance in meters

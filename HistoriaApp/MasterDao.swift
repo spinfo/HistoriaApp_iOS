@@ -53,6 +53,28 @@ class MasterDao {
         }
     }
 
+    public func getFirstArea() -> Area? {
+        do {
+            return try self.dbQueue.inDatabase({ db in
+                return try Area.fetchOne(db)
+            })
+        } catch {
+            SpeedLog.print("ERROR", "Unable to retrieve a single area: \(error)")
+            return nil
+        }
+    }
+
+    public func getTours(inAreaWIthId areaId: Int64) -> [Tour]? {
+        do {
+            return try self.dbQueue.inDatabase({ db in
+                return try Tour.filter(Column("area_id") == areaId).fetchAll(db)
+            })
+        } catch {
+            SpeedLog.print("ERROR", "Unable to retrieve tours for area (id: '\(areaId)'): \(error)")
+            return nil
+        }
+    }
+
     public func getTourWithAssociationsForMapping(id: Int64) -> Tour? {
         do {
             let tour = try unsafeGetTour(id: id)
