@@ -70,6 +70,8 @@ class NavDrawerController: UIViewController, UITableViewDataSource, UITableViewD
         default:
             SpeedLog.print("WARN", "Unknown menu item index: \(indexPath)")
         }
+
+        appDelegate.closeNavDrawer()
     }
 
 }

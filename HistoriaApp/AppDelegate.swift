@@ -94,17 +94,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func switchToTourSelection() {
-        // the tour selection view needs a delegate to respond to tour selections
-        // so we will set this up here
+        // the tour selection is displayed as a popup on the map and interacts with it on
+        // tour selection
         let tourSelectionC = self.getCenterController("TourSelectionViewController") as! TourSelectionViewController
         let mapViewC = self.getCenterController("MapViewController") as! MapViewController
         tourSelectionC.tourSelectionDelegate = mapViewC
-        self.requestCenter(for: tourSelectionC)
+        self.requestCenter(for: mapViewC)
+        mapViewC.displayPopup(controller: tourSelectionC)
+        self.toggleNavDrawer()
     }
 
     // open or close the left navigation drawer
     func toggleNavDrawer() {
         centerContainer?.toggle(.left, animated: true, completion: nil)
+    }
+
+    func closeNavDrawer() {
+        self.centerContainer?.closeDrawer(animated: true, completion: nil)
     }
 
     // -- MARK: Private methods

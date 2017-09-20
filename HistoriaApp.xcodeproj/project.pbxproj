@@ -157,7 +157,6 @@
 				63ABDDCB1F682D7A008AE47A /* NavDrawerTableViewCell.swift */,
 				63CFE6291F5D87B100D6F5E0 /* MapstopPageContentViewController.swift */,
 				63CFE62B1F5DA3DC00D6F5E0 /* MapstopAnnotation.swift */,
-				6377AC601F509387003D729B /* MapUtil.swift */,
 				63FFA2611F604E9F0090A32A /* MapPopupController.swift */,
 				634805F51F7186EA002200D6 /* ModelSelectionDelegate.swift */,
 				63ABDDCD1F683BD6008AE47A /* ReadingModeViewController.swift */,
@@ -215,6 +214,7 @@
 		63F8C71C1F41EB6300691559 /* service */ = {
 			isa = PBXGroup;
 			children = (
+				6377AC601F509387003D729B /* MapUtil.swift */,
 				63D1812A1F3C6CF5004A2036 /* FileService.swift */,
 				63F8C7211F41F23C00691559 /* ServerResponseReader.swift */,
 				63DAB1431F4B2D50005C69B4 /* DatabaseHelper.swift */,

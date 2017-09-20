@@ -12,7 +12,7 @@ import WhirlyGlobe
 import SpeedLog
 
 class MapViewController: UIViewController, MaplyViewControllerDelegate, UIPageViewControllerDataSource,
-                        MapPopupDelegate, ModelSelectionDelegate {
+                        ModelSelectionDelegate {
 
     // the controller used for manipulating the map
     private var mapViewC: MaplyViewController?
@@ -128,8 +128,6 @@ class MapViewController: UIViewController, MaplyViewControllerDelegate, UIPageVi
 
     // handle a tap to an annotation: show that mapstop's pages
     func maplyViewController(_ viewC: MaplyViewController!, didTap annotation: MaplyAnnotation!) {
-        print("Tapped annotation: \(annotation)")
-
         guard let mapstop = (annotation as? MapstopAnnotation)?.mapstop else {
             SpeedLog.print("ERROR", "No mapstop for annotation")
             return
@@ -141,21 +139,19 @@ class MapViewController: UIViewController, MaplyViewControllerDelegate, UIPageVi
 
         // initialise a page view controller to manage the mapstop's places
         self.pageViewController = self.storyboard?.instantiateViewController(withIdentifier: "MapstopPageViewController") as? UIPageViewController
-        self.pageViewController?.dataSource = self
+        self.pageViewController!.dataSource = self
 
         guard let startingViewController = self.mapstopPageContentViewController(at: 0) else {
             SpeedLog.print("ERROR", "Could not get page content controller for start index.")
             return
         }
-        self.pageViewController?.setViewControllers([startingViewController], direction: .forward, animated: false, completion: nil)
+        self.pageViewController!.setViewControllers([startingViewController], direction: .forward, animated: false, completion: nil)
 
         // actually display the page view controller as a popup
-        self.mapPopupController = self.storyboard?.instantiateViewController(withIdentifier: "MapPopupController") as? MapPopupController
-        self.view.addSubview(self.mapPopupController!.view)
-        self.mapPopupController!.didMove(toParentViewController: self)
-        self.mapPopupController!.setPopup(byController: self.pageViewController!)
-        self.mapPopupController!.delegate = self
+        self.displayPopup(controller: pageViewController!)
     }
+
+
 
     // MARK: UIPageViewControllerDataSource
 
@@ -191,7 +187,6 @@ class MapViewController: UIViewController, MaplyViewControllerDelegate, UIPageVi
 
     private func mapstopPageContentViewController(at idx: Int) -> MapstopPageContentViewController? {
         guard self.pages != nil && idx >= 0 && idx < self.pages!.count  else {
-            SpeedLog.print("WARN", "No pages")
             return nil
         }
 
@@ -230,7 +225,6 @@ class MapViewController: UIViewController, MaplyViewControllerDelegate, UIPageVi
         let tourCollectionOnMap = TourCollectionOnMap(tours: [tourAssoc])
 
         // the map view should always request to be the center view when a tour is selected
-        SpeedLog.print("--- requesting center view for map")
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         appDelegate.requestCenter(for: self)
 
@@ -242,12 +236,19 @@ class MapViewController: UIViewController, MaplyViewControllerDelegate, UIPageVi
         // Do nothing for now
     }
 
-    // MARK: -- MapPopupDelegate
+    // MARK: -- Map popups
 
-    func requestedPopupClose(sender: MapPopupController) {
-        sender.willMove(toParentViewController: nil)
-        sender.view.removeFromSuperview()
-        sender.removeFromParentViewController()
+    func displayPopup(controller: UIViewController) {
+        if self.mapPopupController != nil {
+            self.mapPopupController!.close()
+            self.mapPopupController = nil
+        }
+        // a new MapPopupController is instantiated each time (seems necessary to correctly
+        // adapt to the current device orientation)
+        self.mapPopupController = self.storyboard?.instantiateViewController(withIdentifier: "MapPopupController") as? MapPopupController
+        self.view.addSubview(self.mapPopupController!.view)
+        self.mapPopupController!.didMove(toParentViewController: self)
+        self.mapPopupController!.setPopup(byController: controller)
     }
 
     // MARK: -- Drawer Navigation
@@ -270,6 +271,9 @@ class MapViewController: UIViewController, MaplyViewControllerDelegate, UIPageVi
 
         // remove annotations
         mapViewC?.clearAnnotations()
+
+        // close popups
+        self.mapPopupController?.close()
     }
 
     // Remove all other content on the map and only display the given
