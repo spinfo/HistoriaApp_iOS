@@ -12,9 +12,7 @@ class TourSelectionTableViewCell: UITableViewCell {
 
     var tour: Tour?
 
-    @IBOutlet weak var name: UILabel!
-    @IBOutlet weak var infos: UILabel!
-    @IBOutlet weak var tags: UILabel!
+    @IBOutlet weak var tourShortInfoView: TourShortInfoView!
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -28,18 +26,7 @@ class TourSelectionTableViewCell: UITableViewCell {
 
     public func setTour(_ tour: Tour) {
         self.tour = tour
-        self.name.text = tour.name
-
-        self.infos.text = String(format: "%@, %d min., %.2f km (%@)",
-                                 tour.type.representation,
-                                 tour.duration,
-                                 (Float(tour.walkLength) / Float(1000)),
-                                 tour.accessibility)
-
-        self.tags.text = String(format: "%@ - %@ - %@",
-                                tour.tagWhat,
-                                tour.tagWhen,
-                                tour.tagWhere)
+        self.tourShortInfoView.setTour(with: tour)
     }
     
 }

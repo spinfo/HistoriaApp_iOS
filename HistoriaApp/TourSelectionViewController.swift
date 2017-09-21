@@ -16,6 +16,8 @@ class TourSelectionViewController: UIViewController, UITableViewDataSource, UITa
 
     var tourSelectionDelegate: TourSelectionDelegate?
 
+    @IBOutlet var tableView: UITableView!
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -32,6 +34,16 @@ class TourSelectionViewController: UIViewController, UITableViewDataSource, UITa
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == "segueTourShortInfo") {
+            SpeedLog.print("segueing...")
+            print(String(describing: sender))
+        } else {
+            SpeedLog.print("ERROR", "Unknown segue: \(segue.identifier)")
+        }
+    }
+
 
     // MARK: -- UITableViewDataSource
 

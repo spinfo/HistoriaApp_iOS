@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1611" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TourShortInfoView" customModule="HistoriaApp" customModuleProvider="target">
+            <connections>
+                <outlet property="infosLabel" destination="1Rt-y8-VKO" id="xkW-OM-x8V"/>
+                <outlet property="nameLabel" destination="cwK-YH-GdU" id="taM-bu-E4T"/>
+                <outlet property="tagsLabel" destination="Gfr-4k-n9m" id="BFn-Bg-LF6"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="150"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tour Name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cwK-YH-GdU">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="47"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                    <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tour Infos" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Rt-y8-VKO">
+                    <rect key="frame" x="0.0" y="48" width="375" height="54"/>
+                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tour Tags" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gfr-4k-n9m">
+                    <rect key="frame" x="0.0" y="99" width="375" height="51"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="cwK-YH-GdU" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="15p-A0-n1j"/>
+                <constraint firstAttribute="trailing" secondItem="cwK-YH-GdU" secondAttribute="trailing" id="7vL-5H-18Y"/>
+                <constraint firstItem="cwK-YH-GdU" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="FU2-Bn-70b"/>
+                <constraint firstItem="1Rt-y8-VKO" firstAttribute="top" secondItem="cwK-YH-GdU" secondAttribute="bottom" constant="1" id="GCz-KU-KoO"/>
+                <constraint firstAttribute="bottom" secondItem="Gfr-4k-n9m" secondAttribute="bottom" id="NF9-Pj-elY"/>
+                <constraint firstAttribute="bottom" secondItem="1Rt-y8-VKO" secondAttribute="bottom" constant="48" id="OBR-PN-tfc"/>
+                <constraint firstItem="1Rt-y8-VKO" firstAttribute="trailing" secondItem="Gfr-4k-n9m" secondAttribute="trailing" id="TjZ-b8-g60"/>
+                <constraint firstItem="1Rt-y8-VKO" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="VfG-XV-M8b"/>
+                <constraint firstItem="Gfr-4k-n9m" firstAttribute="top" secondItem="cwK-YH-GdU" secondAttribute="bottom" constant="52" id="cAN-X1-wYx"/>
+                <constraint firstItem="cwK-YH-GdU" firstAttribute="leading" secondItem="1Rt-y8-VKO" secondAttribute="leading" id="jMo-aB-ihv"/>
+                <constraint firstItem="cwK-YH-GdU" firstAttribute="trailing" secondItem="1Rt-y8-VKO" secondAttribute="trailing" id="nBL-cB-BGF"/>
+                <constraint firstItem="1Rt-y8-VKO" firstAttribute="leading" secondItem="Gfr-4k-n9m" secondAttribute="leading" id="tmh-3H-nyZ"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="14.5" y="-207"/>
+        </view>
+    </objects>
+</document>
