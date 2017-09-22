@@ -21,15 +21,15 @@ public class Area : Record {
     var name: String = ""
 
     // the tours taking place in this area
-    // TODO: Do not fetch eagerly
-    // TODO: Order by createdAt descending
     var tours: Array<Tour> = Array()
 
     // One corner of the areas rectangle
-    // TODO
+    var point1Id: Int64 = 0
+    var point1: PersistableGeopoint?
 
     // Another corner of the areas rectangle
-    // TODO
+    var point2Id: Int64 = 0
+    var point2: PersistableGeopoint?
 
     // MARK: Record interface
 
@@ -47,6 +47,8 @@ public class Area : Record {
     public required init(row: Row) {
         id = row.value(named: "id")
         name = row.value(named: "name")
+        point1Id = row.value(named: "point1_id")
+        point2Id = row.value(named: "point2_id")
         super.init(row: row)
     }
 
@@ -54,6 +56,8 @@ public class Area : Record {
     override public func encode(to container: inout PersistenceContainer) {
         container["id"] = id
         container["name"] = name
+        container["point1_id"] = point1?.id
+        container["point2_id"] = point2?.id
     }
 
 }

@@ -22,10 +22,10 @@ class DatabaseHelper {
         do {
             let dbQueue = getQueue()!
             try dbQueue.inDatabase({ db in
-                try DatabaseHelper.safeInstallTour(tour, in: db)
 
-                // TODO: Remove the rest of this catch block, meant for development
+                try MasterDao().safeInstallTour(tour, in: db)
 
+                // TODO: Remove the rest of this try block, meant for development
                 let mapstop = tour.mapstops.first!
                 let page = mapstop.pages.first!
 
@@ -38,7 +38,8 @@ class DatabaseHelper {
                                    Tour.fetchCount(db),
                                    Mapstop.fetchCount(db),
                                    Page.fetchCount(db),
-                                   Mediaitem.fetchCount(db) ]
+                                   Mediaitem.fetchCount(db),
+                                   PersistableGeopoint.fetchCount(db) ]
 
                 SpeedLog.print("page: \(page2!.guid)")
                 SpeedLog.print("page: \(page.id) == \(page2?.id)")
@@ -59,10 +60,22 @@ class DatabaseHelper {
     // if not at least one area and one tour is retrievable
     // Returns true if a database is available or false if something went
     // awry
+    // TODO: GRDB seems to support a "DatabasMigrator" that might better be used here
     public class func initDB() -> Bool {
 
         var hasMinimumEntities = false
         do {
+
+
+
+            // TODO: Remove before commit...
+            let dbFile = FileService.getDBFile()
+            try FileManager.default.removeItem(at: dbFile!)
+
+
+
+
+
             // initialize the queue as it might not have been
             guard let localQueue = getQueue() else {
                 SpeedLog.print("ERROR", "Unable to get the db queue.")
@@ -119,43 +132,22 @@ class DatabaseHelper {
         return theQueue
     }
 
-
-    // MARK: Private methods
-
-    // This performs all necessary checks and inserts or updates a tour in the db
-    private class func safeInstallTour(_ tour: Tour, in db: Database) throws {
-        try tour.area!.insertOrUpdate(db)
-        try tour.insertOrUpdate(db)
-
-        for mapstop: Mapstop in tour.mapstops {
-
-            try mapstop.place!.insertOrUpdate(db)
-            try mapstop.insertOrUpdate(db)
-
-            for page in mapstop.pages {
-                try page.insertOrUpdate(db)
-
-                for mediaitem in page.media {
-                    // a mediaitem only needs to be inserted if it is not present already
-                    // for it's page
-                    let sql = "SELECT * FROM mediaitem WHERE guid = ? AND page_id = ?"
-                    let present = try Mediaitem.fetchAll(db, sql, arguments: [mediaitem.guid, page.id])
-                    // do the insert if neccessary
-                    if present.isEmpty {
-                        try mediaitem.insert(db)
-                    }
-                }
-            }
-        }
-    }
-
     // create all tables needed for the application
     // will not delete existing tables
     private class func createTables(in db: Database) throws {
 
+        // the geopoints tour id is defined below (because the tour table does not exist atm)
+        try db.create(table: "geopoint", ifNotExists: true, body: { t in
+            t.column("id", .integer).primaryKey(onConflict: .replace, autoincrement: false)
+            t.column("latitude", .double)
+            t.column("longitude", .double)
+        })
+
         try db.create(table: "area", ifNotExists: true, body: { t in
             t.column("id", .integer).primaryKey(onConflict: .replace, autoincrement: false)
             t.column("name", .text)
+            t.column("point1_id", .integer).references("geopoint", onDelete: .cascade)
+            t.column("point2_id", .integer).references("geopoint", onDelete: .cascade)
         })
 
         try db.create(table: "place", ifNotExists: true, body: { t in
@@ -182,6 +174,11 @@ class DatabaseHelper {
             t.column("intro", .text)
         })
 
+        // add tour id to geopoints now that the table is created
+        try db.alter(table: "geopoint", body: { t in
+            t.add(column: "tour_id", .integer).references("tour", onDelete: .cascade)
+        })
+
         try db.create(table: "mapstop", ifNotExists: true, body: { t in
             t.column("id", .integer).primaryKey(onConflict: .replace, autoincrement: false)
             t.column("place_id", .integer).references("place", onDelete: .restrict)
@@ -203,23 +200,13 @@ class DatabaseHelper {
             t.column("guid", .text)
             t.column("page_id", .integer).references("page", onDelete: .cascade)
         })
+
+        try db.create(table: "lexiconentry", ifNotExists: true, body: { t in
+            t.column("id", .integer).primaryKey(onConflict: .replace, autoincrement: false)
+            t.column("title", .text)
+            t.column("content", .text)
+        })
     }
 
-}
-
-// Our own extension to GRDB Records
-fileprivate extension Record {
-
-    // Insert or update a record in the databse based on it's primary key
-    // NOTE: Not very efficient, but should be seldom needed (on tour install mainly)
-    func insertOrUpdate(_ db: Database) throws {
-        if try self.exists(db) {
-            try self.update(db)
-        } else {
-            try self.insert(db)
-        }
-        
-    }
-    
 }
 

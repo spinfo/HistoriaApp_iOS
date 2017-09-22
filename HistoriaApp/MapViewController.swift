@@ -279,14 +279,26 @@ class MapViewController: UIViewController, MaplyViewControllerDelegate, UIPageVi
     // Remove all other content on the map and only display the given
     // collection of tours
     private func switchTo(tourCollection: TourCollectionOnMap) {
-        // remove the old markers and setup new ones
+        // remove everything drawn before
         self.clearTheMap()
+
+        // create markes
         let markers = tourCollection.placesOnMap.map { p in return p.createMarker() }
         guard let markersHandle = mapViewC?.addScreenMarkers(markers, desc: nil) else {
             SpeedLog.print("WARN", "No components created on creating markers")
             return
         }
         currentlyDrawn.append(markersHandle)
+
+        // paint the tours track
+        let trackVectors = tourCollection.tours.map { t in
+            return MapUtil.getVectorForTrack(t.track!)
+        }
+        guard let tracksHandle = mapViewC?.addVectors(trackVectors, desc: MapUtil.lineDesc) else {
+            SpeedLog.print("WARN", "No components created on adding track vectors")
+            return
+        }
+        currentlyDrawn.append(tracksHandle)
 
         // position the map to the markers
         let box = MapUtil.makeBbox(markers.map({ m in return m.loc }))

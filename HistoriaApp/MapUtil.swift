@@ -18,6 +18,19 @@ import CoreLocation
 // some static methods to extract map functionality
 class MapUtil {
 
+    // how a tour's tracks vector looks
+    static let lineDesc: [String: Any] = [
+        kMaplyColor: UIColor(red: 0.1, green: 0.3, blue: 1, alpha: 0.5) ,
+        kMaplyVecWidth: 9.0
+    ]
+
+    // the track that marks a tour's path on the map
+    public static func getVectorForTrack(_ track: [PersistableGeopoint]) -> MaplyVectorObject {
+        var lineCoords = track.map { p in return p.toCoordinate() }
+        return MaplyVectorObject(lineString: &lineCoords, numCoords: Int32(lineCoords.count), attributes: lineDesc)
+    }
+
+
     // construct a bounding box for a number of coordinates
     public static func makeBbox(_ coords: [MaplyCoordinate]) -> MaplyBoundingBox {
         // extrema to compare against

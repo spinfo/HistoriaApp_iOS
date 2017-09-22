@@ -74,6 +74,16 @@ class ServerResponseReader {
             area.name = try areaDict.safeGetString("name")
             area.tours.append(tour)
             tour.area = area
+            tour.area!.point1 = try PersistableGeopoint(coords: areaDict.safeGetDoubleArray("point1"))
+            tour.area!.point2 = try PersistableGeopoint(coords: areaDict.safeGetDoubleArray("point2"))
+
+            // create and link the tour track
+            tour.track = []
+            for doublePair in try dict.safeGetArrayOfDoubleArrays("track") {
+                let point = try PersistableGeopoint(coords: doublePair)
+                point.tour = tour
+                tour.track!.append(point)
+            }
 
             // creaete and link the tour's mapstops
             let mapstopDicts = try dict.safeGetObjectDictArray("mapstops")
@@ -206,6 +216,20 @@ fileprivate extension Dictionary where Value: Any {
     func safeGetDouble(_ key: Key) throws -> Double {
         guard let result = self[key] as? Double else {
             throw ParseError.CastError(key: String(describing: key), type: "Double")
+        }
+        return result
+    }
+
+    func safeGetDoubleArray(_ key: Key) throws -> [Double] {
+        guard let result = self[key] as? [Double] else {
+            throw ParseError.CastError(key: String(describing: key), type: "[Double]")
+        }
+        return result
+    }
+
+    func safeGetArrayOfDoubleArrays(_ key: Key) throws -> [[Double]] {
+        guard let result = self[key] as? [[Double]] else {
+            throw ParseError.CastError(key: String(describing: key), type: "[[Double]]")
         }
         return result
     }

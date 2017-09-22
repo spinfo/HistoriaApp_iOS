@@ -69,7 +69,7 @@ public class Tour : Record {
     var intro: String = ""
 
     // the tour's track as a series of geo coordinates
-    // TODO
+    var track: [PersistableGeopoint]?
 
     // point of creation in the backend's db assumed to be in GMT+2
     var createdAt: Date = Date()

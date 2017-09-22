@@ -64,6 +64,7 @@ class MasterDao {
         }
     }
 
+    // TODO: Order by createdAt descending
     public func getTours(inAreaWIthId areaId: Int64) -> [Tour]? {
         do {
             return try self.dbQueue.inDatabase({ db in
@@ -80,10 +81,12 @@ class MasterDao {
             let tour = try unsafeGetTour(id: id)
             tour.mapstops = try unsafeGetMapstops(forTour: id)
 
-            // problmatic, could be fetched in one go, then assigned
+            // problematic, could be fetched in one go, then assigned
             for mapstop in tour.mapstops {
                 mapstop.place = try unsafeGetPlace(id: mapstop.placeId)
             }
+
+            tour.track = try unsafeGetTrack(tourId: id)
             return tour
         } catch {
             SpeedLog.print("ERROR", "Unable to retrieve tour with associations: (id: '\(id)'): \(error)")
@@ -99,6 +102,57 @@ class MasterDao {
         } catch {
             SpeedLog.print("ERROR", "Unable to retrieve pages for mapstop (id: '\(id)'): \(error)")
             return []
+        }
+    }
+
+    // MARK: Tour installation
+
+    // This performs all necessary checks and inserts or updates a tour in the db
+    public func safeInstallTour(_ tour: Tour, in db: Database) throws {
+
+        // save/update the area
+        let previousArea = try Area.fetchOne(db, key: tour.area!.id)
+        if previousArea != nil {
+            try PersistableGeopoint.deleteAll(db, keys: [ previousArea!.point1Id, previousArea!.point2Id ])
+        }
+        try tour.area!.point1!.insert(db)
+        try tour.area!.point2!.insert(db)
+        try tour.area!.insertOrUpdate(db)
+
+        // at this point we need a tour with an id, so insert/update it
+        try tour.insertOrUpdate(db)
+
+        // update/insert the mapstops, overwriting where previous ones exist
+        for mapstop: Mapstop in tour.mapstops {
+
+            try mapstop.place!.insertOrUpdate(db)
+            try mapstop.insertOrUpdate(db)
+
+            for page in mapstop.pages {
+                try page.insertOrUpdate(db)
+
+                for mediaitem in page.media {
+                    // a mediaitem only needs to be inserted if it is not present already
+                    // for it's page
+                    let sql = "SELECT * FROM mediaitem WHERE guid = ? AND page_id = ?"
+                    let present = try Mediaitem.fetchAll(db, sql, arguments: [mediaitem.guid, page.id])
+                    // do the insert if neccessary
+                    if present.isEmpty {
+                        try mediaitem.insert(db)
+                    }
+                }
+            }
+        }
+
+        // update the tour track by removing all old coordinates and re-inserting the new ones
+        if (tour.track != nil && tour.track!.count > 0) {
+            try PersistableGeopoint.filter(Column("tour_id") == tour.id).deleteAll(db)
+            for point in tour.track! {
+                point.tour = tour
+                try point.insert(db)
+            }
+        } else {
+            SpeedLog.print("WARN", "Installing a tour without a track should never happen.")
         }
     }
 
@@ -123,4 +177,31 @@ class MasterDao {
         })
     }
 
+    private func unsafeGetArea(id: Int64) throws -> Area {
+        return try dbQueue.inDatabase({ db in
+            return try Area.fetchOne(db, key: id)!
+        })
+    }
+
+    private func unsafeGetTrack(tourId: Int64) throws -> [PersistableGeopoint] {
+        return try dbQueue.inDatabase({ db in
+            return try PersistableGeopoint.filter(Column("tour_id") == tourId).fetchAll(db)
+        })
+    }
+}
+
+// Our own extension to GRDB Records
+fileprivate extension Record {
+
+    // Insert or update a record in the databse based on it's primary key
+    // NOTE: Not very efficient, but should be seldom needed (on tour install mainly)
+    func insertOrUpdate(_ db: Database) throws {
+        if try self.exists(db) {
+            try self.update(db)
+        } else {
+            try self.insert(db)
+        }
+        
+    }
+    
 }
