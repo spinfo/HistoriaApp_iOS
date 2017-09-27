@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2339BA3C7FEEE8E52E3E861E /* Pods_HistoriaApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6045C3165F919166DCC28EE /* Pods_HistoriaApp.framework */; };
 		634805F21F715DA6002200D6 /* TourSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634805F11F715DA6002200D6 /* TourSelectionViewController.swift */; };
 		634805F41F71615D002200D6 /* TourSelectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634805F31F71615D002200D6 /* TourSelectionTableViewCell.swift */; };
 		634805F61F7186EA002200D6 /* ModelSelectionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634805F51F7186EA002200D6 /* ModelSelectionDelegate.swift */; };
@@ -43,7 +44,6 @@
 		63F8C7221F41F23C00691559 /* ServerResponseReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F8C7211F41F23C00691559 /* ServerResponseReader.swift */; };
 		63F8C7261F41F7CB00691559 /* Mapstop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F8C7251F41F7CB00691559 /* Mapstop.swift */; };
 		63FFA2621F604E9F0090A32A /* MapPopupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FFA2611F604E9F0090A32A /* MapPopupController.swift */; };
-		CF1CC6EE2EA693A90CF39D66 /* Pods_HistoriaApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD96C74FD6D32ED29DB3956C /* Pods_HistoriaApp.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,8 +57,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		21F82B0400D6EF908341CC22 /* Pods-HistoriaApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HistoriaApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HistoriaApp/Pods-HistoriaApp.debug.xcconfig"; sourceTree = "<group>"; };
-		49BA23F5D32E9ABAEB130A53 /* Pods-HistoriaApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HistoriaApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-HistoriaApp/Pods-HistoriaApp.release.xcconfig"; sourceTree = "<group>"; };
 		634805F11F715DA6002200D6 /* TourSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TourSelectionViewController.swift; sourceTree = "<group>"; };
 		634805F31F71615D002200D6 /* TourSelectionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TourSelectionTableViewCell.swift; sourceTree = "<group>"; };
 		634805F51F7186EA002200D6 /* ModelSelectionDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelSelectionDelegate.swift; sourceTree = "<group>"; };
@@ -93,6 +91,10 @@
 		63D1812D1F3C74B4004A2036 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		63D54A911F73FA6300EC7084 /* TourShortInfoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TourShortInfoView.xib; sourceTree = "<group>"; };
 		63D54A931F74045400EC7084 /* TourShortInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TourShortInfoView.swift; sourceTree = "<group>"; };
+		63D7D7B71F7AC7D100E39B3E /* WhirlyGlobeMaplyComponent.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WhirlyGlobeMaplyComponent.framework; path = Pods/WhirlyGlobe/WhirlyGlobeMaplyComponent.framework; sourceTree = "<group>"; };
+		63D7D7B91F7AC7E500E39B3E /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		63D7D7BB1F7AC7ED00E39B3E /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		63D7D7BE1F7AC80600E39B3E /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
 		63DAB1431F4B2D50005C69B4 /* DatabaseHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseHelper.swift; sourceTree = "<group>"; };
 		63E2EB8C1F66DDC300D66F41 /* NavDrawerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavDrawerController.swift; sourceTree = "<group>"; };
 		63F8C70D1F41E26300691559 /* Page.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Page.swift; sourceTree = "<group>"; };
@@ -104,7 +106,9 @@
 		63FC6EAF1F3E0394000CB70D /* Yams.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Yams.framework; path = Carthage/Build/iOS/Yams.framework; sourceTree = "<group>"; };
 		63FC6EB21F3E05CA000CB70D /* Yams */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = Yams; path = Carthage/Build/iOS/Yams.framework/Yams; sourceTree = "<group>"; };
 		63FFA2611F604E9F0090A32A /* MapPopupController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapPopupController.swift; sourceTree = "<group>"; };
-		AD96C74FD6D32ED29DB3956C /* Pods_HistoriaApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HistoriaApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		709A2B10CEDF963B2BDA67F6 /* Pods-HistoriaApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HistoriaApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-HistoriaApp/Pods-HistoriaApp.release.xcconfig"; sourceTree = "<group>"; };
+		A8F85AB6FA43CF0ECA0E0C92 /* Pods-HistoriaApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HistoriaApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HistoriaApp/Pods-HistoriaApp.debug.xcconfig"; sourceTree = "<group>"; };
+		E6045C3165F919166DCC28EE /* Pods_HistoriaApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HistoriaApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,7 +116,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CF1CC6EE2EA693A90CF39D66 /* Pods_HistoriaApp.framework in Frameworks */,
+				2339BA3C7FEEE8E52E3E861E /* Pods_HistoriaApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -126,6 +130,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0439AD249E5FE9605C39FBB2 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				A8F85AB6FA43CF0ECA0E0C92 /* Pods-HistoriaApp.debug.xcconfig */,
+				709A2B10CEDF963B2BDA67F6 /* Pods-HistoriaApp.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		63C8F0EA1F56E79B00F90F7C /* mappables */ = {
 			isa = PBXGroup;
 			children = (
@@ -143,7 +156,7 @@
 				63D1811E1F3C5B29004A2036 /* HistoriaAppTests */,
 				63D181081F3C5B29004A2036 /* Products */,
 				63D1812C1F3C74B4004A2036 /* Frameworks */,
-				DA70395C2E23D49549799D9A /* Pods */,
+				0439AD249E5FE9605C39FBB2 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -197,12 +210,16 @@
 		63D1812C1F3C74B4004A2036 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				63D7D7BE1F7AC80600E39B3E /* libxml2.tbd */,
+				63D7D7BB1F7AC7ED00E39B3E /* libc++.tbd */,
+				63D7D7B91F7AC7E500E39B3E /* CoreLocation.framework */,
+				63D7D7B71F7AC7D100E39B3E /* WhirlyGlobeMaplyComponent.framework */,
 				635A138E1F47369100A86A62 /* libsqlite3.tbd */,
 				63AF21491F47276900DD2973 /* ZipArchive.framework */,
 				63FC6EB21F3E05CA000CB70D /* Yams */,
 				63FC6EAF1F3E0394000CB70D /* Yams.framework */,
 				63D1812D1F3C74B4004A2036 /* libz.tbd */,
-				AD96C74FD6D32ED29DB3956C /* Pods_HistoriaApp.framework */,
+				E6045C3165F919166DCC28EE /* Pods_HistoriaApp.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -235,15 +252,6 @@
 			name = service;
 			sourceTree = "<group>";
 		};
-		DA70395C2E23D49549799D9A /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				21F82B0400D6EF908341CC22 /* Pods-HistoriaApp.debug.xcconfig */,
-				49BA23F5D32E9ABAEB130A53 /* Pods-HistoriaApp.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -251,12 +259,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 63D181241F3C5B29004A2036 /* Build configuration list for PBXNativeTarget "HistoriaApp" */;
 			buildPhases = (
-				0934B365D9F2739A08B4D9DA /* [CP] Check Pods Manifest.lock */,
+				ACBA992E40B4481876200D0D /* [CP] Check Pods Manifest.lock */,
 				63D181031F3C5B29004A2036 /* Sources */,
 				63D181041F3C5B29004A2036 /* Frameworks */,
 				63D181051F3C5B29004A2036 /* Resources */,
-				AE1FEEFB58656285CDD06CCB /* [CP] Embed Pods Frameworks */,
-				1CA5A0875A94B4FD59106EB6 /* [CP] Copy Pods Resources */,
+				4E08792D49FE12F2E38F9B78 /* [CP] Embed Pods Frameworks */,
+				E35940BC56FF08B7692E4283 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -297,7 +305,7 @@
 				TargetAttributes = {
 					63D181061F3C5B29004A2036 = {
 						CreatedOnToolsVersion = 8.2;
-						DevelopmentTeam = 9B7QDZ2A48;
+						DevelopmentTeam = 5469X45TCH;
 						ProvisioningStyle = Automatic;
 					};
 					63D1811A1F3C5B29004A2036 = {
@@ -349,7 +357,49 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0934B365D9F2739A08B4D9DA /* [CP] Check Pods Manifest.lock */ = {
+		4E08792D49FE12F2E38F9B78 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-HistoriaApp/Pods-HistoriaApp-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework",
+				"${BUILT_PRODUCTS_DIR}/FMDB/FMDB.framework",
+				"${BUILT_PRODUCTS_DIR}/GRDB.swift/GRDB.framework",
+				"${BUILT_PRODUCTS_DIR}/MMDrawerController/MMDrawerController.framework",
+				"${BUILT_PRODUCTS_DIR}/SMCalloutView/SMCalloutView.framework",
+				"${BUILT_PRODUCTS_DIR}/SSZipArchive/SSZipArchive.framework",
+				"${BUILT_PRODUCTS_DIR}/SpeedLog/SpeedLog.framework",
+				"${BUILT_PRODUCTS_DIR}/WhirlyGlobe/WhirlyGlobe.framework",
+				"${BUILT_PRODUCTS_DIR}/Yams/Yams.framework",
+				"${BUILT_PRODUCTS_DIR}/clipper/clipper.framework",
+				"${BUILT_PRODUCTS_DIR}/libjson/libjson.framework",
+				"${BUILT_PRODUCTS_DIR}/proj4/proj4.framework",
+				"${BUILT_PRODUCTS_DIR}/tinyxml/tinyxml.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AFNetworking.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FMDB.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GRDB.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MMDrawerController.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SMCalloutView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SSZipArchive.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SpeedLog.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WhirlyGlobe.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Yams.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/clipper.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/libjson.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/proj4.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/tinyxml.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-HistoriaApp/Pods-HistoriaApp-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		ACBA992E40B4481876200D0D /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -367,7 +417,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		1CA5A0875A94B4FD59106EB6 /* [CP] Copy Pods Resources */ = {
+		E35940BC56FF08B7692E4283 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -771,48 +821,6 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-HistoriaApp/Pods-HistoriaApp-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		AE1FEEFB58656285CDD06CCB /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-HistoriaApp/Pods-HistoriaApp-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework",
-				"${BUILT_PRODUCTS_DIR}/FMDB/FMDB.framework",
-				"${BUILT_PRODUCTS_DIR}/GRDB.swift/GRDB.framework",
-				"${BUILT_PRODUCTS_DIR}/MMDrawerController/MMDrawerController.framework",
-				"${BUILT_PRODUCTS_DIR}/SMCalloutView/SMCalloutView.framework",
-				"${BUILT_PRODUCTS_DIR}/SSZipArchive/SSZipArchive.framework",
-				"${BUILT_PRODUCTS_DIR}/SpeedLog/SpeedLog.framework",
-				"${BUILT_PRODUCTS_DIR}/WhirlyGlobe/WhirlyGlobe.framework",
-				"${BUILT_PRODUCTS_DIR}/Yams/Yams.framework",
-				"${BUILT_PRODUCTS_DIR}/clipper/clipper.framework",
-				"${BUILT_PRODUCTS_DIR}/libjson/libjson.framework",
-				"${BUILT_PRODUCTS_DIR}/proj4/proj4.framework",
-				"${BUILT_PRODUCTS_DIR}/tinyxml/tinyxml.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AFNetworking.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FMDB.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GRDB.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MMDrawerController.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SMCalloutView.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SSZipArchive.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SpeedLog.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WhirlyGlobe.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Yams.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/clipper.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/libjson.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/proj4.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/tinyxml.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-HistoriaApp/Pods-HistoriaApp-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -918,6 +926,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -932,11 +941,13 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -968,6 +979,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -976,9 +988,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -987,10 +1001,10 @@
 		};
 		63D181251F3C5B29004A2036 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 21F82B0400D6EF908341CC22 /* Pods-HistoriaApp.debug.xcconfig */;
+			baseConfigurationReference = A8F85AB6FA43CF0ECA0E0C92 /* Pods-HistoriaApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 9B7QDZ2A48;
+				DEVELOPMENT_TEAM = 5469X45TCH;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				HEADER_SEARCH_PATHS = (
 					"\"${PODS_ROOT}/boost\"",
@@ -1012,17 +1026,18 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "de.historia-app.HistoriaApp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_INCLUDE_PATHS = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "$(inherited)";
+				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = "";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
 		63D181261F3C5B29004A2036 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 49BA23F5D32E9ABAEB130A53 /* Pods-HistoriaApp.release.xcconfig */;
+			baseConfigurationReference = 709A2B10CEDF963B2BDA67F6 /* Pods-HistoriaApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 9B7QDZ2A48;
+				DEVELOPMENT_TEAM = 5469X45TCH;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				HEADER_SEARCH_PATHS = (
 					"\"${PODS_ROOT}/boost\"",
@@ -1044,7 +1059,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "de.historia-app.HistoriaApp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_INCLUDE_PATHS = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "$(inherited)";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;

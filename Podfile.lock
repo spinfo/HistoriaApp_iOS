@@ -47,7 +47,7 @@ PODS:
   - proj4 (4.8.0)
   - SMCalloutView (2.1.5)
   - SpeedLog (0.3.0)
-  - SSZipArchive (2.0.3)
+  - SSZipArchive (2.0.7)
   - tinyxml (2.1.0)
   - WhirlyGlobe (2.4):
     - WhirlyGlobe/MaplyComponent (= 2.4)
@@ -83,7 +83,7 @@ PODS:
   - WhirlyGlobe/octencoding (2.4)
   - WhirlyGlobe/shapefile (2.4)
   - WhirlyGlobeResources (2.3)
-  - Yams (0.3.5)
+  - Yams (0.3.6)
 
 DEPENDENCIES:
   - GRDB.swift (= 1.0)
@@ -106,12 +106,12 @@ SPEC CHECKSUMS:
   proj4: 234525105d05a33b2ae9a90a6fe3935f7a246f7e
   SMCalloutView: 5c0ee363dc8e7204b2fda17dfad38c93e9e23481
   SpeedLog: 7d4413adbbaef1894dd264516707b57f30f06515
-  SSZipArchive: b6648b70a36303ca5be9f0351174b347e1886236
+  SSZipArchive: 8c197761d66bd33e7f8b5b51ee57dff303971150
   tinyxml: 41d718babd106ac5d39d4e98b43c835d3b9080d8
   WhirlyGlobe: 2849f458220be42d92d814ba04377586cadbf7f1
   WhirlyGlobeResources: d7b3e929e828f958a8477ff6797f962fdb165472
-  Yams: 2822e8b2a8c2b532c4a8d94ede9485ec2be7992d
+  Yams: 33b90105277731bc2035a309a718b51fb655005c
 
-PODFILE CHECKSUM: bdc856f1c6c3c356d20bbfce787c5fc2ae8b949d
+PODFILE CHECKSUM: a691dc9450d0f7983bab8c9782af9140cfe1daa6
 
 COCOAPODS: 1.3.1
