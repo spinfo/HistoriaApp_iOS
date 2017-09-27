@@ -338,9 +338,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view alpha="0.40000000000000002" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oF0-ld-Eoj" userLabel="Half Transparent Background">
+                            <view alpha="0.40000000000000002" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oF0-ld-Eoj" userLabel="Half Transparent Background">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Vm4-eu-reh">
@@ -371,9 +370,13 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="bUy-Hd-dmq" firstAttribute="top" secondItem="Vm4-eu-reh" secondAttribute="bottom" constant="57" id="FXG-tG-dvE"/>
+                            <constraint firstItem="oF0-ld-Eoj" firstAttribute="leading" secondItem="WMS-dH-zy9" secondAttribute="leading" id="IVg-2Z-l0h"/>
                             <constraint firstItem="Vm4-eu-reh" firstAttribute="leading" secondItem="WMS-dH-zy9" secondAttribute="leadingMargin" constant="35" id="T35-Oh-ipI"/>
+                            <constraint firstAttribute="trailing" secondItem="oF0-ld-Eoj" secondAttribute="trailing" id="ULf-DS-umF"/>
+                            <constraint firstItem="oF0-ld-Eoj" firstAttribute="top" secondItem="WMS-dH-zy9" secondAttribute="top" id="cTm-Bd-9GR"/>
                             <constraint firstItem="Vm4-eu-reh" firstAttribute="top" secondItem="sYc-yY-cVC" secondAttribute="bottom" constant="23" id="fN1-9G-BFP"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Vm4-eu-reh" secondAttribute="trailing" constant="36" id="pAD-3y-695"/>
+                            <constraint firstItem="bUy-Hd-dmq" firstAttribute="top" secondItem="oF0-ld-Eoj" secondAttribute="bottom" id="pkF-XX-uDN"/>
                         </constraints>
                     </view>
                     <connections>
