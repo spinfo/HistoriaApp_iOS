@@ -1039,7 +1039,7 @@
 				INFOPLIST_FILE = HistoriaApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = "de.historia-app.HistoriaApp";
+				PRODUCT_BUNDLE_IDENTIFIER = "de.uni-koeln.historia";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_INCLUDE_PATHS = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(inherited)";
@@ -1072,7 +1072,7 @@
 				INFOPLIST_FILE = HistoriaApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = "de.historia-app.HistoriaApp";
+				PRODUCT_BUNDLE_IDENTIFIER = "de.uni-koeln.historia";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_INCLUDE_PATHS = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(inherited)";
