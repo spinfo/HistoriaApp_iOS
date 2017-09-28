@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--MapViewController-->
+        <!--HistoriaApp-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController storyboardIdentifier="MapViewController" id="BYZ-38-t0r" customClass="MapViewController" customModule="HistoriaApp" customModuleProvider="target" sceneMemberID="viewController">
@@ -23,8 +23,8 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
-                    <navigationItem key="navigationItem" title="MapViewController" id="fRg-8J-DCA">
-                        <barButtonItem key="leftBarButtonItem" title="&lt;" id="b1R-FG-SOx" userLabel="LeftDrawerButton">
+                    <navigationItem key="navigationItem" title="HistoriaApp" id="fRg-8J-DCA">
+                        <barButtonItem key="leftBarButtonItem" image="MenuToggle" id="b1R-FG-SOx" userLabel="LeftDrawerButton">
                             <connections>
                                 <action selector="leftDrawerButtonTapped:" destination="BYZ-38-t0r" id="aoy-zZ-fm3"/>
                             </connections>
@@ -271,7 +271,7 @@
             </objects>
             <point key="canvasLocation" x="1042.4000000000001" y="94.902548725637189"/>
         </scene>
-        <!--Reading Mode View Controller-->
+        <!--Lesemodus-->
         <scene sceneID="Yib-66-xFY">
             <objects>
                 <viewController storyboardIdentifier="ReadingModeViewController" id="GYw-Kl-Bea" customClass="ReadingModeViewController" customModule="HistoriaApp" customModuleProvider="target" sceneMemberID="viewController">
@@ -282,23 +282,24 @@
                     <view key="view" contentMode="scaleToFill" id="bcx-ao-elN">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Lesemodus" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lfB-6d-A3B">
-                                <rect key="frame" x="112" y="169" width="146" height="132"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="29"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="Lesemodus" id="kcG-WQ-UMS">
+                        <barButtonItem key="leftBarButtonItem" image="MenuToggle" id="ttS-AJ-mH1">
+                            <connections>
+                                <action selector="leftBarButtonItemTapped:" destination="GYw-Kl-Bea" id="aEH-gw-QUC"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jEv-0L-rvB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="382" y="779"/>
         </scene>
-        <!--Tour Download View Controller-->
+        <!--Touren Laden-->
         <scene sceneID="uFE-hI-C4d">
             <objects>
                 <viewController storyboardIdentifier="TourDownloadViewController" id="eFe-bI-dJN" customClass="TourDownloadViewController" customModule="HistoriaApp" customModuleProvider="target" sceneMemberID="viewController">
@@ -377,6 +378,13 @@
                             <constraint firstItem="KB7-lO-rRK" firstAttribute="leading" secondItem="GOy-lG-TaS" secondAttribute="leading" id="wzx-rw-34V"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" title="Touren Laden" id="EXo-ly-aNv">
+                        <barButtonItem key="leftBarButtonItem" image="MenuToggle" id="z6n-hZ-vgQ">
+                            <connections>
+                                <action selector="leftBarButtonItemTapped:" destination="eFe-bI-dJN" id="spi-1c-t00"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="tableView" destination="KB7-lO-rRK" id="im5-Ij-Tge"/>
@@ -470,4 +478,7 @@
             <point key="canvasLocation" x="-302" y="95"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="MenuToggle" width="22" height="22"/>
+    </resources>
 </document>

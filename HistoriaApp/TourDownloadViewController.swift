@@ -46,6 +46,10 @@ class TourDownloadViewController: UIViewController, UITableViewDataSource, UITab
         // Dispose of any resources that can be recreated.
     }
 
+    @IBAction func leftBarButtonItemTapped(_ sender: Any) {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        appDelegate.toggleNavDrawer()
+    }
     // MARK: -- UITableViewDataSource
 
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
