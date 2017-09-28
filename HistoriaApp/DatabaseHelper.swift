@@ -65,17 +65,6 @@ class DatabaseHelper {
 
         var hasMinimumEntities = false
         do {
-
-
-
-            // TODO: Remove before commit...
-            let dbFile = FileService.getDBFile()
-            try FileManager.default.removeItem(at: dbFile!)
-
-
-
-
-
             // initialize the queue as it might not have been
             guard let localQueue = getQueue() else {
                 SpeedLog.print("ERROR", "Unable to get the db queue.")
@@ -138,7 +127,7 @@ class DatabaseHelper {
 
         // the geopoints tour id is defined below (because the tour table does not exist atm)
         try db.create(table: "geopoint", ifNotExists: true, body: { t in
-            t.column("id", .integer).primaryKey(onConflict: .replace, autoincrement: false)
+            t.column("id", .integer).primaryKey(autoincrement: true)
             t.column("latitude", .double)
             t.column("longitude", .double)
         })
@@ -146,8 +135,8 @@ class DatabaseHelper {
         try db.create(table: "area", ifNotExists: true, body: { t in
             t.column("id", .integer).primaryKey(onConflict: .replace, autoincrement: false)
             t.column("name", .text)
-            t.column("point1_id", .integer).references("geopoint", onDelete: .cascade)
-            t.column("point2_id", .integer).references("geopoint", onDelete: .cascade)
+            t.column("point1_id", .integer).references("geopoint")
+            t.column("point2_id", .integer).references("geopoint")
         })
 
         try db.create(table: "place", ifNotExists: true, body: { t in
