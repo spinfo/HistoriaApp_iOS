@@ -64,29 +64,57 @@ class MasterDao {
         }
     }
 
-    // TODO: Order by createdAt descending
-    public func getTours(inAreaWIthId areaId: Int64) -> [Tour]? {
+    public func getTourCount(forAreaWithId id: Int64) -> Int  {
         do {
             return try self.dbQueue.inDatabase({ db in
-                return try Tour.filter(Column("area_id") == areaId).fetchAll(db)
+                return try Tour.filter(Column("area_id") == id).fetchCount(db)
             })
         } catch {
+            SpeedLog.print("ERROR", "Unable to retrieve a tour count for area \(id)")
+            return 0
+        }
+    }
+
+    public func getAreas() -> [Area] {
+        do {
+            return try self.dbQueue.inDatabase({ db in
+                return try Area.fetchAll(db)
+            })
+        } catch {
+            SpeedLog.print("ERROR", "Unable to retrieve a list of all areas")
+            return []
+        }
+    }
+
+    // TODO: Order by createdAt descending
+    public func getTours(inAreaWIthId areaId: Int64) -> [Tour] {
+        do {
+            return try unsafeGetTours(inAreaWithId: areaId)
+        } catch {
             SpeedLog.print("ERROR", "Unable to retrieve tours for area (id: '\(areaId)'): \(error)")
-            return nil
+            return []
+        }
+    }
+
+    public func getToursWithAssociationsForMapping(inAreaWithId id: Int64) -> [Tour] {
+        do {
+            let tours = try unsafeGetTours(inAreaWithId: id)
+            // TODO: atm this introduces quadratic complexity (no of tours * no mapstops)
+            //      and should be refactored
+            for tour in tours {
+                try self.unsafeSetAssociationsForMapping(on: tour)
+            }
+            return tours
+        } catch {
+            SpeedLog.print("ERROR", "Unable to retrieve tours for area (id: '\(id)'): \(error)")
+            return []
         }
     }
 
     public func getTourWithAssociationsForMapping(id: Int64) -> Tour? {
         do {
             let tour = try unsafeGetTour(id: id)
-            tour.mapstops = try unsafeGetMapstops(forTour: id)
-
-            // problematic, could be fetched in one go, then assigned
-            for mapstop in tour.mapstops {
-                mapstop.place = try unsafeGetPlace(id: mapstop.placeId)
-            }
-
-            tour.track = try unsafeGetTrack(tourId: id)
+            try self.unsafeSetAssociationsForMapping(on: tour)
             return tour
         } catch {
             SpeedLog.print("ERROR", "Unable to retrieve tour with associations: (id: '\(id)'): \(error)")
@@ -110,16 +138,20 @@ class MasterDao {
     // This performs all necessary checks and inserts or updates a tour in the db
     public func safeInstallTour(_ tour: Tour, in db: Database) throws {
 
-        // save/update the area
+
+        // keep a previous version of the tour's area for cleanup
         let previousArea = try Area.fetchOne(db, key: tour.area!.id)
-        if previousArea != nil {
-            try PersistableGeopoint.deleteAll(db, keys: [ previousArea!.point1Id, previousArea!.point2Id ])
-        }
+        // save/update the area
         try tour.area!.point1!.insert(db)
         try tour.area!.point2!.insert(db)
         try tour.area!.insertOrUpdate(db)
+        // if there was a previous area, it's points may now be safely deleted
+        if previousArea != nil {
+            try PersistableGeopoint.deleteAll(db, keys: [ previousArea!.point1Id, previousArea!.point2Id ])
+        }
 
-        // at this point we need a tour with an id, so insert/update it
+
+        // at this point we need a tour with a db referable id, so insert/update it
         try tour.insertOrUpdate(db)
 
         // update/insert the mapstops, overwriting where previous ones exist
@@ -171,6 +203,12 @@ class MasterDao {
         })
     }
 
+    private func unsafeGetTours(inAreaWithId id: Int64) throws -> [Tour] {
+        return try self.dbQueue.inDatabase({ db in
+            return try Tour.filter(Column("area_id") == id).fetchAll(db)
+        })
+    }
+
     private func unsafeGetPlace(id: Int64) throws -> Place {
         return try dbQueue.inDatabase({ db in
             return try Place.fetchOne(db, key: id)!
@@ -188,6 +226,18 @@ class MasterDao {
             return try PersistableGeopoint.filter(Column("tour_id") == tourId).fetchAll(db)
         })
     }
+
+    // set associations needed for map display on the given tour
+    // NOTE: Very, very problematic. We should be able to at least fetch
+    //      this without the loop over the mapstops
+    private func unsafeSetAssociationsForMapping(on tour: Tour) throws {
+        tour.mapstops = try unsafeGetMapstops(forTour: tour.id)
+
+        for mapstop in tour.mapstops {
+            mapstop.place = try unsafeGetPlace(id: mapstop.placeId)
+        }
+        tour.track = try unsafeGetTrack(tourId: tour.id)
+    }
 }
 
 // Our own extension to GRDB Records
@@ -197,8 +247,10 @@ fileprivate extension Record {
     // NOTE: Not very efficient, but should be seldom needed (on tour install mainly)
     func insertOrUpdate(_ db: Database) throws {
         if try self.exists(db) {
+            SpeedLog.print("Updating: \(type(of: self))")
             try self.update(db)
         } else {
+            SpeedLog.print("Inserting: \(type(of: self))")
             try self.insert(db)
         }
         

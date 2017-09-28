@@ -218,11 +218,11 @@ class MapViewController: UIViewController, MaplyViewControllerDelegate, UIPageVi
         // we need to re-retrieve the tour here because we don't know if all connections are
         // present. (We could test, but they won't be in all current cases anyway.)
         let dao = MasterDao()
-        guard let tourAssoc = dao.getTourWithAssociationsForMapping(id: tour.id) else {
+        guard let tourWithAssociations = dao.getTourWithAssociationsForMapping(id: tour.id) else {
             SpeedLog.print("ERROR", "Unable to retrieve tour (id: \(tour.id)) with associations.")
             return
         }
-        let tourCollectionOnMap = TourCollectionOnMap(tours: [tourAssoc])
+        let tourCollectionOnMap = TourCollectionOnMap(tours: [tourWithAssociations])
 
         // the map view should always request to be the center view when a tour is selected
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -233,7 +233,15 @@ class MapViewController: UIViewController, MaplyViewControllerDelegate, UIPageVi
     }
 
     func areaSelected(_ area: Area) {
-        // Do nothing for now
+        let dao = MasterDao()
+        let tours = dao.getToursWithAssociationsForMapping(inAreaWithId: area.id)
+        let tourCollectionOnMap = TourCollectionOnMap(tours: tours)
+
+        // the map view should always request to be the center view when an area is selected
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        appDelegate.requestCenter(for: self)
+
+        self.switchTo(tourCollection: tourCollectionOnMap)
     }
 
     // MARK: -- Map popups
@@ -249,6 +257,10 @@ class MapViewController: UIViewController, MaplyViewControllerDelegate, UIPageVi
         self.view.addSubview(self.mapPopupController!.view)
         self.mapPopupController!.didMove(toParentViewController: self)
         self.mapPopupController!.setPopup(byController: controller)
+    }
+
+    func closePopups() {
+        self.mapPopupController?.close()
     }
 
     // MARK: -- Drawer Navigation

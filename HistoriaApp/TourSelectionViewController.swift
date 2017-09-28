@@ -22,12 +22,9 @@ class TourSelectionViewController: UIViewController, UITableViewDataSource, UITa
         super.viewDidLoad()
 
         let dao = MasterDao()
+        // TODO: This has to react to the currently chosen area
         let area = dao.getFirstArea()!
-        guard let tours = dao.getTours(inAreaWIthId: area.id) else {
-            SpeedLog.print("ERROR", "Cannot show tour selection without tours in area.")
-            return
-        }
-        self.tours = tours
+        self.tours = dao.getTours(inAreaWIthId: area.id)
     }
 
     override func didReceiveMemoryWarning() {
@@ -35,6 +32,7 @@ class TourSelectionViewController: UIViewController, UITableViewDataSource, UITa
         // Dispose of any resources that can be recreated.
     }
 
+    /* TODO: Remove
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "segueTourShortInfo") {
             SpeedLog.print("segueing...")
@@ -43,6 +41,7 @@ class TourSelectionViewController: UIViewController, UITableViewDataSource, UITa
             SpeedLog.print("ERROR", "Unknown segue: \(segue.identifier)")
         }
     }
+    */
 
 
     // MARK: -- UITableViewDataSource

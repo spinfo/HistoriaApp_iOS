@@ -114,12 +114,72 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hod-jD-gkA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2024.8" y="676.91154422788611"/>
+            <point key="canvasLocation" x="1953" y="1471"/>
         </scene>
-        <!--View Controller-->
+        <!--Area Selection View Controller-->
+        <scene sceneID="NJs-P5-NkR">
+            <objects>
+                <tableViewController storyboardIdentifier="AreaSelectionViewController" id="Ma5-F1-wAT" customClass="AreaSelectionViewController" customModule="HistoriaApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="75" sectionHeaderHeight="28" sectionFooterHeight="28" id="xrj-N2-PII">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="AreaSelectionTableViewCell" rowHeight="75" id="rDs-qN-kbV" customClass="AreaSelectionTableViewCell" customModule="HistoriaApp" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="375" height="75"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="rDs-qN-kbV" id="KXo-cT-ZJl">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="74"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Area Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3hT-aX-eAu">
+                                            <rect key="frame" x="8" y="8" width="359" height="31"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="31" id="LbR-Ji-2wX"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                            <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tour Amount" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fCC-YW-XQt">
+                                            <rect key="frame" x="8" y="47" width="359" height="17"/>
+                                            <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="3hT-aX-eAu" firstAttribute="leading" secondItem="fCC-YW-XQt" secondAttribute="leading" id="8d1-aD-HOB"/>
+                                        <constraint firstItem="3hT-aX-eAu" firstAttribute="top" secondItem="KXo-cT-ZJl" secondAttribute="topMargin" id="Fb3-3U-6iV"/>
+                                        <constraint firstItem="3hT-aX-eAu" firstAttribute="trailing" secondItem="fCC-YW-XQt" secondAttribute="trailing" id="a0N-Ld-gx3"/>
+                                        <constraint firstItem="fCC-YW-XQt" firstAttribute="top" secondItem="3hT-aX-eAu" secondAttribute="bottom" constant="8" symbolic="YES" id="bta-Ht-6JW"/>
+                                        <constraint firstItem="3hT-aX-eAu" firstAttribute="leading" secondItem="KXo-cT-ZJl" secondAttribute="leadingMargin" id="cKc-fW-dQg"/>
+                                        <constraint firstItem="3hT-aX-eAu" firstAttribute="trailing" secondItem="KXo-cT-ZJl" secondAttribute="trailingMargin" id="teD-5K-tK5"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="areaNameLabel" destination="3hT-aX-eAu" id="5cX-Rj-Iiw"/>
+                                    <outlet property="tourAmountLabel" destination="fCC-YW-XQt" id="jC4-BB-mEb"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="Ma5-F1-wAT" id="T1B-nr-EDB"/>
+                            <outlet property="delegate" destination="Ma5-F1-wAT" id="sn2-Vi-Ur5"/>
+                        </connections>
+                    </tableView>
+                    <connections>
+                        <outlet property="tableView" destination="xrj-N2-PII" id="xTx-2O-aAZ"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sbv-sq-p23" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2720.8000000000002" y="1471.2143928035982"/>
+        </scene>
+        <!--Map Popup View-->
         <scene sceneID="jUn-R9-2Jn">
             <objects>
-                <viewController id="zUs-cb-rOl" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MapPopupView" id="zUs-cb-rOl" userLabel="Map Popup View" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="0wo-9t-HSw"/>
                         <viewControllerLayoutGuide type="bottom" id="1ep-oC-V0b"/>
@@ -146,7 +206,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="q5H-ux-fYb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2025" y="1490"/>
+            <point key="canvasLocation" x="1953" y="2185"/>
         </scene>
         <!--Page View Controller-->
         <scene sceneID="O1Y-mJ-Tid">
@@ -343,18 +403,21 @@
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Vm4-eu-reh">
-                                <rect key="frame" x="51" y="43" width="272" height="567"/>
+                                <rect key="frame" x="51" y="90" width="272" height="520"/>
                                 <subviews>
                                     <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" translatesAutoresizingMaskIntoConstraints="NO" id="haM-UX-HLN">
-                                        <rect key="frame" x="0.0" y="0.0" width="272" height="44"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="272" height="42"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="42" id="e3h-4X-YCL"/>
+                                        </constraints>
                                         <items>
-                                            <barButtonItem title="Close" id="s66-Yy-IgA"/>
+                                            <barButtonItem title="×" id="s66-Yy-IgA"/>
                                         </items>
                                         <color key="barTintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     </toolbar>
                                     <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="G2W-6s-DOL">
-                                        <rect key="frame" x="0.0" y="44" width="272" height="523"/>
+                                        <rect key="frame" x="0.0" y="42" width="272" height="478"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </containerView>
                                 </subviews>
@@ -371,10 +434,10 @@
                         <constraints>
                             <constraint firstItem="bUy-Hd-dmq" firstAttribute="top" secondItem="Vm4-eu-reh" secondAttribute="bottom" constant="57" id="FXG-tG-dvE"/>
                             <constraint firstItem="oF0-ld-Eoj" firstAttribute="leading" secondItem="WMS-dH-zy9" secondAttribute="leading" id="IVg-2Z-l0h"/>
+                            <constraint firstItem="Vm4-eu-reh" firstAttribute="top" secondItem="sYc-yY-cVC" secondAttribute="bottom" constant="70" id="Igz-jN-SvH"/>
                             <constraint firstItem="Vm4-eu-reh" firstAttribute="leading" secondItem="WMS-dH-zy9" secondAttribute="leadingMargin" constant="35" id="T35-Oh-ipI"/>
                             <constraint firstAttribute="trailing" secondItem="oF0-ld-Eoj" secondAttribute="trailing" id="ULf-DS-umF"/>
                             <constraint firstItem="oF0-ld-Eoj" firstAttribute="top" secondItem="WMS-dH-zy9" secondAttribute="top" id="cTm-Bd-9GR"/>
-                            <constraint firstItem="Vm4-eu-reh" firstAttribute="top" secondItem="sYc-yY-cVC" secondAttribute="bottom" constant="23" id="fN1-9G-BFP"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Vm4-eu-reh" secondAttribute="trailing" constant="36" id="pAD-3y-695"/>
                             <constraint firstItem="bUy-Hd-dmq" firstAttribute="top" secondItem="oF0-ld-Eoj" secondAttribute="bottom" id="pkF-XX-uDN"/>
                         </constraints>

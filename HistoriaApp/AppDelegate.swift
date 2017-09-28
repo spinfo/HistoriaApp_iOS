@@ -94,14 +94,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func switchToTourSelection() {
-        // the tour selection is displayed as a popup on the map and interacts with it on
-        // tour selection
+        // link tour selection and map view controller
         let tourSelectionC = self.getCenterController("TourSelectionViewController") as! TourSelectionViewController
         let mapViewC = self.getCenterController("MapViewController") as! MapViewController
         tourSelectionC.tourSelectionDelegate = mapViewC
+
+        // display the tour selection in a map popup
+        self.switchToMapPopup(with: tourSelectionC)
+    }
+
+    func switchToAreaSelection() {
+        // link area selection and map view controller
+        let areaSelectionC = self.getCenterController("AreaSelectionViewController") as! AreaSelectionViewController
+        let mapViewC = self.getCenterController("MapViewController") as! MapViewController
+        areaSelectionC.areaSelectionDelegate = mapViewC
+
+        // display the area selection as a popup on the map
+        self.switchToMapPopup(with: areaSelectionC)
+    }
+
+    func switchToPlainMap() {
+        let mapViewC = self.getCenterController("MapViewController") as! MapViewController
         self.requestCenter(for: mapViewC)
-        mapViewC.displayPopup(controller: tourSelectionC)
-        self.toggleNavDrawer()
+        mapViewC.closePopups()
     }
 
     // open or close the left navigation drawer
@@ -141,6 +156,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.centerViewControllers[identifier] = result
         }
         return result
+    }
+
+    // let the map view controller display a controller in a popup
+    private func switchToMapPopup(with viewController: UIViewController) {
+        let mapViewC = self.getCenterController("MapViewController") as! MapViewController
+        self.requestCenter(for: mapViewC)
+        mapViewC.displayPopup(controller: viewController)
+        self.toggleNavDrawer()
     }
 
 }

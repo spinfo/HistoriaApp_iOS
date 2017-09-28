@@ -58,9 +58,9 @@ class NavDrawerController: UIViewController, UITableViewDataSource, UITableViewD
 
         switch indexPath.row {
         case 0:
-            appDelegate.switchToCenterController("MapViewController")
+            appDelegate.switchToAreaSelection()
         case 1:
-            appDelegate.switchToCenterController("MapViewController")
+            appDelegate.switchToPlainMap()
         case 2:
             appDelegate.switchToTourSelection()
         case 3:
