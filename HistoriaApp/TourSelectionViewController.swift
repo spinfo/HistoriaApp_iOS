@@ -20,11 +20,7 @@ class TourSelectionViewController: UIViewController, UITableViewDataSource, UITa
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        let dao = MasterDao()
-        // TODO: This has to react to the currently chosen area
-        let area = dao.getFirstArea()!
-        self.tours = dao.getTours(inAreaWIthId: area.id)
+        self.refreshTours()
     }
 
     override func didReceiveMemoryWarning() {
@@ -32,16 +28,14 @@ class TourSelectionViewController: UIViewController, UITableViewDataSource, UITa
         // Dispose of any resources that can be recreated.
     }
 
-    /* TODO: Remove
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if (segue.identifier == "segueTourShortInfo") {
-            SpeedLog.print("segueing...")
-            print(String(describing: sender))
-        } else {
-            SpeedLog.print("ERROR", "Unknown segue: \(segue.identifier)")
-        }
+    // we may be told from the outside to refresh our content
+    func refreshTours() {
+        let dao = MasterDao()
+        // TODO: This has to react to the currently chosen area
+        let area = dao.getFirstArea()!
+        self.tours = dao.getTours(inAreaWIthId: area.id)
+        SpeedLog.print("INFO", "Refreshed tour list to display: Have \(tours.count) tours")
     }
-    */
 
 
     // MARK: -- UITableViewDataSource
@@ -68,6 +62,7 @@ class TourSelectionViewController: UIViewController, UITableViewDataSource, UITa
             SpeedLog.print("ERROR", "Cannot delegate tour selection, no delegate present.")
         }
     }
+
 
 
 }

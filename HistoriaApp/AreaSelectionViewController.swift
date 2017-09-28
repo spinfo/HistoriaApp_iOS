@@ -23,15 +23,18 @@ class AreaSelectionViewController: UIViewController, UITableViewDelegate, UITabl
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // retrieve the list of areas
-        self.areas = theDao.getAreas()
+        self.refreshAreas()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+
+    func refreshAreas() {
+        self.areas = theDao.getAreas()
+    }
+
     // MARK: -- UITableViewDataSource
 
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
