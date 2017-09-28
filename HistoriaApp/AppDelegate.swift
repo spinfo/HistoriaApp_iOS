@@ -99,6 +99,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let mapViewC = self.getCenterController("MapViewController") as! MapViewController
         tourSelectionC.tourSelectionDelegate = mapViewC
 
+        // tell the tour controller to refresh it's content
+        tourSelectionC.refreshTours()
+
         // display the tour selection in a map popup
         self.switchToMapPopup(with: tourSelectionC)
     }
@@ -108,6 +111,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let areaSelectionC = self.getCenterController("AreaSelectionViewController") as! AreaSelectionViewController
         let mapViewC = self.getCenterController("MapViewController") as! MapViewController
         areaSelectionC.areaSelectionDelegate = mapViewC
+
+        // tell the controller to refresh the content
+        areaSelectionC.refreshAreas()
 
         // display the area selection as a popup on the map
         self.switchToMapPopup(with: areaSelectionC)

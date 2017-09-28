@@ -12,9 +12,6 @@ import SpeedLog
 
 class TourDownloadViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
-    // let recordsEndpoint = "http://smarthistory.spinfo.uni-koeln.de/wp-content/uploads/smart-history-tours/tours.yaml"
-    let recordsEndpoint = "https://historia-app.de/wp-content/uploads/smart-history-tours/tours.yaml"
-
     private var tourRecords = Array<TourRecord>()
 
     @IBOutlet weak var tableView: UITableView!
@@ -23,7 +20,7 @@ class TourDownloadViewController: UIViewController, UITableViewDataSource, UITab
         super.viewDidLoad()
 
         // retrieve a list of tour records from the server
-        self.performUrlRequest(self.recordsEndpoint) { data in
+        self.performUrlRequest(UrlSchemes.availableToursUri) { data in
 
             let recordsYaml = String(data: data, encoding: .utf8)
             guard recordsYaml != nil else {

@@ -176,10 +176,10 @@
             </objects>
             <point key="canvasLocation" x="2720.8000000000002" y="1471.2143928035982"/>
         </scene>
-        <!--Map Popup View-->
+        <!--YetUnusedTourSelectionView-->
         <scene sceneID="jUn-R9-2Jn">
             <objects>
-                <viewController storyboardIdentifier="MapPopupView" id="zUs-cb-rOl" userLabel="Map Popup View" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="YetUnusedTourSelectionView" id="zUs-cb-rOl" userLabel="YetUnusedTourSelectionView" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="0wo-9t-HSw"/>
                         <viewControllerLayoutGuide type="bottom" id="1ep-oC-V0b"/>

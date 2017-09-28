@@ -133,6 +133,17 @@ class MasterDao {
         }
     }
 
+    public func getMediaitems(forPageWithId id: Int64) -> [Mediaitem] {
+        do {
+            return try dbQueue.inDatabase({ db in
+                return try Mediaitem.filter(Column("page_id") == id).fetchAll(db)
+            })
+        } catch {
+            SpeedLog.print("ERROR", "Unable to retrieve mediaitems for page (id: '\(id)'): \(error)")
+            return []
+        }
+    }
+
     // MARK: Tour installation
 
     // This performs all necessary checks and inserts or updates a tour in the db
@@ -255,5 +266,4 @@ fileprivate extension Record {
         }
         
     }
-    
 }

@@ -32,6 +32,13 @@ public class Page : Record {
     // the mapstop this page is meant for
     var mapstop: Mapstop?
 
+    // get the actual content that should be displayed for the page
+    func getPresentationContent() -> String {
+        let dao = MasterDao()
+        let media = dao.getMediaitems(forPageWithId: self.id)
+        let localContent = HtmlContentCompletion.replaceMediaitems(in: self.content, media: media)
+        return HtmlContentCompletion.wrapInPage(localContent)
+    }
 
     // MARK: Record interface
 

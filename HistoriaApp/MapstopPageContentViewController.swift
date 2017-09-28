@@ -28,7 +28,7 @@ class MapstopPageContentViewController : UIViewController {
         super.viewDidLoad()
 
         if (self.page != nil) {
-            self.webView.loadHTMLString(self.page!.content, baseURL: nil)
+            self.webView.loadHTMLString(self.page!.getPresentationContent(), baseURL: nil)
         } else {
             SpeedLog.print("ERROR", "No page to display.")
         }

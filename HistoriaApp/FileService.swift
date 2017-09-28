@@ -24,7 +24,7 @@ class FileService {
         let docsFolderPath = getDocumentsFolder().path
 
         // unzip the archive doing some checks
-        if FileManager().fileExists(atPath: file.path) {
+        if FileManager.default.fileExists(atPath: file.path) {
             if !(SSZipArchive.unzipFile(atPath: file.path, toDestination: docsFolderPath!)) {
                 SpeedLog.print("ERROR", "Could not extract example tour to: \(docsFolderPath)")
                 return nil
@@ -36,7 +36,7 @@ class FileService {
 
         // Remove the input file, failure to do so does not affect the return status
         do {
-            try FileManager().removeItem(at: file)
+            try FileManager.default.removeItem(at: file)
         } catch {
             SpeedLog.print("WARN", "Removing the installed tour file failed. Caught: \(error)")
         }
@@ -80,7 +80,7 @@ class FileService {
 
     // return the file url that should be used for database access
     public class func getDBFile() -> URL? {
-        guard let url = getDocumentsFolder().appendingPathComponent("db.sqlite") else {
+        guard let url = getFile(atBase: "db.sqlite") else {
             SpeedLog.print("ERROR", "Unable to determine db file.")
             return nil
         }
@@ -88,6 +88,11 @@ class FileService {
             FileManager.default.createFile(atPath: url.path, contents: nil, attributes: nil)
         }
         return url
+    }
+
+    // return the file url with the given basename from our documents folder
+    public class func getFile(atBase base: String) -> URL? {
+        return getDocumentsFolder().appendingPathComponent(base)
     }
 
     //MARK: Private methods
