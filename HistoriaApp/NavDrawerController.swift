@@ -16,7 +16,7 @@ class NavDrawerController: UIViewController, UITableViewDataSource, UITableViewD
         "Karte wechseln",
         " - Zur Karte",
         "Touren wählen",
-        "Lesemodus",
+        // "Lesemodus",
         "Touren laden",
         "Über uns"
     ]
@@ -63,9 +63,9 @@ class NavDrawerController: UIViewController, UITableViewDataSource, UITableViewD
             appDelegate.switchToPlainMap()
         case 2:
             appDelegate.switchToTourSelection()
+        // case 3:
+        //    appDelegate.switchToCenterController("ReadingModeViewController")
         case 3:
-            appDelegate.switchToCenterController("ReadingModeViewController")
-        case 4:
             appDelegate.switchToCenterController("TourDownloadViewController")
         default:
             SpeedLog.print("WARN", "Unknown menu item index: \(indexPath)")
