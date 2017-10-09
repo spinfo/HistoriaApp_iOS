@@ -67,6 +67,8 @@ class NavDrawerController: UIViewController, UITableViewDataSource, UITableViewD
         //    appDelegate.switchToCenterController("ReadingModeViewController")
         case 3:
             appDelegate.switchToCenterController("TourDownloadViewController")
+        case 4:
+            appDelegate.switchToCenterController("AboutPageViewController")
         default:
             SpeedLog.print("WARN", "Unknown menu item index: \(indexPath)")
         }
