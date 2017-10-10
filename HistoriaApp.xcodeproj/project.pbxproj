@@ -261,8 +261,8 @@
 				63F8C7211F41F23C00691559 /* ServerResponseReader.swift */,
 				63DAB1431F4B2D50005C69B4 /* DatabaseHelper.swift */,
 				6377AC5E1F5085F8003D729B /* MasterDao.swift */,
-				63344B9B1F7D55AC007D1445 /* UrlSchemes.swift */,
 				63344B9D1F7D5739007D1445 /* HtmlContentCompletion.swift */,
+				63344B9B1F7D55AC007D1445 /* UrlSchemes.swift */,
 			);
 			name = service;
 			sourceTree = "<group>";

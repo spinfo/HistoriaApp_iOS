@@ -15,11 +15,22 @@ class AboutPageViewController: UIViewController {
     @IBOutlet weak var versionNoLabel: UIBarButtonItem!
 
     @IBOutlet weak var webView: UIWebView!
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.title = "HistoriaApp"
+
+        // setup the about page to load and the app delegate to handle link clicks etc.
+        self.webView.delegate = UIApplication.shared.delegate as! AppDelegate
         self.webView.loadHTMLString(self.getAboutPageContent(), baseURL: nil)
+
+        // get and display the apps current version
+        guard let versionStr = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String else {
+            self.versionNoLabel.title = ""
+            return
+        }
+        self.versionNoLabel.title = "Version \(versionStr)"
     }
 
     override func didReceiveMemoryWarning() {
@@ -31,7 +42,6 @@ class AboutPageViewController: UIViewController {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         appDelegate.toggleNavDrawer()
     }
-
 
     // -- MARK: Private methods
 

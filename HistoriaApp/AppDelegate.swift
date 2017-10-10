@@ -12,7 +12,7 @@ import SpeedLog
 import MMDrawerController
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UIWebViewDelegate {
 
     // MARK: Properties for Navigation
 
@@ -133,6 +133,43 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func closeNavDrawer() {
         self.centerContainer?.closeDrawer(animated: true, completion: nil)
     }
+
+
+    // -- MARK: UIWebViewDelegate
+
+    // url requests made from within a web view of this app should be handled globally
+    // by this method
+
+    func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
+
+        let urlScheme = request.mainDocumentURL?.scheme
+        guard urlScheme != nil else {
+            // Never load anything that we can't know the scheme of
+            SpeedLog.print("WARN", "No url scheme for request: \(request)")
+            return false
+        }
+
+        if navigationType == .linkClicked {
+            switch (urlScheme!) {
+            case "http", "https", "mailto", "tel":
+                SpeedLog.print("INFO", "Delegating url load: \(request)")
+                UIApplication.shared.openURL(request.mainDocumentURL!)
+            default:
+                SpeedLog.print("WARN", "Unknown url scheme for request: \(request)")
+            }
+            return false
+        } else if navigationType == .other {
+            // this is needed to allow the web view to load with a String (loads "about:blank")
+            if urlScheme! == "about" {
+                return true
+            }
+            SpeedLog.print("Not reacting to unknown navigation event: \(request)")
+            return false
+        }
+        // Prevent the user from navigating away in case of other navigation events
+        return false
+    }
+
 
     // -- MARK: Private methods
 

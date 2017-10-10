@@ -405,17 +405,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Vb-1w-uSF">
-                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
-                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L9j-gf-FE1">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </webView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="0Vb-1w-uSF" firstAttribute="top" secondItem="ohW-a0-JVK" secondAttribute="bottom" id="I97-3R-L63"/>
-                            <constraint firstItem="0Vb-1w-uSF" firstAttribute="leading" secondItem="vfA-ZS-QGz" secondAttribute="leading" id="Piu-H8-ETk"/>
-                            <constraint firstAttribute="bottom" secondItem="0Vb-1w-uSF" secondAttribute="bottom" id="YWL-Zf-b1s"/>
-                            <constraint firstAttribute="trailing" secondItem="0Vb-1w-uSF" secondAttribute="trailing" id="ihW-LG-fti"/>
+                            <constraint firstAttribute="bottom" secondItem="L9j-gf-FE1" secondAttribute="bottom" id="AgK-cb-cdd"/>
+                            <constraint firstItem="L9j-gf-FE1" firstAttribute="leading" secondItem="vfA-ZS-QGz" secondAttribute="leading" id="ksT-P5-fI4"/>
+                            <constraint firstAttribute="trailing" secondItem="L9j-gf-FE1" secondAttribute="trailing" id="oSd-i5-gkO"/>
+                            <constraint firstItem="L9j-gf-FE1" firstAttribute="top" secondItem="vfA-ZS-QGz" secondAttribute="top" id="zUH-T6-rrM"/>
                         </constraints>
                     </view>
                     <toolbarItems/>
@@ -431,7 +431,7 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="versionNoLabel" destination="lCs-Vr-bw0" id="2tE-u0-8Bz"/>
-                        <outlet property="webView" destination="0Vb-1w-uSF" id="ilj-xQ-3OK"/>
+                        <outlet property="webView" destination="L9j-gf-FE1" id="Wnm-Fw-0OH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EIl-HD-D6z" userLabel="First Responder" sceneMemberID="firstResponder"/>
