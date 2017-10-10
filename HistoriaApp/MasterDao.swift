@@ -161,7 +161,6 @@ class MasterDao {
             try PersistableGeopoint.deleteAll(db, keys: [ previousArea!.point1Id, previousArea!.point2Id ])
         }
 
-
         // at this point we need a tour with a db referable id, so insert/update it
         try tour.insertOrUpdate(db)
 
@@ -196,6 +195,11 @@ class MasterDao {
             }
         } else {
             SpeedLog.print("WARN", "Installing a tour without a track should never happen.")
+        }
+
+        // save the tour's lexicon entries
+        for entry in tour.lexiconEntries {
+            try entry.insertOrUpdate(db)
         }
     }
 

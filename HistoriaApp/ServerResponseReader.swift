@@ -134,6 +134,17 @@ class ServerResponseReader {
                 tour.mapstops.append(mapstop)
             }
 
+            // create and link the tour's lexicon entries
+            if dict["lexiconEntries"] != nil {
+                let lexDicts = try dict.safeGetObjectDictArray("lexiconEntries")
+                for lexDict in lexDicts {
+                    let entry = LexiconEntry()
+                    entry.id = try lexDict.safeGetInt64("id")
+                    entry.title = try lexDict.safeGetString("title")
+                    entry.content = try lexDict.safeGetString("content")
+                    tour.lexiconEntries.append(entry)
+                }
+            }
         } catch let error as ParseError {
             SpeedLog.print("ERROR", "ParseError on tour parsing: \(error)")
             return nil

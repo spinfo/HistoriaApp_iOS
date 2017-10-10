@@ -80,10 +80,9 @@ public class Tour : Record {
         return formatter
     }
 
-    // TODO: Check if necessary
     // a tour might have Lexicon entries associated during installation
     // the connection to those is however not persisted
-
+    var lexiconEntries: [LexiconEntry] = Array()
 
     // MARK: Record interface
 

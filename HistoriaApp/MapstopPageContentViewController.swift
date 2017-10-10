@@ -28,6 +28,7 @@ class MapstopPageContentViewController : UIViewController {
         super.viewDidLoad()
 
         if (self.page != nil) {
+            self.webView.delegate = UIApplication.shared.delegate as! AppDelegate
             self.webView.loadHTMLString(self.page!.getPresentationContent(), baseURL: nil)
         } else {
             SpeedLog.print("ERROR", "No page to display.")

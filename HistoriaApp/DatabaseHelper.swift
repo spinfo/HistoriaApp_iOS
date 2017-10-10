@@ -39,7 +39,8 @@ class DatabaseHelper {
                                    Mapstop.fetchCount(db),
                                    Page.fetchCount(db),
                                    Mediaitem.fetchCount(db),
-                                   PersistableGeopoint.fetchCount(db) ]
+                                   PersistableGeopoint.fetchCount(db),
+                                   LexiconEntry.fetchCount(db) ]
 
                 SpeedLog.print("page: \(page2!.guid)")
                 SpeedLog.print("page: \(page.id) == \(page2?.id)")

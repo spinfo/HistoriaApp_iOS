@@ -66,4 +66,9 @@ class HtmlContentCompletion {
         return htmlTemplate.replacingOccurrences(of: replaceMe, with: innerHtml)
     }
 
+    // set the given title at the start of the html snippet and return it
+    static func setTitle(_ title: String, on content: String) -> String {
+        return "<h1>\(title)</h1>\(content)"
+    }
+
 }
