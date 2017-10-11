@@ -32,6 +32,8 @@ class MapViewController: UIViewController, MaplyViewControllerDelegate, UIPageVi
     // a controller for poups over the map
     private var mapPopupController: MapPopupController?
 
+    @IBOutlet weak var osmLicenseLinkButton: UIButton!
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -45,6 +47,13 @@ class MapViewController: UIViewController, MaplyViewControllerDelegate, UIPageVi
         self.view.addSubview(mapViewC!.view)
         mapViewC!.view.frame = self.view.bounds
         addChildViewController(mapViewC!)
+
+        // bring the osm license link back to the front as it is now hidden
+        self.view.bringSubview(toFront: self.osmLicenseLinkButton)
+
+        // set titles
+        self.osmLicenseLinkButton.setTitle("© OpenStreetMap contributors", for: .normal)
+        self.title = "HistoriaApp"
 
         // make this the delegate for tap events
         mapViewC?.delegate = self
@@ -94,6 +103,11 @@ class MapViewController: UIViewController, MaplyViewControllerDelegate, UIPageVi
         // Dispose of any resources that can be recreated.
     }
 
+    // tapping the copyright link int the lower left corner opens the osm page in browser
+    @IBAction func osmLicenseLinkButtonTapped(_ sender: Any) {
+        let url = URL(string: "https://www.openstreetmap.org/copyright/")
+        UIApplication.shared.openURL(url!)
+    }
 
     // MARK: -- Map Interaction (and MaplyViewControllerDelegate)
 
