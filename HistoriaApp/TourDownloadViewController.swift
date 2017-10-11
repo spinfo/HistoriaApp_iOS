@@ -19,6 +19,8 @@ class TourDownloadViewController: UIViewController, UITableViewDataSource, UITab
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.title = "Touren laden"
+
         // retrieve a list of tour records from the server
         self.performUrlRequest(UrlSchemes.availableToursUri) { data in
 
