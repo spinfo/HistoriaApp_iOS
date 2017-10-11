@@ -144,6 +144,17 @@ class MasterDao {
         }
     }
 
+    public func getLexiconEntry(_ id: Int64) -> LexiconEntry? {
+        do {
+            return try dbQueue.inDatabase({ db in
+                return try LexiconEntry.fetchOne(db, key: id)
+            })
+        } catch {
+            SpeedLog.print("ERROR", "Unable to retrieve lexicon entry for (id: '\(id)'): \(error)")
+            return nil
+        }
+    }
+
     // MARK: Tour installation
 
     // This performs all necessary checks and inserts or updates a tour in the db

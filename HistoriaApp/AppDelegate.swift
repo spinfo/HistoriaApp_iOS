@@ -12,7 +12,7 @@ import SpeedLog
 import MMDrawerController
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, UIWebViewDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UIWebViewDelegate, LexiconArticleCloseDelegate {
 
     // MARK: Properties for Navigation
 
@@ -23,6 +23,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIWebViewDelegate {
     private var centerViewControllers = Dictionary<String, UIViewController>()
 
     private var currentCenterController: UIViewController?
+
+    private var lexiconDisplayControllerStack = Array<UIViewController>()
 
     // MARK: Normal AppDelegate stuff
 
@@ -78,6 +80,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIWebViewDelegate {
             SpeedLog.print("INFO", "Controller \(type(of: controller)) already in center.")
             return
         }
+        // if we are not switching to a lexicon article, discard the lexicon article stack
+        if !((controller as? LexiconArticleViewController) != nil) {
+            self.lexiconDisplayControllerStack.removeAll()
+        }
+
         // setup the new center controller and correctly linkt it to the navigation drawer
         let centerNavC = UINavigationController(rootViewController: controller)
         self.centerContainer?.centerViewController = centerNavC
@@ -134,6 +141,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIWebViewDelegate {
         self.centerContainer?.closeDrawer(animated: true, completion: nil)
     }
 
+    // since lexicon articles can lead to further lexicon articles, switching to one starts a
+    // view controller stack, where the first element is the current center view controller
+    // and further lexicon entries may be added to it
+    private func switchToLexiconArticle(for entry: LexiconEntry) {
+        let entryC = self.mainStoryboard.instantiateViewController(withIdentifier: "LexiconArticleViewController") as! LexiconArticleViewController
+        entryC.lexiconEntry = entry
+        entryC.delegate = self
+
+        // a lexicon article is added from another view, add that controller to the stack as first elem
+        if (self.lexiconDisplayControllerStack.count == 0) {
+            self.lexiconDisplayControllerStack.append(self.currentCenterController!)
+        }
+
+        // add the lexicon entry controller to the stack and display it in the center
+        self.lexiconDisplayControllerStack.append(entryC)
+        self.requestCenter(for: entryC)
+    }
+
 
     // -- MARK: UIWebViewDelegate
 
@@ -154,6 +179,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIWebViewDelegate {
             case "http", "https", "mailto", "tel":
                 SpeedLog.print("INFO", "Delegating url load: \(request)")
                 UIApplication.shared.openURL(request.mainDocumentURL!)
+            case "lexicon":
+                let entryId = UrlSchemes.parseLexiconEntryIdFromUrl(request.mainDocumentURL!.absoluteString)
+                if (entryId != nil) {
+                    SpeedLog.print("INFO", "Request to open lexicon article with id: \(entryId)")
+                    let dao = MasterDao()
+                    let entry = dao.getLexiconEntry(entryId!)
+                    if (entry != nil) {
+                        self.switchToLexiconArticle(for: entry!)
+                    } else {
+                        SpeedLog.print("ERROR", "Cannot fetch lexicon article for display, id: \(entryId)")
+                    }
+                } else {
+                    SpeedLog.print("ERROR", "Cannot parse lexicon entry id from request: \(request)")
+                }
             default:
                 SpeedLog.print("WARN", "Unknown url scheme for request: \(request)")
             }
@@ -168,6 +207,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIWebViewDelegate {
         }
         // Prevent the user from navigating away in case of other navigation events
         return false
+    }
+
+    // -- MARK: Lexicon Articles
+
+    // Closing a lexicon article leeds back to the last lexicon article before that
+    // or to  view controller from which the first lexicon article was started
+    func onCloseLexiconArticle() {
+        let _ = self.lexiconDisplayControllerStack.popLast()
+        let next = self.lexiconDisplayControllerStack.popLast()
+        if(next != nil) {
+            self.requestCenter(for: next!)
+        } else {
+            SpeedLog.print("ERROR", "Empty stack on lexicon article close. Switching back to map")
+            self.switchToPlainMap()
+        }
     }
 
 
