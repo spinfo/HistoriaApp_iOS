@@ -273,10 +273,8 @@ fileprivate extension Record {
     // NOTE: Not very efficient, but should be seldom needed (on tour install mainly)
     func insertOrUpdate(_ db: Database) throws {
         if try self.exists(db) {
-            SpeedLog.print("Updating: \(type(of: self))")
             try self.update(db)
         } else {
-            SpeedLog.print("Inserting: \(type(of: self))")
             try self.insert(db)
         }
         

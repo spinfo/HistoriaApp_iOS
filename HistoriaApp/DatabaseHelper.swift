@@ -17,38 +17,12 @@ class DatabaseHelper {
 
     private static var theQueue: DatabaseQueue?
 
-    // TODO: Remove this
+    // TODO: Move to Dao
     public class func save(tour: Tour) -> Bool {
         do {
             let dbQueue = getQueue()!
             try dbQueue.inDatabase({ db in
-
                 try MasterDao().safeInstallTour(tour, in: db)
-
-                // TODO: Remove the rest of this try block, meant for development
-                let mapstop = tour.mapstops.first!
-                let page = mapstop.pages.first!
-
-                let page2 = try Page.fetchOne(db, key: ["guid": page.guid])
-                let mapstop2 = try Mapstop.fetchOne(db, key: mapstop.id)
-                let tour2 = try Tour.fetchOne(db)
-                let area2 = try Area.fetchOne(db)
-                let counts = try [ Area.fetchCount(db),
-                                   Place.fetchCount(db),
-                                   Tour.fetchCount(db),
-                                   Mapstop.fetchCount(db),
-                                   Page.fetchCount(db),
-                                   Mediaitem.fetchCount(db),
-                                   PersistableGeopoint.fetchCount(db),
-                                   LexiconEntry.fetchCount(db) ]
-
-                SpeedLog.print("page: \(page2!.guid)")
-                SpeedLog.print("page: \(page.id) == \(page2?.id)")
-                SpeedLog.print("stop: \(mapstop2?.name)")
-                SpeedLog.print("area: \(area2?.name)")
-                SpeedLog.print("tour: \(tour2?.name)")
-                SpeedLog.print("count: \(counts)")
-
             })
         } catch {
             SpeedLog.print("ERROR", "Failed to install tour: \(error)")
