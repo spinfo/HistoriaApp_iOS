@@ -82,7 +82,6 @@ PODS:
     - WhirlyGlobe/Lib-Headers
   - WhirlyGlobe/octencoding (2.4)
   - WhirlyGlobe/shapefile (2.4)
-  - WhirlyGlobeResources (2.3)
   - Yams (0.3.6)
 
 DEPENDENCIES:
@@ -91,7 +90,6 @@ DEPENDENCIES:
   - SpeedLog
   - SSZipArchive (~> 2.0.3)
   - WhirlyGlobe (= 2.4)
-  - WhirlyGlobeResources
   - Yams (~> 0.3.5)
 
 SPEC CHECKSUMS:
@@ -109,9 +107,8 @@ SPEC CHECKSUMS:
   SSZipArchive: 8c197761d66bd33e7f8b5b51ee57dff303971150
   tinyxml: 41d718babd106ac5d39d4e98b43c835d3b9080d8
   WhirlyGlobe: 2849f458220be42d92d814ba04377586cadbf7f1
-  WhirlyGlobeResources: d7b3e929e828f958a8477ff6797f962fdb165472
   Yams: 33b90105277731bc2035a309a718b51fb655005c
 
-PODFILE CHECKSUM: a691dc9450d0f7983bab8c9782af9140cfe1daa6
+PODFILE CHECKSUM: c41ff4796e6409c6be21c2027f39ba99c9d67075
 
 COCOAPODS: 1.3.1

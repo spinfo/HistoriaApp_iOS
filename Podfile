@@ -7,7 +7,6 @@ target 'HistoriaApp' do
 
   # Our framework for maps
   pod 'WhirlyGlobe', '2.4'
-  pod 'WhirlyGlobeResources'
 
   # Yaml parsing
   pod 'Yams', '~> 0.3.5'
