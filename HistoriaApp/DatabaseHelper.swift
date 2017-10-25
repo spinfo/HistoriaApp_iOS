@@ -1,10 +1,3 @@
-//
-//  DatabaseHelper.swift
-//  HistoriaApp
-//
-//  Created by David on 21.08.17.
-//  Copyright © 2017 David. All rights reserved.
-//
 
 import Foundation
 

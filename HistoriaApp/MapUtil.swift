@@ -1,10 +1,3 @@
-//
-//  MapUtil.swift
-//  HistoriaApp
-//
-//  Created by David on 25.08.17.
-//  Copyright © 2017 David. All rights reserved.
-//
 
 import Foundation
 

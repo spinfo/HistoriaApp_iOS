@@ -1,10 +1,3 @@
-//
-//  TourShortInfoView.swift
-//  HistoriaApp
-//
-//  Created by David on 21.09.17.
-//  Copyright © 2017 David. All rights reserved.
-//
 
 import UIKit
 

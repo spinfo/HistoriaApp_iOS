@@ -1,10 +1,3 @@
-//
-//  Mapstop.swift
-//  HistoriaApp
-//
-//  Created by David on 14.08.17.
-//  Copyright © 2017 David. All rights reserved.
-//
 
 import Foundation
 

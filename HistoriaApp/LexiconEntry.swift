@@ -1,10 +1,3 @@
-//
-//  LexiconEntry.swift
-//  HistoriaApp
-//
-//  Created by David on 22.09.17.
-//  Copyright © 2017 David. All rights reserved.
-//
 
 import Foundation
 

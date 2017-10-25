@@ -1,10 +1,3 @@
-//
-//  NavDrawerController.swift
-//  HistoriaApp
-//
-//  Created by David on 11.09.17.
-//  Copyright © 2017 David. All rights reserved.
-//
 
 import UIKit
 

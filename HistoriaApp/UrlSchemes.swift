@@ -1,10 +1,3 @@
-//
-//  UrlSchemes.swift
-//  HistoriaApp
-//
-//  Created by David on 28.09.17.
-//  Copyright © 2017 David. All rights reserved.
-//
 
 import Foundation
 

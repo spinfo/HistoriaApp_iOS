@@ -1,10 +1,3 @@
-//
-//  HistoriaAppTests.swift
-//  HistoriaAppTests
-//
-//  Created by David on 10.08.17.
-//  Copyright © 2017 David. All rights reserved.
-//
 
 import XCTest
 @testable import HistoriaApp
