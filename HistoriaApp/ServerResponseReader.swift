@@ -151,7 +151,7 @@ class ServerResponseReader {
 
     // wrap Yams' basic parsing into a throwing function for convenience
     private static func parseToDict(_ input: String) throws -> Dictionary<String, Any> {
-        guard input.characters.count > 0 else {
+        guard !input.isEmpty else {
             throw ParseError.General(msg: "Empty input on yaml parsing.")
         }
         // parse the yaml input into a YAMS node and use YAMS' dictionary extension to get a mapping
@@ -161,7 +161,7 @@ class ServerResponseReader {
 
     // wrap Yams' basic parsing into a throwing function for convenience
     private static func parseToArray(_ input: String) throws -> Array<Dictionary<String, Any>> {
-        guard input.characters.count > 0 else {
+        guard !input.isEmpty else {
             throw ParseError.General(msg: "Empty input on yaml parsing.")
         }
         var result = Array<Dictionary<String, Any>>()

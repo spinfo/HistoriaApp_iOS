@@ -19,7 +19,7 @@ class FileService {
         // unzip the archive doing some checks
         if FileManager.default.fileExists(atPath: file.path) {
             if !(SSZipArchive.unzipFile(atPath: file.path, toDestination: docsFolderPath!)) {
-                log.error("Could not extract example tour to: \(docsFolderPath)")
+                log.error("Could not extract example tour to: \(String(describing: docsFolderPath))")
                 return nil
             }
         } else {

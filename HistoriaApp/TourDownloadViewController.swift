@@ -84,18 +84,18 @@ class TourDownloadViewController: UIViewController, UITableViewDataSource, UITab
         let task = session.dataTask(with: urlRequest) { data, response, error in
             // check for errors
             guard error == nil else {
-                log.error("Error on retrieving '\(urlString)': \(error)")
+                log.error("Error on retrieving '\(urlString)': \(error!)")
                 return
             }
             // check for a 200 OK response
             let httpResponse = response as? HTTPURLResponse
             guard (httpResponse != nil && httpResponse?.statusCode == 200) else {
-                log.error("Bad response on request for '\(urlString)': \(response)")
+                log.error("Bad response on request for '\(urlString)': \(response!)")
                 return
             }
             // check for a non-empty data response
             guard data != nil && data?.count != 0 else {
-                log.error("Request for '\(urlString)' returned empty: \(data)")
+                log.error("Request for '\(urlString)' returned empty: \(data!)")
                 return
             }
             // call the provided data handler on the data we got from the request

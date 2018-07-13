@@ -94,7 +94,7 @@ class TourDownloadTableViewCell: UITableViewCell, URLSessionDownloadDelegate  {
                                        delegate: self, delegateQueue: OperationQueue.main)
 
         guard let url = URL(string: tourRecord!.downloadUrl) else {
-            log.error("Not a valid url: '\(tourRecord?.downloadUrl)'")
+            log.error("Not a valid url: '\(String(describing: tourRecord?.downloadUrl))'")
             return
         }
         downloadTask = backgroundSession?.downloadTask(with: url)
@@ -137,7 +137,7 @@ class TourDownloadTableViewCell: UITableViewCell, URLSessionDownloadDelegate  {
             return
         }
         self.updateProgress(.FailedDownloading, bytesWritten: 0)
-        log.error("Download finished with error: \(error)")
+        log.error("Download finished with error: \(String(describing: error))")
     }
 
     // -- MARK: Private methods

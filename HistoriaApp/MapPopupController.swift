@@ -32,14 +32,14 @@ class MapPopupController : UIViewController {
         otherViewC.didMove(toParentViewController: self)
     }
 
-    public func close() {
+    @objc public func close() {
         self.removeExistingChildViews()
         self.removeViewController(self)
     }
 
     // MARK: -- Private methods
 
-    @objc private func userRequestedRemoval(sender: UIBarButtonItem) {
+    private func userRequestedRemoval(sender: UIBarButtonItem) {
         self.close()
     }
 
