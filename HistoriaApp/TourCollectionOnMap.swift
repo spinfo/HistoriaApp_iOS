@@ -1,7 +1,7 @@
 
 import Foundation
 
-import SpeedLog
+import XCGLogger
 
 // A class used to prepare a bunch of tours to be dispplayed on the map
 // - 1st use: Set all relevant attributes of models to be displayed on the map
@@ -38,7 +38,7 @@ public class TourCollectionOnMap {
                 }
 
                 guard let place = mapstop.place else {
-                    SpeedLog.print("WARN", "No place for mapstop. Skipping.")
+                    log.warning("No place for mapstop. Skipping.")
                     continue
                 }
 

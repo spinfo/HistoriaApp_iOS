@@ -1,17 +1,19 @@
 
 import UIKit
 
-import WhirlyGlobe
-import SpeedLog
+import Mapbox
+import XCGLogger
 
-class MapViewController: UIViewController, MaplyViewControllerDelegate, UIPageViewControllerDataSource,
-                        ModelSelectionDelegate {
+class MapViewController: UIViewController, UIPageViewControllerDataSource, ModelSelectionDelegate {
 
+    
+    /*
     // the controller used for manipulating the map
     private var mapViewC: MaplyViewController?
 
     // This saves handles for the currently drawn objects for later removal
     private var currentlyDrawn: [MaplyComponentObject] = Array()
+    */
 
     // The placeOnMap currently selected
     private var selectedPlaceOnMap: PlaceOnMap?
@@ -31,11 +33,12 @@ class MapViewController: UIViewController, MaplyViewControllerDelegate, UIPageVi
         super.viewDidLoad()
 
         guard DatabaseHelper.initDB() else {
-            SpeedLog.print("Database init failed. Nothing to show.")
+            log.error("Database init failed. Nothing to show.")
             return
         }
 
         // Create an empty map and add it to the view
+        /*
         mapViewC = MaplyViewController(asFlatMap: ())
         self.view.addSubview(mapViewC!.view)
         mapViewC!.view.frame = self.view.bounds
@@ -89,6 +92,7 @@ class MapViewController: UIViewController, MaplyViewControllerDelegate, UIPageVi
         let dao = MasterDao()
         let firstTour = dao.getFirstTour()!
         self.tourSelected(firstTour)
+        */
     }
 
     override func didReceiveMemoryWarning() {
@@ -104,6 +108,8 @@ class MapViewController: UIViewController, MaplyViewControllerDelegate, UIPageVi
 
     // MARK: -- Map Interaction (and MaplyViewControllerDelegate)
 
+    /*
+    
     // A tap made directly to the map
     func maplyViewController(_ viewC: MaplyViewController!, didTapAt coord: MaplyCoordinate) {
         // clear annotations for a selected place on map and remove the selection
@@ -115,19 +121,19 @@ class MapViewController: UIViewController, MaplyViewControllerDelegate, UIPageVi
     func maplyViewController(_ viewC: MaplyViewController!, didSelect selectedObj: NSObject!) {
         if let marker = selectedObj as? MaplyScreenMarker {
             guard let placeOnMap = marker.userObject as? PlaceOnMap else {
-                SpeedLog.print("WARN", "Marker without associated PlaceOnMap.")
+                log.warning("Marker without associated PlaceOnMap.")
                 return
             }
             self.showNextAnnotation(for: placeOnMap)
         } else {
-            SpeedLog.print("INFO", "Click to other object: \(selectedObj)")
+            log.info("Click to other object: \(selectedObj)")
         }
     }
 
     // handle a click to the "next" label inside a mapstop annotation
     func onNextMapstopPreviewClick() {
         guard self.selectedPlaceOnMap != nil else {
-            SpeedLog.print("ERROR", "No place on map selected.")
+            log.error("No place on map selected.")
             return
         }
         showNextAnnotation(for: self.selectedPlaceOnMap!)
@@ -136,7 +142,7 @@ class MapViewController: UIViewController, MaplyViewControllerDelegate, UIPageVi
     // handle a tap to an annotation: show that mapstop's pages
     func maplyViewController(_ viewC: MaplyViewController!, didTap annotation: MaplyAnnotation!) {
         guard let mapstop = (annotation as? MapstopAnnotation)?.mapstop else {
-            SpeedLog.print("ERROR", "No mapstop for annotation")
+            log.error("No mapstop for annotation")
             return
         }
 
@@ -149,7 +155,7 @@ class MapViewController: UIViewController, MaplyViewControllerDelegate, UIPageVi
         self.pageViewController!.dataSource = self
 
         guard let startingViewController = self.mapstopPageContentViewController(at: 0) else {
-            SpeedLog.print("ERROR", "Could not get page content controller for start index.")
+            log.error("Could not get page content controller for start index.")
             return
         }
         self.pageViewController!.setViewControllers([startingViewController], direction: .forward, animated: false, completion: nil)
@@ -158,14 +164,14 @@ class MapViewController: UIViewController, MaplyViewControllerDelegate, UIPageVi
         self.displayPopup(controller: pageViewController!)
     }
 
-
+    */
 
     // MARK: UIPageViewControllerDataSource
 
     // prepare the mastops page before the current one
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         guard let pageViewC = viewController as? MapstopPageContentViewController else {
-            SpeedLog.print("ERROR", "Wrong page content view controller type")
+            log.error("Wrong page content view controller type")
             return nil
         }
 
@@ -180,7 +186,7 @@ class MapViewController: UIViewController, MaplyViewControllerDelegate, UIPageVi
     // prepare the mastops page after the current one
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
         guard let pageViewC = viewController as? MapstopPageContentViewController else {
-            SpeedLog.print("ERROR", "Wrong page content view controller type")
+            log.error("Wrong page content view controller type")
             return nil
         }
 
@@ -207,7 +213,7 @@ class MapViewController: UIViewController, MaplyViewControllerDelegate, UIPageVi
     // tell the caller how many pages the currently selected mapstop has
     func presentationCount(for pageViewController: UIPageViewController) -> Int {
         guard self.pages != nil else {
-            SpeedLog.print("ERROR", "Can't get page count for current mapstop.")
+            log.error("Can't get page count for current mapstop.")
             return 0
         }
         return self.pages!.count
@@ -221,12 +227,12 @@ class MapViewController: UIViewController, MaplyViewControllerDelegate, UIPageVi
     // MARK: -- ModelSelectionDelegate
 
     func tourSelected(_ tour: Tour) {
-        SpeedLog.print("INFO", "Request to select tour: \(tour.name)")
+        log.info("Request to select tour: \(tour.name)")
         // we need to re-retrieve the tour here because we don't know if all connections are
         // present. (We could test, but they won't be in all current cases anyway.)
         let dao = MasterDao()
         guard let tourWithAssociations = dao.getTourWithAssociationsForMapping(id: tour.id) else {
-            SpeedLog.print("ERROR", "Unable to retrieve tour (id: \(tour.id)) with associations.")
+            log.error("Unable to retrieve tour (id: \(tour.id)) with associations.")
             return
         }
         let tourCollectionOnMap = TourCollectionOnMap(tours: [tourWithAssociations])
@@ -282,6 +288,7 @@ class MapViewController: UIViewController, MaplyViewControllerDelegate, UIPageVi
 
     // clear the map of all objects we might have added
     private func clearTheMap() {
+        /*
         // remove everything drawn so far
         for handle in currentlyDrawn {
             mapViewC?.remove(handle)
@@ -291,6 +298,7 @@ class MapViewController: UIViewController, MaplyViewControllerDelegate, UIPageVi
         // remove annotations
         mapViewC?.clearAnnotations()
 
+        */
         // close popups
         self.mapPopupController?.close()
     }
@@ -298,13 +306,14 @@ class MapViewController: UIViewController, MaplyViewControllerDelegate, UIPageVi
     // Remove all other content on the map and only display the given
     // collection of tours
     private func switchTo(tourCollection: TourCollectionOnMap) {
+        /*
         // remove everything drawn before
         self.clearTheMap()
 
         // create markes
         let markers = tourCollection.placesOnMap.map { p in return p.createMarker() }
         guard let markersHandle = mapViewC?.addScreenMarkers(markers, desc: nil) else {
-            SpeedLog.print("WARN", "No components created on creating markers")
+            log.warning("No components created on creating markers")
             return
         }
         currentlyDrawn.append(markersHandle)
@@ -314,7 +323,7 @@ class MapViewController: UIViewController, MaplyViewControllerDelegate, UIPageVi
             return MapUtil.getVectorForTrack(t.track!)
         }
         guard let tracksHandle = mapViewC?.addVectors(trackVectors, desc: MapUtil.lineDesc) else {
-            SpeedLog.print("WARN", "No components created on adding track vectors")
+            log.warning("No components created on adding track vectors")
             return
         }
         currentlyDrawn.append(tracksHandle)
@@ -325,10 +334,12 @@ class MapViewController: UIViewController, MaplyViewControllerDelegate, UIPageVi
         let height = mapViewC!.myFindHeight(bbox: box)
         mapViewC!.height = height
         mapViewC!.animate(toPosition: center, time: 0.0)
+        */
     }
 
     // Show an annotation view for a place on the map
     private func showNextAnnotation(for placeOnMap: PlaceOnMap) {
+        /*
         let annotation = placeOnMap.nextAnnotation()
 
         // If the placeOnMap has multiple mapstops, set it up to switch through those
@@ -344,8 +355,11 @@ class MapViewController: UIViewController, MaplyViewControllerDelegate, UIPageVi
         mapViewC?.addAnnotation(annotation, forPoint: placeOnMap.place.getLocation(),
                                 offset: PlaceOnMap.ANNOTATION_OFFSET)
         self.selectedPlaceOnMap = placeOnMap
-    }
+        */
+    }  
 }
+
+/*
 
 fileprivate extension MaplyViewController {
 
@@ -393,7 +407,9 @@ fileprivate extension MaplyViewController {
             zoomHeight /= 2
         }
         
-        SpeedLog.print("WARN", "Calculating the zoom height did not terminate.")
+        log.warning("Calculating the zoom height did not terminate.")
         return zoomHeight * 4
     }
 }
+ 
+ */

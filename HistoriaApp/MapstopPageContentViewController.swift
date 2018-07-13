@@ -2,7 +2,7 @@
 import Foundation
 
 import UIKit
-import SpeedLog
+import XCGLogger
 
 class MapstopPageContentViewController : UIViewController {
 
@@ -24,7 +24,7 @@ class MapstopPageContentViewController : UIViewController {
             self.webView.delegate = UIApplication.shared.delegate as! AppDelegate
             self.webView.loadHTMLString(self.page!.getPresentationContent(), baseURL: nil)
         } else {
-            SpeedLog.print("ERROR", "No page to display.")
+            log.error("No page to display.")
         }
     }
 

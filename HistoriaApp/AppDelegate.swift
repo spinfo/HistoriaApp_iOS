@@ -1,12 +1,15 @@
 
 import UIKit
 
-import SpeedLog
+import XCGLogger
 import MMDrawerController
+
+// globally declare the logger
+let log = XCGLogger.default
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UIWebViewDelegate, LexiconArticleCloseDelegate {
-
+    
     // MARK: Properties for Navigation
 
     private var centerContainer: MMDrawerController?
@@ -26,7 +29,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIWebViewDelegate, Lexico
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
         // Set logging options for the app
-        SpeedLog.mode = [ .FullCodeLocation ]
+        // TODO: Set log level to .error in production
+        log.setup(level: .debug, showThreadName: true, showLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: nil, fileLevel: .debug)
 
         // Set the appearence of page view indicators
         let pageControl = UIPageControl.appearance()
@@ -70,7 +74,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIWebViewDelegate, Lexico
     // a controller may request to be put in center view and will be so put, if it isn't there already
     func requestCenter(for controller: UIViewController) {
         if (self.currentCenterController != nil && self.currentCenterController! == controller) {
-            SpeedLog.print("INFO", "Controller \(type(of: controller)) already in center.")
+            log.info("Controller \(type(of: controller)) already in center.")
             return
         }
         // if we are not switching to a lexicon article, discard the lexicon article stack
@@ -163,31 +167,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIWebViewDelegate, Lexico
         let urlScheme = request.mainDocumentURL?.scheme
         guard urlScheme != nil else {
             // Never load anything that we can't know the scheme of
-            SpeedLog.print("WARN", "No url scheme for request: \(request)")
+            log.warning("No url scheme for request: \(request)")
             return false
         }
 
         if navigationType == .linkClicked {
             switch (urlScheme!) {
             case "http", "https", "mailto", "tel":
-                SpeedLog.print("INFO", "Delegating url load: \(request)")
+                log.info("Delegating url load: \(request)")
                 UIApplication.shared.openURL(request.mainDocumentURL!)
             case "lexicon":
                 let entryId = UrlSchemes.parseLexiconEntryIdFromUrl(request.mainDocumentURL!.absoluteString)
                 if (entryId != nil) {
-                    SpeedLog.print("INFO", "Request to open lexicon article with id: \(entryId)")
+                    log.info("Request to open lexicon article with id: \(String(describing: entryId))")
                     let dao = MasterDao()
                     let entry = dao.getLexiconEntry(entryId!)
                     if (entry != nil) {
                         self.switchToLexiconArticle(for: entry!)
                     } else {
-                        SpeedLog.print("ERROR", "Cannot fetch lexicon article for display, id: \(entryId)")
+                        log.error("Cannot fetch lexicon article for display, id: \(String(describing: entryId))")
                     }
                 } else {
-                    SpeedLog.print("ERROR", "Cannot parse lexicon entry id from request: \(request)")
+                    log.error("Cannot parse lexicon entry id from request: \(request)")
                 }
             default:
-                SpeedLog.print("WARN", "Unknown url scheme for request: \(request)")
+                log.warning("Unknown url scheme for request: \(request)")
             }
             return false
         } else if navigationType == .other {
@@ -195,7 +199,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIWebViewDelegate, Lexico
             if urlScheme! == "about" {
                 return true
             }
-            SpeedLog.print("Not reacting to unknown navigation event: \(request)")
+            log.debug("Not reacting to unknown navigation event: \(request)")
             return false
         }
         // Prevent the user from navigating away in case of other navigation events
@@ -212,7 +216,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIWebViewDelegate, Lexico
         if(next != nil) {
             self.requestCenter(for: next!)
         } else {
-            SpeedLog.print("ERROR", "Empty stack on lexicon article close. Switching back to map")
+            log.error("Empty stack on lexicon article close. Switching back to map")
             self.switchToPlainMap()
         }
     }

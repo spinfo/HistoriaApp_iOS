@@ -2,7 +2,7 @@
 import Foundation
 
 import Yams
-import SpeedLog
+import XCGLogger
 
 // A service class parsing YAML responses sent by the backend
 class ServerResponseReader {
@@ -30,10 +30,10 @@ class ServerResponseReader {
                 return record
             })
         } catch let error as ParseError {
-            SpeedLog.print("ERROR", "ParseError on tour records parsing: \(error)")
+            log.error("ParseError on tour records parsing: \(error)")
             return nil
         } catch {
-            SpeedLog.print("ERROR", "Unknown error in tour records parsing: \(error)")
+            log.error("Unknown error in tour records parsing: \(error)")
             return nil
         }
 
@@ -139,10 +139,10 @@ class ServerResponseReader {
                 }
             }
         } catch let error as ParseError {
-            SpeedLog.print("ERROR", "ParseError on tour parsing: \(error)")
+            log.error("ParseError on tour parsing: \(error)")
             return nil
         } catch {
-            SpeedLog.print("ERROR", "Unknown error in tour parsing: \(error)")
+            log.error("Unknown error in tour parsing: \(error)")
             return nil
         }
 

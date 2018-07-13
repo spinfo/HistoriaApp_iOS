@@ -1,8 +1,6 @@
 
 import UIKit
 
-import SpeedLog
-
 class AboutPageViewController: UIViewController {
 
     @IBOutlet weak var versionNoLabel: UIBarButtonItem!
@@ -41,11 +39,11 @@ class AboutPageViewController: UIViewController {
     private func getAboutPageContent() -> String {
         // retrieve the asset data as a string
         guard let asset = NSDataAsset(name: "AboutPage") else {
-            SpeedLog.print("ERROR", "About page asset data not present.")
+            log.error("About page asset data not present.")
             return ""
         }
         guard let aboutPageHtml = String(data: asset.data, encoding: .utf8) else {
-            SpeedLog.print("ERROR", "Cannot parse about page asset data into string.")
+            log.error("Cannot parse about page asset data into string.")
             return ""
         }
         return aboutPageHtml

@@ -2,7 +2,7 @@
 import Foundation
 
 import GRDB
-import SpeedLog
+import XCGLogger
 
 // For the moment we only use one dao for all db access
 class MasterDao {
@@ -21,7 +21,7 @@ class MasterDao {
         do {
             return try unsafeGetMapstops(forTour: id)
         } catch {
-            SpeedLog.print("ERROR", "Unable to retrieve mapstops for tour (id: '\(id)'): \(error)")
+            log.error("Unable to retrieve mapstops for tour (id: '\(id)'): \(error)")
             return []
         }
     }
@@ -30,7 +30,7 @@ class MasterDao {
         do {
             return try unsafeGetPlace(id: id)
         } catch {
-            SpeedLog.print("ERROR", "Unable to retrieve place (id: '\(id)'): \(error)")
+            log.error("Unable to retrieve place (id: '\(id)'): \(error)")
             return nil
         }
     }
@@ -41,7 +41,7 @@ class MasterDao {
                 return try Tour.fetchOne(db)
             })
         } catch {
-            SpeedLog.print("ERROR", "Unable to retrieve a single tour: \(error)")
+            log.error("Unable to retrieve a single tour: \(error)")
             return nil
         }
     }
@@ -52,7 +52,7 @@ class MasterDao {
                 return try Area.fetchOne(db)
             })
         } catch {
-            SpeedLog.print("ERROR", "Unable to retrieve a single area: \(error)")
+            log.error("Unable to retrieve a single area: \(error)")
             return nil
         }
     }
@@ -63,7 +63,7 @@ class MasterDao {
                 return try Tour.filter(Column("area_id") == id).fetchCount(db)
             })
         } catch {
-            SpeedLog.print("ERROR", "Unable to retrieve a tour count for area \(id)")
+            log.error("Unable to retrieve a tour count for area \(id)")
             return 0
         }
     }
@@ -74,7 +74,7 @@ class MasterDao {
                 return try Area.fetchAll(db)
             })
         } catch {
-            SpeedLog.print("ERROR", "Unable to retrieve a list of all areas")
+            log.error("Unable to retrieve a list of all areas")
             return []
         }
     }
@@ -84,7 +84,7 @@ class MasterDao {
         do {
             return try unsafeGetTours(inAreaWithId: areaId)
         } catch {
-            SpeedLog.print("ERROR", "Unable to retrieve tours for area (id: '\(areaId)'): \(error)")
+            log.error("Unable to retrieve tours for area (id: '\(areaId)'): \(error)")
             return []
         }
     }
@@ -99,7 +99,7 @@ class MasterDao {
             }
             return tours
         } catch {
-            SpeedLog.print("ERROR", "Unable to retrieve tours for area (id: '\(id)'): \(error)")
+            log.error("Unable to retrieve tours for area (id: '\(id)'): \(error)")
             return []
         }
     }
@@ -110,7 +110,7 @@ class MasterDao {
             try self.unsafeSetAssociationsForMapping(on: tour)
             return tour
         } catch {
-            SpeedLog.print("ERROR", "Unable to retrieve tour with associations: (id: '\(id)'): \(error)")
+            log.error("Unable to retrieve tour with associations: (id: '\(id)'): \(error)")
             return nil
         }
     }
@@ -121,7 +121,7 @@ class MasterDao {
                 return try Page.filter(Column("mapstop_id") == id).fetchAll(db)
             })
         } catch {
-            SpeedLog.print("ERROR", "Unable to retrieve pages for mapstop (id: '\(id)'): \(error)")
+            log.error("Unable to retrieve pages for mapstop (id: '\(id)'): \(error)")
             return []
         }
     }
@@ -132,7 +132,7 @@ class MasterDao {
                 return try Mediaitem.filter(Column("page_id") == id).fetchAll(db)
             })
         } catch {
-            SpeedLog.print("ERROR", "Unable to retrieve mediaitems for page (id: '\(id)'): \(error)")
+            log.error("Unable to retrieve mediaitems for page (id: '\(id)'): \(error)")
             return []
         }
     }
@@ -143,7 +143,7 @@ class MasterDao {
                 return try LexiconEntry.fetchOne(db, key: id)
             })
         } catch {
-            SpeedLog.print("ERROR", "Unable to retrieve lexicon entry for (id: '\(id)'): \(error)")
+            log.error("Unable to retrieve lexicon entry for (id: '\(id)'): \(error)")
             return nil
         }
     }
@@ -198,7 +198,7 @@ class MasterDao {
                 try point.insert(db)
             }
         } else {
-            SpeedLog.print("WARN", "Installing a tour without a track should never happen.")
+            log.warning("Installing a tour without a track should never happen.")
         }
 
         // save the tour's lexicon entries

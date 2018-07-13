@@ -1,7 +1,7 @@
 
 import UIKit
 
-import SpeedLog
+import XCGLogger
 
 class AreaSelectionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
@@ -53,7 +53,7 @@ class AreaSelectionViewController: UIViewController, UITableViewDelegate, UITabl
         if self.areaSelectionDelegate != nil {
             areaSelectionDelegate?.areaSelected(area)
         } else {
-            SpeedLog.print("ERROR", "Cannot delegate tour selection, no delegate present.")
+            log.error("Cannot delegate tour selection, no delegate present.")
         }
     }
 

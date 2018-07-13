@@ -1,7 +1,7 @@
 
 import UIKit
 
-import SpeedLog
+import XCGLogger
 
 class TourSelectionViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
@@ -27,7 +27,7 @@ class TourSelectionViewController: UIViewController, UITableViewDataSource, UITa
         // TODO: This has to react to the currently chosen area
         let area = dao.getFirstArea()!
         self.tours = dao.getTours(inAreaWIthId: area.id)
-        SpeedLog.print("INFO", "Refreshed tour list to display: Have \(tours.count) tours")
+        log.info("Refreshed tour list to display: Have \(tours.count) tours")
     }
 
 
@@ -52,7 +52,7 @@ class TourSelectionViewController: UIViewController, UITableViewDataSource, UITa
         if self.tourSelectionDelegate != nil {
             tourSelectionDelegate?.tourSelected(tour)
         } else {
-            SpeedLog.print("ERROR", "Cannot delegate tour selection, no delegate present.")
+            log.error("Cannot delegate tour selection, no delegate present.")
         }
     }
 

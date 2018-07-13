@@ -1,7 +1,7 @@
 
 import UIKit
 
-import SpeedLog
+import XCGLogger
 
 protocol LexiconArticleCloseDelegate {
     func onCloseLexiconArticle() -> Void
@@ -24,7 +24,7 @@ class LexiconArticleViewController: UIViewController {
             self.webView.delegate = UIApplication.shared.delegate as! AppDelegate
             self.webView.loadHTMLString(lexiconEntry!.getPresentationContent(), baseURL: nil)
         } else {
-            SpeedLog.print("ERROR", "No lexicon entry defined for article view.")
+            log.error("No lexicon entry defined for article view.")
         }
     }
 

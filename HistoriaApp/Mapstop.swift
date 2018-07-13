@@ -39,10 +39,10 @@ public class Mapstop : Record {
 
     /// Initialize from a database row
     public required init(row: Row) {
-        id = row.value(named: "id")
-        name = row.value(named: "name")
-        description = row.value(named: "description")
-        placeId = row.value(named: "place_id")
+        id = row["id"]
+        name = row["name"]
+        description = row["description"]
+        placeId = row["place_id"]
         // pages = Page.filter( == id)
         super.init(row: row)
     }

@@ -47,10 +47,10 @@ public class Page : Record {
 
     /// Initialize from a database row
     public required init(row: Row) {
-        id = row.value(named: "id")
-        guid = row.value(named: "guid")
-        pos = row.value(named: "pos")
-        content = row.value(named: "content")
+        id = row["id"]
+        guid = row["guid"]
+        pos = row["pos"]
+        content = row["content"]
         super.init(row: row)
     }
 

@@ -1,11 +1,13 @@
 
 import Foundation
 
-import WhirlyGlobe
+import Mapbox
 
 // A simple wrapper around maply annotation allowing for the connection to a mapstop annotation
-class MapstopAnnotation : MaplyAnnotation {
+/*
+ class MapstopAnnotation : MaplyAnnotation {
 
     public var mapstop: Mapstop?
 
 }
+*/

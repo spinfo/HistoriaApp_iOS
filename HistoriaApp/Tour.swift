@@ -91,18 +91,18 @@ public class Tour : Record {
 
     /// Initialize from a database row
     public required init(row: Row) {
-        id = row.value(named: "id")
-        version = row.value(named: "version")
-        name = row.value(named: "name")
-        type = TourType(rawValue: row.value(named: "type"))!
-        walkLength = row.value(named: "walkLength")
-        duration = row.value(named: "duration")
-        tagWhat = row.value(named: "tagWhat")
-        tagWhen = row.value(named: "tagWhen")
-        tagWhere = row.value(named: "tagWhere")
-        accessibility = row.value(named: "accessibility")
-        author = row.value(named: "author")
-        intro = row.value(named: "intro")
+        id = row["id"]
+        version = row["version"]
+        name = row["name"]
+        type = TourType(rawValue: row["type"])!
+        walkLength = row["walkLength"]
+        duration = row["duration"]
+        tagWhat = row["tagWhat"]
+        tagWhen = row["tagWhen"]
+        tagWhere = row["tagWhere"]
+        accessibility = row["accessibility"]
+        author = row["author"]
+        intro = row["intro"]
         super.init(row: row)
     }
 

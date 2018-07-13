@@ -1,7 +1,6 @@
 
 import UIKit
 
-import SpeedLog
 
 class NavDrawerController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
@@ -63,7 +62,7 @@ class NavDrawerController: UIViewController, UITableViewDataSource, UITableViewD
         case 4:
             appDelegate.switchToCenterController("AboutPageViewController")
         default:
-            SpeedLog.print("WARN", "Unknown menu item index: \(indexPath)")
+            log.warning("Unknown menu item index: \(indexPath)")
         }
 
         appDelegate.closeNavDrawer()

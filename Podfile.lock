@@ -1,37 +1,6 @@
 PODS:
-  - AFNetworking (2.4.1):
-    - AFNetworking/NSURLConnection (= 2.4.1)
-    - AFNetworking/NSURLSession (= 2.4.1)
-    - AFNetworking/Reachability (= 2.4.1)
-    - AFNetworking/Security (= 2.4.1)
-    - AFNetworking/Serialization (= 2.4.1)
-    - AFNetworking/UIKit (= 2.4.1)
-  - AFNetworking/NSURLConnection (2.4.1):
-    - AFNetworking/Reachability
-    - AFNetworking/Security
-    - AFNetworking/Serialization
-  - AFNetworking/NSURLSession (2.4.1):
-    - AFNetworking/Reachability
-    - AFNetworking/Security
-    - AFNetworking/Serialization
-  - AFNetworking/Reachability (2.4.1)
-  - AFNetworking/Security (2.4.1)
-  - AFNetworking/Serialization (2.4.1)
-  - AFNetworking/UIKit (2.4.1):
-    - AFNetworking/NSURLConnection
-    - AFNetworking/NSURLSession
-  - boost/graph-includes (1.51.0)
-  - boost/math-includes (1.51.0)
-  - boost/pointer_cast-includes (1.51.0)
-  - boost/shared_ptr-includes (1.51.0)
-  - boost/string_algorithms-includes (1.51.0)
-  - clipper (6.1.3a)
-  - eigen (3.2.10)
-  - FMDB (2.7.2):
-    - FMDB/standard (= 2.7.2)
-  - FMDB/standard (2.7.2)
-  - GRDB.swift (1.0)
-  - libjson (7.6.1)
+  - GRDB.swift (3.2.0)
+  - Mapbox-iOS-SDK (4.1.1)
   - MMDrawerController (0.5.7):
     - MMDrawerController/Core (= 0.5.7)
     - MMDrawerController/MMDrawerBarButtonItem (= 0.5.7)
@@ -44,71 +13,43 @@ PODS:
     - MMDrawerController/Core
   - MMDrawerController/Subclass (0.5.7):
     - MMDrawerController/Core
-  - proj4 (4.8.0)
-  - SMCalloutView (2.1.5)
-  - SpeedLog (0.3.0)
+  - ObjcExceptionBridging (1.0.1):
+    - ObjcExceptionBridging/ObjcExceptionBridging (= 1.0.1)
+  - ObjcExceptionBridging/ObjcExceptionBridging (1.0.1)
   - SSZipArchive (2.0.7)
-  - tinyxml (2.1.0)
-  - WhirlyGlobe (2.4):
-    - WhirlyGlobe/MaplyComponent (= 2.4)
-  - WhirlyGlobe/aaplus (2.4)
-  - WhirlyGlobe/glues-wg (2.4)
-  - WhirlyGlobe/kissxml (2.4)
-  - WhirlyGlobe/Lib (2.4):
-    - clipper (~> 6.1.3a)
-    - libjson (~> 7.6.0)
-    - proj4 (~> 4.8.0)
-    - tinyxml (~> 2.1.0)
-    - WhirlyGlobe/glues-wg
-    - WhirlyGlobe/Lib-Headers
-    - WhirlyGlobe/octencoding
-    - WhirlyGlobe/shapefile
-  - WhirlyGlobe/Lib-Headers (2.4):
-    - boost/graph-includes (<= 1.51.0)
-    - boost/math-includes (<= 1.51.0)
-    - boost/pointer_cast-includes (<= 1.51.0)
-    - boost/shared_ptr-includes (<= 1.51.0)
-    - boost/string_algorithms-includes (<= 1.51.0)
-    - eigen (~> 3.2.4)
-  - WhirlyGlobe/MaplyComponent (2.4):
-    - AFNetworking (~> 2.4.0)
-    - FMDB
-    - SMCalloutView
-    - WhirlyGlobe/aaplus
-    - WhirlyGlobe/kissxml
-    - WhirlyGlobe/Lib
-    - WhirlyGlobe/MaplyComponent-Headers
-  - WhirlyGlobe/MaplyComponent-Headers (2.4):
-    - WhirlyGlobe/Lib-Headers
-  - WhirlyGlobe/octencoding (2.4)
-  - WhirlyGlobe/shapefile (2.4)
+  - XCGLogger (6.0.4):
+    - XCGLogger/Core (= 6.0.4)
+  - XCGLogger/Core (6.0.4):
+    - ObjcExceptionBridging
   - Yams (0.3.6)
 
 DEPENDENCIES:
-  - GRDB.swift (= 1.0)
+  - GRDB.swift (= 3.2.0)
+  - Mapbox-iOS-SDK (~> 4.1)
   - MMDrawerController (~> 0.5.7)
-  - SpeedLog
   - SSZipArchive (~> 2.0.3)
-  - WhirlyGlobe (= 2.4)
+  - XCGLogger (~> 6.0.4)
   - Yams (~> 0.3.5)
 
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - GRDB.swift
+    - Mapbox-iOS-SDK
+    - MMDrawerController
+    - ObjcExceptionBridging
+    - SSZipArchive
+    - XCGLogger
+    - Yams
+
 SPEC CHECKSUMS:
-  AFNetworking: 41d45d2c14219af0fa5addf3cfd433a002c13c9f
-  boost: 6c5c8d8daef26ac83c1e1c00ad14de62b80161d7
-  clipper: b009ea56c501e756299e6999e2c73eef6e1ed218
-  eigen: e2d5ffb7be5a884d4608ebe35a97b6f65e13ed8b
-  FMDB: 6198a90e7b6900cfc046e6bc0ef6ebb7be9236aa
-  GRDB.swift: d2613b2a4c07270d91c8589d94f8b237776e6473
-  libjson: 1a065ca64704a5d1b51c3754268998942d57ac6f
+  GRDB.swift: c5bb04b25a9931fec937920e913787e45f96124f
+  Mapbox-iOS-SDK: 78e66fad4085433d04fccb9364df4be08042fb82
   MMDrawerController: 7a4cf8e25596bf2434e03ce50d22a8608ddee6a1
-  proj4: 234525105d05a33b2ae9a90a6fe3935f7a246f7e
-  SMCalloutView: 5c0ee363dc8e7204b2fda17dfad38c93e9e23481
-  SpeedLog: 7d4413adbbaef1894dd264516707b57f30f06515
+  ObjcExceptionBridging: c30e00eb3700467e695faeea30e26e18bd445001
   SSZipArchive: 8c197761d66bd33e7f8b5b51ee57dff303971150
-  tinyxml: 41d718babd106ac5d39d4e98b43c835d3b9080d8
-  WhirlyGlobe: 2849f458220be42d92d814ba04377586cadbf7f1
+  XCGLogger: 4fc1bc0bdd5828cb8dc8da7a843536cda1bea8f3
   Yams: 33b90105277731bc2035a309a718b51fb655005c
 
-PODFILE CHECKSUM: c41ff4796e6409c6be21c2027f39ba99c9d67075
+PODFILE CHECKSUM: c22ffcd216959fc27a4c385c4ce5eaa57456995a
 
-COCOAPODS: 1.3.1
+COCOAPODS: 1.5.3

@@ -1,8 +1,7 @@
 
 import Foundation
 
-import WhirlyGlobe
-import SpeedLog
+import XCGLogger
 
 // just for "rad2deg()" at the moment
 import GLKit
@@ -11,6 +10,8 @@ import CoreLocation
 // some static methods to extract map functionality
 class MapUtil {
 
+    /*
+    
     // how a tour's tracks vector looks
     static let lineDesc: [String: Any] = [
         kMaplyColor: UIColor(red: 0.1, green: 0.3, blue: 1, alpha: 0.5) ,
@@ -55,5 +56,7 @@ class MapUtil {
     private static func rad2deg(_ radians: Float) -> Double {
         return CLLocationDegrees(GLKMathRadiansToDegrees(radians))
     }
+ 
+    */
 
 }

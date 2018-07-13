@@ -2,7 +2,7 @@
 import Foundation
 
 import GRDB
-import SpeedLog
+import XCGLogger
 
 // This performs basic operations having to do with the database in general,
 // e.g. setting up the database or tearing it down
@@ -18,7 +18,7 @@ class DatabaseHelper {
                 try MasterDao().safeInstallTour(tour, in: db)
             })
         } catch {
-            SpeedLog.print("ERROR", "Failed to install tour: \(error)")
+            log.error("Failed to install tour: \(error)")
             return false
         }
         return true
@@ -35,7 +35,7 @@ class DatabaseHelper {
         do {
             // initialize the queue as it might not have been
             guard let localQueue = getQueue() else {
-                SpeedLog.print("ERROR", "Unable to get the db queue.")
+                log.error("Unable to get the db queue.")
                 return false
             }
             try localQueue.inDatabase({ db in
@@ -49,20 +49,20 @@ class DatabaseHelper {
 
         if !hasMinimumEntities {
             guard let localQueue = getQueue() else {
-                SpeedLog.print("ERROR", "Unable to get the db queue.")
+                log.error("Unable to get the db queue.")
                 return false
             }
-            SpeedLog.print("INFO", "Minimum db requirements not met, (re-)installing db.")
+            log.info("Minimum db requirements not met, (re-)installing db.")
             do {
                 try localQueue.inDatabase({ db in
                     try createTables(in: db)
                 })
             } catch {
-                SpeedLog.print("ERROR", "Could not create tables: \(error)")
+                log.error("Could not create tables: \(error)")
                 return false
             }
             guard let _ = FileService.installExampleTour() else {
-                SpeedLog.print("ERROR", "Error on installing the example tour.")
+                log.error("Error on installing the example tour.")
                 return false
             }
         }
@@ -73,7 +73,7 @@ class DatabaseHelper {
     public class func getQueue() -> DatabaseQueue? {
         if theQueue == nil {
             guard let dbFileURL = FileService.getDBFile() else {
-                SpeedLog.print("ERROR", "Unable to determine a database file.")
+                log.error("Unable to determine a database file.")
                 return nil
             }
 
@@ -82,7 +82,7 @@ class DatabaseHelper {
                 // setup our database queue to release memory if asked for by the os
                 theQueue?.setupMemoryManagement(in: UIApplication.shared)
             } catch {
-                SpeedLog.print("ERROR", "Unable to establish database queue: \(error)")
+                log.error("Unable to establish database queue: \(error)")
                 return nil
             }
         }

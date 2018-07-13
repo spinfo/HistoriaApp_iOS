@@ -1,7 +1,7 @@
 
 import Foundation
 
-import SpeedLog
+import XCGLogger
 
 class UrlSchemes {
 

@@ -2,7 +2,7 @@
 import Foundation
 
 import GRDB
-import WhirlyGlobe
+
 
 class Place : Record {
 
@@ -22,9 +22,11 @@ class Place : Record {
     var area: Area?
 
     // Method to get a geographical point from the place's lat/lon
+    /*
     public func getLocation() -> MaplyCoordinate {
         return MaplyCoordinateMakeWithDegrees(Float(self.lon), Float(self.lat))
     }
+    */
 
     // MARK: Record interface
 
@@ -40,10 +42,10 @@ class Place : Record {
 
     /// Initialize from a database row
     public required init(row: Row) {
-        id = row.value(named: "id")
-        lat = row.value(named: "lat")
-        lon = row.value(named: "lon")
-        name = row.value(named: "name")
+        id = row["id"]
+        lat = row["lat"]
+        lon = row["lon"]
+        name = row["name"]
         super.init(row: row)
     }
 

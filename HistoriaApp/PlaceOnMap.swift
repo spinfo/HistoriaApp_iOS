@@ -1,8 +1,8 @@
 
 import Foundation
 
-import SpeedLog
-import WhirlyGlobe
+import XCGLogger
+
 
 class PlaceOnMap {
 
@@ -38,16 +38,17 @@ class PlaceOnMap {
     public static let ANNOTATION_OFFSET = CGPoint(x: 0, y: -20)
 
     // a handle to the marker, that this mapstop represents on the map
-    private var marker: MaplyScreenMarker?
+    // private var marker: MaplyScreenMarker?
 
     // the annotation used to show information about the mapstops located at
     // this place
-    private var annotation: MapstopAnnotation?
+    // private var annotation: MapstopAnnotation?
 
     // we keep an index to the currently previewed mapstop
     private var stopPreviewIdx = -1
 
     // create a marker to show this place on the map
+    /*
     func createMarker() -> MaplyScreenMarker {
         // create an empty marker
         let marker = MaplyScreenMarker()
@@ -68,10 +69,12 @@ class PlaceOnMap {
 
         return marker
     }
+    */
 
     // when a place is selected, it shows a preview of it's mapstop(s) in
     // an annotation, this selects the next mapstop to preview and returns
     // a MaplyAnnotation to do the preview with
+    /*
     func nextAnnotation() -> MapstopAnnotation {
         // initialize the annotation for this mapstop if need be
         if annotation == nil {
@@ -88,6 +91,7 @@ class PlaceOnMap {
         annotation!.subTitle = mapstop.description
         return annotation!
     }
+     */
 
     // an optional label, that the client may add to the annotation to switch
     // throgh multiple mapstop previews

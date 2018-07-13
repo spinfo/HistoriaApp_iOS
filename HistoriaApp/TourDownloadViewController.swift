@@ -1,7 +1,7 @@
 
 import UIKit
 
-import SpeedLog
+import XCGLogger
 
 class TourDownloadViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
@@ -19,12 +19,12 @@ class TourDownloadViewController: UIViewController, UITableViewDataSource, UITab
 
             let recordsYaml = String(data: data, encoding: .utf8)
             guard recordsYaml != nil else {
-                SpeedLog.print("ERROR", "Unable to parse response for tour record request.")
+                log.error("Unable to parse response for tour record request.")
                 return
             }
             let records = ServerResponseReader.parseTourRecordsYAML(recordsYaml!)
             guard records != nil && records!.count > 0 else {
-                SpeedLog.print("ERROR", "Empty or nil response on tour record parsing.")
+                log.error("Empty or nil response on tour record parsing.")
                 return
             }
             // update our data and reload the table on the main thread
@@ -63,7 +63,7 @@ class TourDownloadViewController: UIViewController, UITableViewDataSource, UITab
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let cell = tableView.cellForRow(at: indexPath) as? TourDownloadTableViewCell else {
-            SpeedLog.print("ERROR", "Can't get cell at \(indexPath)")
+            log.error("Can't get cell at \(indexPath)")
             return
         }
         cell.toggleTourDownload()
@@ -75,7 +75,7 @@ class TourDownloadViewController: UIViewController, UITableViewDataSource, UITab
     // provides the caller with a hook to just deal with the returned data
     private func performUrlRequest(_ urlString: String, dataHandler: @escaping ((Data) -> Void)) {
         guard let url = URL(string: urlString) else {
-            SpeedLog.print("ERROR", "Not a valid url: '\(urlString)'")
+            log.error("Not a valid url: '\(urlString)'")
             return
         }
         let urlRequest = URLRequest(url: url)
@@ -84,18 +84,18 @@ class TourDownloadViewController: UIViewController, UITableViewDataSource, UITab
         let task = session.dataTask(with: urlRequest) { data, response, error in
             // check for errors
             guard error == nil else {
-                SpeedLog.print("ERROR", "Error on retrieving '\(urlString)': \(error)")
+                log.error("Error on retrieving '\(urlString)': \(error)")
                 return
             }
             // check for a 200 OK response
             let httpResponse = response as? HTTPURLResponse
             guard (httpResponse != nil && httpResponse?.statusCode == 200) else {
-                SpeedLog.print("ERROR", "Bad response on request for '\(urlString)': \(response)")
+                log.error("Bad response on request for '\(urlString)': \(response)")
                 return
             }
             // check for a non-empty data response
             guard data != nil && data?.count != 0 else {
-                SpeedLog.print("ERROR", "Request for '\(urlString)' returned empty: \(data)")
+                log.error("Request for '\(urlString)' returned empty: \(data)")
                 return
             }
             // call the provided data handler on the data we got from the request

@@ -1,7 +1,7 @@
 
 import Foundation
 
-import SpeedLog
+import XCGLogger
 
 class HtmlContentCompletion {
 
@@ -34,21 +34,21 @@ class HtmlContentCompletion {
         for mediaitem in media {
             let basename = (mediaitem.guid as NSString).lastPathComponent
             guard (basename.characters.count > 0 && basename != "/") else {
-                SpeedLog.print("WARN", "Could not determine basename for guid: \(mediaitem.guid)")
+                log.warning("Could not determine basename for guid: \(mediaitem.guid)")
                 continue
             }
             guard let fileUrl = FileService.getFile(atBase: basename) else {
-                SpeedLog.print("WARN", "Cannot determine file url for base: '\(basename)'")
+                log.warning("Cannot determine file url for base: '\(basename)'")
                 continue
             }
             guard FileManager.default.fileExists(atPath: fileUrl.path) else {
-                SpeedLog.print("WARN", "File for mediaitem does not exist at: \(fileUrl)")
+                log.warning("File for mediaitem does not exist at: \(fileUrl)")
                 continue
             }
             // actually do the replacement
             let replacement = UrlSchemes.file + fileUrl.path
             newContent = newContent.replacingOccurrences(of: mediaitem.guid, with: replacement)
-            SpeedLog.print("INFO", "Replacing '\(mediaitem.guid)' with '\(replacement)'")
+            log.info("Replacing '\(mediaitem.guid)' with '\(replacement)'")
         }
 
         return newContent

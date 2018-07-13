@@ -1,7 +1,7 @@
 
 import UIKit
 
-import SpeedLog
+import XCGLogger
 
 class TourDownloadTableViewCell: UITableViewCell, URLSessionDownloadDelegate  {
 
@@ -84,7 +84,7 @@ class TourDownloadTableViewCell: UITableViewCell, URLSessionDownloadDelegate  {
         }
 
         guard tourRecord != nil else {
-            SpeedLog.print("ERROR", "No tour record to start download for")
+            log.error("No tour record to start download for")
             return
         }
 
@@ -94,7 +94,7 @@ class TourDownloadTableViewCell: UITableViewCell, URLSessionDownloadDelegate  {
                                        delegate: self, delegateQueue: OperationQueue.main)
 
         guard let url = URL(string: tourRecord!.downloadUrl) else {
-            SpeedLog.print("ERROR", "Not a valid url: '\(tourRecord?.downloadUrl)'")
+            log.error("Not a valid url: '\(tourRecord?.downloadUrl)'")
             return
         }
         downloadTask = backgroundSession?.downloadTask(with: url)
@@ -107,20 +107,20 @@ class TourDownloadTableViewCell: UITableViewCell, URLSessionDownloadDelegate  {
     // Attempt to install the tour after a successfull download
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
         if FileManager.default.fileExists(atPath: location.path) {
-            SpeedLog.print("INFO", "Downloaded file to \(location.path)")
+            log.info("Downloaded file to \(location.path)")
             self.updateProgress(.InstallingTour, bytesWritten: 0)
         } else {
-            SpeedLog.print("ERROR", "Downloaded file not at expected location: \(location.path)")
+            log.error("Downloaded file not at expected location: \(location.path)")
             self.updateProgress(.FailedDownloading, bytesWritten: 0)
             return
         }
         let tour = FileService.installTour(fromZipFile: location, tourRecord: self.tourRecord!)
 
         if tour != nil {
-            SpeedLog.print("INFO", "Tour installed: \(tour!.name)")
+            log.info("Tour installed: \(tour!.name)")
             self.updateProgress(.Installed, bytesWritten: 0)
         } else {
-            SpeedLog.print("ERROR", "Empty tour after handing to install")
+            log.error("Empty tour after handing to install")
             self.updateProgress(.FailedInstalling, bytesWritten: 0)
         }
     }
@@ -137,7 +137,7 @@ class TourDownloadTableViewCell: UITableViewCell, URLSessionDownloadDelegate  {
             return
         }
         self.updateProgress(.FailedDownloading, bytesWritten: 0)
-        SpeedLog.print("ERROR", "Download finished with error: \(error)")
+        log.error("Download finished with error: \(error)")
     }
 
     // -- MARK: Private methods

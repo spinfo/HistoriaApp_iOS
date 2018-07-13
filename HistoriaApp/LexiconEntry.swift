@@ -34,9 +34,9 @@ class LexiconEntry : Record {
 
     /// Initialize from a database row
     public required init(row: Row) {
-        id = row.value(named: "id")
-        title = row.value(named: "title")
-        content = row.value(named: "content")
+        id = row["id"]
+        title = row["title"]
+        content = row["content"]
         super.init(row: row)
     }
 

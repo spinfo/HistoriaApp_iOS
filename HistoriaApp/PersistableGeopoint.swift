@@ -2,7 +2,7 @@
 import Foundation
 
 import GRDB
-import WhirlyGlobe
+
 
 class PersistableGeopoint : Record {
 
@@ -36,10 +36,11 @@ class PersistableGeopoint : Record {
         self.longitude = coords[1]
     }
 
-
+    /*
     func toCoordinate() -> MaplyCoordinate {
         return MaplyCoordinateMakeWithDegrees(Float(self.longitude), Float(self.latitude))
     }
+     */
 
     // MARK: Record interface
 
@@ -50,9 +51,9 @@ class PersistableGeopoint : Record {
 
     /// Initialize from a database row
     public required init(row: Row) {
-        id = row.value(named: "id")
-        latitude = row.value(named: "latitude")
-        longitude = row.value(named: "longitude")
+        id = row["id"]
+        latitude = row["latitude"]
+        longitude = row["longitude"]
         super.init(row: row)
     }
 

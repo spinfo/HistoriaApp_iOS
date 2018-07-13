@@ -38,10 +38,10 @@ public class Area : Record {
 
     /// Initialize from a database row
     public required init(row: Row) {
-        id = row.value(named: "id")
-        name = row.value(named: "name")
-        point1Id = row.value(named: "point1_id")
-        point2Id = row.value(named: "point2_id")
+        id = row["id"]
+        name = row["name"]
+        point1Id = row["point1_id"]
+        point2Id = row["point2_id"]
         super.init(row: row)
     }
 

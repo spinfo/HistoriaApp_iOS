@@ -4,7 +4,7 @@ import Foundation
 import UIKit
 
 import SSZipArchive
-import SpeedLog
+import XCGLogger
 
 class FileService {
 
@@ -19,11 +19,11 @@ class FileService {
         // unzip the archive doing some checks
         if FileManager.default.fileExists(atPath: file.path) {
             if !(SSZipArchive.unzipFile(atPath: file.path, toDestination: docsFolderPath!)) {
-                SpeedLog.print("ERROR", "Could not extract example tour to: \(docsFolderPath)")
+                log.error("Could not extract example tour to: \(docsFolderPath)")
                 return nil
             }
         } else {
-            SpeedLog.print("ERROR", "No zip file to extract at: \(file.path)")
+            log.error("No zip file to extract at: \(file.path)")
             return nil
         }
 
@@ -31,21 +31,21 @@ class FileService {
         do {
             try FileManager.default.removeItem(at: file)
         } catch {
-            SpeedLog.print("WARN", "Removing the installed tour file failed. Caught: \(error)")
+            log.warning("Removing the installed tour file failed. Caught: \(error)")
         }
 
         // Construct a tour from the now readable content file and hand it to the db installer
         let fileName = self.tourFileName(record: tourRecord)
         let content = read(url: getDocumentsFolder().appendingPathComponent(fileName)!)
         guard let tour = ServerResponseReader.parseTourYAML(content) else {
-            SpeedLog.print("ERROR", "Empty response on parsing the input tour.")
+            log.error("Empty response on parsing the input tour.")
             return nil
         }
         // Save to db or fail
         if DatabaseHelper.save(tour: tour) {
             return tour
         } else {
-            SpeedLog.print("ERROR", "Tour could not be saved to db.")
+            log.error("Tour could not be saved to db.")
             // TODO: Remove all the unzipped files, that were meant for the tour
             return nil
         }
@@ -74,7 +74,7 @@ class FileService {
     // return the file url that should be used for database access
     public class func getDBFile() -> URL? {
         guard let url = getFile(atBase: "db.sqlite") else {
-            SpeedLog.print("ERROR", "Unable to determine db file.")
+            log.error("Unable to determine db file.")
             return nil
         }
         if !FileManager.default.fileExists(atPath: url.path) {
@@ -123,7 +123,7 @@ class FileService {
         do {
             try data.write(to: fileUrl)
         } catch {
-            SpeedLog.print("ERROR", "Failed to write file to: \(fileUrl.path), caught: \(error)")
+            log.error("Failed to write file to: \(fileUrl.path), caught: \(error)")
             return nil
         }
         return fileUrl
@@ -134,7 +134,7 @@ class FileService {
         do {
             return try NSString(contentsOf: url, encoding: String.Encoding.utf8.rawValue) as String
         } catch {
-            SpeedLog.print("ERROR", "Could not read file at: \(url.path), caught: \(error)")
+            log.error("Could not read file at: \(url.path), caught: \(error)")
             return ""
         }
     }
