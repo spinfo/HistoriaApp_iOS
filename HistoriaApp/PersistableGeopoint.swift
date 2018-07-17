@@ -2,6 +2,7 @@
 import Foundation
 
 import GRDB
+import Mapbox
 
 
 class PersistableGeopoint : Record {
@@ -36,11 +37,9 @@ class PersistableGeopoint : Record {
         self.longitude = coords[1]
     }
 
-    /*
-    func toCoordinate() -> MaplyCoordinate {
-        return MaplyCoordinateMakeWithDegrees(Float(self.longitude), Float(self.latitude))
+    func toCoordinate() -> CLLocationCoordinate2D {
+        return CLLocationCoordinate2D(latitude: self.latitude, longitude: self.longitude)
     }
-     */
 
     // MARK: Record interface
 

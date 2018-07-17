@@ -21,13 +21,6 @@ class Place : Record {
     // the place's area
     var area: Area?
 
-    // Method to get a geographical point from the place's lat/lon
-    /*
-    public func getLocation() -> MaplyCoordinate {
-        return MaplyCoordinateMakeWithDegrees(Float(self.lon), Float(self.lat))
-    }
-    */
-
     // MARK: Record interface
 
     /// The table name

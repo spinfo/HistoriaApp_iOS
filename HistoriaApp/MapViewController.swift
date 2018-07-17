@@ -12,6 +12,8 @@ class MapViewController: UIViewController, UIPageViewControllerDataSource, Model
     private var currentlyDrawn: [MaplyComponentObject] = Array()
     */
 
+    private var mapView: MGLMapView?
+
     // The placeOnMap currently selected
     private var selectedPlaceOnMap: PlaceOnMap?
 
@@ -35,61 +37,24 @@ class MapViewController: UIViewController, UIPageViewControllerDataSource, Model
         }
 
         // Create an empty map and add it to the view
-        let mapView = MGLMapView(frame: view.bounds)
-        mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        view.addSubview(mapView)
-        mapView.styleURL = FileService.getMapStyleUrl()
+        mapView = MGLMapView(frame: view.bounds)
+        mapView?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        view.addSubview(mapView!)
+        mapView?.styleURL = FileService.getMapStyleUrl()
+        mapView?.delegate = self
     
         // (re) draw the copyright notice now hidden behind the map view
         drawOSMCopyrightNotice()
         
-        
-        // ->
         self.title = "HistoriaApp"
 
-        /*
-        // make this the delegate for tap events
-        mapViewC?.delegate = self
 
-        // set a white background for the map
-        mapViewC!.clearColor = UIColor.white
-
-        // try 30 fps (set to 3 if the app struggles)
-        mapViewC!.frameInterval = 2
-
-        // this is the map's baselayer
-        var layer: MaplyQuadImageTilesLayer
-
-        // setup cache directory for the remote tile set
-        let baseCacheDir = NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true)[0]
-        let tilesCacheDir = "\(baseCacheDir)/tiles/"
-
-        // setup the tile source and options
-        guard let tileSource = MaplyRemoteTileSource(
-            baseURL: "http://tile.openstreetmap.org/",
-            ext: "png",
-            minZoom: 0,
-            maxZoom: 18) else {
-                fatalError("Can't create remote tile source.")
-        }
-        tileSource.cacheDir = tilesCacheDir
-        layer = MaplyQuadImageTilesLayer(coordSystem: tileSource.coordSys, tileSource: tileSource)
-
-        // set map layer options
-        layer.handleEdges = false
-        layer.coverPoles = false
-        layer.requireElev = false
-        layer.waitLoad = false
-        layer.drawPriority = 0
-        layer.singleLevelLoading = false
-        layer.enable = true
-        mapViewC!.add(layer)
 
         // actually display a tour
         let dao = MasterDao()
         let firstTour = dao.getFirstTour()!
         self.tourSelected(firstTour)
-        */
+ 
     }
 
     override func didReceiveMemoryWarning() {
@@ -103,10 +68,29 @@ class MapViewController: UIViewController, UIPageViewControllerDataSource, Model
         UIApplication.shared.openURL(url!)
     }
 
-    // MARK: -- Map Interaction (and MaplyViewControllerDelegate)
+    // MARK: -- Map Interaction (and MGLMapViewDelegate)
+
+    // what happens when a marker is put on the map
+    func mapView(_ mapView: MGLMapView, viewFor annotation: MGLAnnotation) -> MGLAnnotationView? {
+        // use the default annotation view
+        return nil
+    }
+
+    func mapView(_ mapView: MGLMapView, imageFor annotation: MGLAnnotation) -> MGLAnnotationImage? {
+        if let castAnnotation = annotation as? PlaceOnMapAnnotation {
+            return castAnnotation.annotationImage(reuseFrom: mapView)
+        } else {
+            log.error("Unknown annotation class: " + String(describing: annotation))
+            return nil
+        }
+    }
+
+    // whether the marker information bubble should be shown on clicking the marker
+    func mapView(_ mapView: MGLMapView, annotationCanShowCallout annotation: MGLAnnotation) -> Bool {
+        return true
+    }
 
     /*
-    
     // A tap made directly to the map
     func maplyViewController(_ viewC: MaplyViewController!, didTapAt coord: MaplyCoordinate) {
         // clear annotations for a selected place on map and remove the selection
@@ -239,7 +223,7 @@ class MapViewController: UIViewController, UIPageViewControllerDataSource, Model
         appDelegate.requestCenter(for: self)
 
         // initiate the switch only after we are on center so that the animation works
-        self.switchTo(tourCollection: tourCollectionOnMap)
+        self.switchMapContents(to: tourCollectionOnMap)
     }
 
     func areaSelected(_ area: Area) {
@@ -251,7 +235,7 @@ class MapViewController: UIViewController, UIPageViewControllerDataSource, Model
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         appDelegate.requestCenter(for: self)
 
-        self.switchTo(tourCollection: tourCollectionOnMap)
+        self.switchMapContents(to: tourCollectionOnMap)
     }
 
     // MARK: -- Map popups
@@ -285,6 +269,7 @@ class MapViewController: UIViewController, UIPageViewControllerDataSource, Model
 
     // clear the map of all objects we might have added
     private func clearTheMap() {
+
         /*
         // remove everything drawn so far
         for handle in currentlyDrawn {
@@ -302,36 +287,28 @@ class MapViewController: UIViewController, UIPageViewControllerDataSource, Model
 
     // Remove all other content on the map and only display the given
     // collection of tours
-    private func switchTo(tourCollection: TourCollectionOnMap) {
-        /*
+    private func switchMapContents(to tourCollection: TourCollectionOnMap) {
+
         // remove everything drawn before
         self.clearTheMap()
 
-        // create markes
-        let markers = tourCollection.placesOnMap.map { p in return p.createMarker() }
-        guard let markersHandle = mapViewC?.addScreenMarkers(markers, desc: nil) else {
-            log.warning("No components created on creating markers")
-            return
+        // create a bunch of annotations
+        let annotations = tourCollection.placesOnMap.map { p -> MGLPointAnnotation in
+            let a = PlaceOnMapAnnotation()
+            a.placeOnMap = p
+            a.coordinate = p.getCoordinate()
+            a.title = p.mapstopsOnMap.first?.mapstop.name
+            a.subtitle = p.mapstopsOnMap.first?.mapstop.description
+            return a
         }
-        currentlyDrawn.append(markersHandle)
+        mapView?.addAnnotations(annotations)
 
-        // paint the tours track
-        let trackVectors = tourCollection.tours.map { t in
-            return MapUtil.getVectorForTrack(t.track!)
-        }
-        guard let tracksHandle = mapViewC?.addVectors(trackVectors, desc: MapUtil.lineDesc) else {
-            log.warning("No components created on adding track vectors")
-            return
-        }
-        currentlyDrawn.append(tracksHandle)
-
-        // position the map to the markers
-        let box = MapUtil.makeBbox(markers.map({ m in return m.loc }))
-        let center = MapUtil.bboxCenter(box)
-        let height = mapViewC!.myFindHeight(bbox: box)
-        mapViewC!.height = height
-        mapViewC!.animate(toPosition: center, time: 0.0)
-        */
+        let coords = tourCollection.placesOnMap.map { p in return p.getCoordinate() }
+        let bounds = MapUtil.makeBbox(coords)
+        log.debug("Bounds: " + String(describing: bounds))
+        let n = CGFloat(100.0)
+        let inset = UIEdgeInsets(top: n, left: n, bottom: n, right: n)
+        mapView?.setVisibleCoordinateBounds(bounds, edgePadding: inset, animated: false)
     }
 
     // Show an annotation view for a place on the map
@@ -361,58 +338,3 @@ class MapViewController: UIViewController, UIPageViewControllerDataSource, Model
         self.osmLicenseLinkButton.setTitle("© OpenStreetMap contributors", for: .normal)
     }
 }
-
-/*
-
-fileprivate extension MaplyViewController {
-
-    // finds a good height to display all of the given bounding box on the current
-    // map view
-    // (Implemented here because WhirlyGlobes findHeight() did not really work for small boxes)
-    // TODO: This seems not to work for some tours
-    //      * not at all: "Judendeportation etc."
-    //      * a little to narrow: "Auswirkungen und Folgen etc."
-    func myFindHeight(bbox: MaplyBoundingBox) -> Float {
-
-        // calculate distance in meters
-        let distance = MaplyGreatCircleDistance(bbox.ll, bbox.ur)
-
-        // calculate screen diagonal in pixels
-        let screenDist = Double(sqrt(pow(self.view.frame.height, 2) + pow(self.view.frame.width, 2)))
-
-        // the equator has about 40 million meters
-        let eqFrac = distance / 40000000
-
-        // note the min and max highest zoom level, the latter will be halved to get a fit
-        // TODO: Set these to self.getMinZoom() and self.getMaxZoom() once we are on WhirlyGlobe 2.5
-        let minHeight = Float(0.000001)
-        var zoomHeight = Float(5.0)
-
-        // an additional factor to use when zooming out (1.0 would mean one additional zoom level)
-        let plusZoom = Float(0.25)
-
-        for i in stride(from: 1.0, to: 20.0, by: 1.0) {
-
-            let tilesAmount = pow(2.0, i)
-
-            // how many pixels would a map for that distance have at the given zoom level
-            // assume 256 pixels per tile
-            let pixels = (256.0 *  eqFrac * tilesAmount)
-
-            // if the map's pixels are more than the screen diagonal, we have gone too far
-            // so return the last correct height plus plus added offset
-            // also break if we got below the minimum height
-            if (pixels > screenDist || zoomHeight < minHeight) {
-                return (zoomHeight * (2 + (2 * plusZoom)))
-            }
-            
-            // halve the height for the next iteration
-            zoomHeight /= 2
-        }
-        
-        log.warning("Calculating the zoom height did not terminate.")
-        return zoomHeight * 4
-    }
-}
- 
- */

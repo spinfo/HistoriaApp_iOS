@@ -2,6 +2,7 @@
 import Foundation
 
 import XCGLogger
+import Mapbox
 
 // A class used to prepare a bunch of tours to be dispplayed on the map
 // - 1st use: Set all relevant attributes of models to be displayed on the map
