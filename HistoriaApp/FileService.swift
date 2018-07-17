@@ -74,7 +74,7 @@ class FileService {
     // return the file url that should be used for database access
     public class func getDBFile() -> URL? {
         guard let url = getFile(atBase: "db.sqlite") else {
-            log.error("Unable to determine db file.")
+            log.error("Unable to determine db file location.")
             return nil
         }
         if !FileManager.default.fileExists(atPath: url.path) {
@@ -87,6 +87,19 @@ class FileService {
     public class func getFile(atBase base: String) -> URL? {
         return getDocumentsFolder().appendingPathComponent(base)
     }
+    
+    // return a url to the map style, unpack that file from the assets if necessary
+    public class func getMapStyleUrl() -> URL? {
+        guard let url = getFile(atBase: "map-style-v1.json") else {
+            log.error("Unable to determine a file location for the map style.")
+            return nil
+        }
+        if !FileManager.default.fileExists(atPath: url.path) {
+            log.debug("Creating map style file at: \(url.path)")
+            return writeFileLoggingErrors(getAssetData(assetName: "map-style-v1"), fileUrl: url)
+        }
+        return url;
+    }
 
     //MARK: Private methods
 
@@ -97,11 +110,16 @@ class FileService {
             isDirectory: true
         )
     }
-
-    // read the example tour asset and return all it's data
+    
+    // read the example tour asset and return it's data
     private class func getExampleTourData() -> Data {
-        guard let asset = NSDataAsset(name: "ExampleTour") else {
-            fatalError("Example tour not present.")
+        return getAssetData(assetName: "ExampleTour")
+    }
+
+    // convenience function to read asset data and emit a fatal error if the asset is not present
+    private class func getAssetData(assetName: String) -> Data {
+        guard let asset = NSDataAsset(name: assetName) else {
+            fatalError("Asset not present: " + assetName)
         }
         return asset.data
     }

@@ -4,13 +4,10 @@ import UIKit
 import Mapbox
 import XCGLogger
 
-class MapViewController: UIViewController, UIPageViewControllerDataSource, ModelSelectionDelegate {
+class MapViewController: UIViewController, UIPageViewControllerDataSource, ModelSelectionDelegate, MGLMapViewDelegate {
 
     
     /*
-    // the controller used for manipulating the map
-    private var mapViewC: MaplyViewController?
-
     // This saves handles for the currently drawn objects for later removal
     private var currentlyDrawn: [MaplyComponentObject] = Array()
     */
@@ -38,19 +35,19 @@ class MapViewController: UIViewController, UIPageViewControllerDataSource, Model
         }
 
         // Create an empty map and add it to the view
-        /*
-        mapViewC = MaplyViewController(asFlatMap: ())
-        self.view.addSubview(mapViewC!.view)
-        mapViewC!.view.frame = self.view.bounds
-        addChildViewController(mapViewC!)
-
-        // bring the osm license link back to the front as it is now hidden
-        self.view.bringSubview(toFront: self.osmLicenseLinkButton)
-
-        // set titles
-        self.osmLicenseLinkButton.setTitle("© OpenStreetMap contributors", for: .normal)
+        let mapView = MGLMapView(frame: view.bounds)
+        mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        view.addSubview(mapView)
+        mapView.styleURL = FileService.getMapStyleUrl()
+    
+        // (re) draw the copyright notice now hidden behind the map view
+        drawOSMCopyrightNotice()
+        
+        
+        // ->
         self.title = "HistoriaApp"
 
+        /*
         // make this the delegate for tap events
         mapViewC?.delegate = self
 
@@ -356,7 +353,13 @@ class MapViewController: UIViewController, UIPageViewControllerDataSource, Model
                                 offset: PlaceOnMap.ANNOTATION_OFFSET)
         self.selectedPlaceOnMap = placeOnMap
         */
-    }  
+    }
+    
+    private func drawOSMCopyrightNotice() {
+        // bring the osm license link back to the front as it might be hidden by the map view
+        self.view.bringSubview(toFront: self.osmLicenseLinkButton)
+        self.osmLicenseLinkButton.setTitle("© OpenStreetMap contributors", for: .normal)
+    }
 }
 
 /*
