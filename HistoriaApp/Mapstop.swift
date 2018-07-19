@@ -2,6 +2,7 @@
 import Foundation
 
 import GRDB
+import MapKit
 
 public class Mapstop : Record {
 
@@ -24,6 +25,9 @@ public class Mapstop : Record {
     // the mapstops main content: (html) pages
     var pages: Array<Page> = Array()
 
+    var coordinate: CLLocationCoordinate2D {
+        return place!.coordinate
+    }
 
     // MARK: Record interface
 

@@ -1,6 +1,5 @@
 PODS:
   - GRDB.swift (3.2.0)
-  - Mapbox-iOS-SDK (4.1.1)
   - MMDrawerController (0.5.7):
     - MMDrawerController/Core (= 0.5.7)
     - MMDrawerController/MMDrawerBarButtonItem (= 0.5.7)
@@ -25,7 +24,6 @@ PODS:
 
 DEPENDENCIES:
   - GRDB.swift (= 3.2.0)
-  - Mapbox-iOS-SDK (~> 4.1)
   - MMDrawerController (~> 0.5.7)
   - SSZipArchive (~> 2.0.3)
   - XCGLogger (~> 6.0.4)
@@ -34,7 +32,6 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - GRDB.swift
-    - Mapbox-iOS-SDK
     - MMDrawerController
     - ObjcExceptionBridging
     - SSZipArchive
@@ -43,13 +40,12 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   GRDB.swift: c5bb04b25a9931fec937920e913787e45f96124f
-  Mapbox-iOS-SDK: 78e66fad4085433d04fccb9364df4be08042fb82
   MMDrawerController: 7a4cf8e25596bf2434e03ce50d22a8608ddee6a1
   ObjcExceptionBridging: c30e00eb3700467e695faeea30e26e18bd445001
   SSZipArchive: 8c197761d66bd33e7f8b5b51ee57dff303971150
   XCGLogger: 4fc1bc0bdd5828cb8dc8da7a843536cda1bea8f3
   Yams: 33b90105277731bc2035a309a718b51fb655005c
 
-PODFILE CHECKSUM: c22ffcd216959fc27a4c385c4ce5eaa57456995a
+PODFILE CHECKSUM: 8215f2a8009920e30bad4c126b886fd439d80a0b
 
 COCOAPODS: 1.5.3

@@ -5,10 +5,18 @@ import Foundation
 public class MapstopOnMap {
 
     // the mapstop this wraps on the map
-    var mapstop: Mapstop
+    let mapstop: Mapstop
 
     // Whether this mapstop is the first in it's tour
     var isFirstInTour: Bool
+
+    var title: String {
+        return mapstop.name
+    }
+
+    var subtitle: String {
+        return mapstop.description
+    }
 
     init(_ mapstop: Mapstop) {
         self.mapstop = mapstop

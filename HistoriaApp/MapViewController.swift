@@ -1,18 +1,18 @@
 
 import UIKit
 
-import Mapbox
+import MapKit
 import XCGLogger
 
-class MapViewController: UIViewController, UIPageViewControllerDataSource, ModelSelectionDelegate, MGLMapViewDelegate {
+class MapViewController: UIViewController, UIPageViewControllerDataSource, MKMapViewDelegate, ModelSelectionDelegate {
 
-    
-    /*
-    // This saves handles for the currently drawn objects for later removal
-    private var currentlyDrawn: [MaplyComponentObject] = Array()
-    */
+    @IBOutlet var mapView: MKMapView!
 
-    private var mapView: MGLMapView?
+    @IBOutlet weak var osmLicenseLinkButton: UIButton!
+
+    private var tileRenderer: MKTileOverlayRenderer!
+
+    private var currentAnnotations: [MKAnnotation] = Array()
 
     // The placeOnMap currently selected
     private var selectedPlaceOnMap: PlaceOnMap?
@@ -26,8 +26,6 @@ class MapViewController: UIViewController, UIPageViewControllerDataSource, Model
     // a controller for poups over the map
     private var mapPopupController: MapPopupController?
 
-    @IBOutlet weak var osmLicenseLinkButton: UIButton!
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -36,19 +34,13 @@ class MapViewController: UIViewController, UIPageViewControllerDataSource, Model
             return
         }
 
-        // Create an empty map and add it to the view
-        mapView = MGLMapView(frame: view.bounds)
-        mapView?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        view.addSubview(mapView!)
-        mapView?.styleURL = FileService.getMapStyleUrl()
-        mapView?.delegate = self
-    
         // (re) draw the copyright notice now hidden behind the map view
         drawOSMCopyrightNotice()
         
         self.title = "HistoriaApp"
 
-
+        self.setupTileRenderer()
+        self.mapView.delegate = self
 
         // actually display a tour
         let dao = MasterDao()
@@ -68,28 +60,20 @@ class MapViewController: UIViewController, UIPageViewControllerDataSource, Model
         UIApplication.shared.openURL(url!)
     }
 
-    // MARK: -- Map Interaction (and MGLMapViewDelegate)
+    // MARK: -- Map Interaction (and MKMapViewDelegate)
 
-    // what happens when a marker is put on the map
-    func mapView(_ mapView: MGLMapView, viewFor annotation: MGLAnnotation) -> MGLAnnotationView? {
-        // use the default annotation view
-        return nil
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        log.debug(String(describing: tileRenderer))
+        return tileRenderer
     }
 
-    func mapView(_ mapView: MGLMapView, imageFor annotation: MGLAnnotation) -> MGLAnnotationImage? {
-        if let castAnnotation = annotation as? PlaceOnMapAnnotation {
-            return castAnnotation.annotationImage(reuseFrom: mapView)
-        } else {
-            log.error("Unknown annotation class: " + String(describing: annotation))
-            return nil
-        }
+    private func setupTileRenderer() {
+        let template = "https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png"
+        let overlay = MKTileOverlay(urlTemplate: template)
+        overlay.canReplaceMapContent = true
+        mapView.add(overlay, level: .aboveLabels)
+        tileRenderer = MKTileOverlayRenderer(overlay: overlay)
     }
-
-    // whether the marker information bubble should be shown on clicking the marker
-    func mapView(_ mapView: MGLMapView, annotationCanShowCallout annotation: MGLAnnotation) -> Bool {
-        return true
-    }
-
     /*
     // A tap made directly to the map
     func maplyViewController(_ viewC: MaplyViewController!, didTapAt coord: MaplyCoordinate) {
@@ -270,17 +254,8 @@ class MapViewController: UIViewController, UIPageViewControllerDataSource, Model
     // clear the map of all objects we might have added
     private func clearTheMap() {
 
-        /*
-        // remove everything drawn so far
-        for handle in currentlyDrawn {
-            mapViewC?.remove(handle)
-        }
-        currentlyDrawn = Array()
+        //TODO
 
-        // remove annotations
-        mapViewC?.clearAnnotations()
-
-        */
         // close popups
         self.mapPopupController?.close()
     }
@@ -292,44 +267,37 @@ class MapViewController: UIViewController, UIPageViewControllerDataSource, Model
         // remove everything drawn before
         self.clearTheMap()
 
-        // create a bunch of annotations
-        let annotations = tourCollection.placesOnMap.map { p -> MGLPointAnnotation in
-            let a = PlaceOnMapAnnotation()
-            a.placeOnMap = p
-            a.coordinate = p.getCoordinate()
-            a.title = p.mapstopsOnMap.first?.mapstop.name
-            a.subtitle = p.mapstopsOnMap.first?.mapstop.description
-            return a
+        for p in tourCollection.placesOnMap {
+            let annotation = PlaceOnMapAnnotation(p)
+            mapView.addAnnotation(annotation)
         }
-        mapView?.addAnnotations(annotations)
 
-        let coords = tourCollection.placesOnMap.map { p in return p.getCoordinate() }
-        let bounds = MapUtil.makeBbox(coords)
-        log.debug("Bounds: " + String(describing: bounds))
-        let n = CGFloat(100.0)
+        zoomTo(tourCollectionOnMap: tourCollection)
+    }
+
+    private func makeRectFor(coords: [CLLocationCoordinate2D]) -> MKMapRect {
+        var rect = MKMapRectNull
+        for coord in coords {
+            let point = MKMapPointForCoordinate(coord)
+            let pointRect = MKMapRectMake(point.x, point.y, 0.1, 0.1)
+            rect = MKMapRectUnion(rect, pointRect)
+        }
+        return rect
+    }
+
+    private func zoomTo(tourCollectionOnMap: TourCollectionOnMap) {
+        zoomTo(rect: makeRectFor(coords: tourCollectionOnMap.coordinates()))
+    }
+
+    private func zoomTo(rect: MKMapRect) {
+        let n = CGFloat(40.0)
         let inset = UIEdgeInsets(top: n, left: n, bottom: n, right: n)
-        mapView?.setVisibleCoordinateBounds(bounds, edgePadding: inset, animated: false)
+        mapView.setVisibleMapRect(rect, edgePadding: inset, animated: true)
     }
 
     // Show an annotation view for a place on the map
     private func showNextAnnotation(for placeOnMap: PlaceOnMap) {
-        /*
-        let annotation = placeOnMap.nextAnnotation()
-
-        // If the placeOnMap has multiple mapstops, set it up to switch through those
-        if placeOnMap.mapstopsOnMap.count > 1 {
-            let nextLabel = placeOnMap.createNextMapstopPreviewLabel()
-            let labelTap = UITapGestureRecognizer(target: self, action: #selector(onNextMapstopPreviewClick))
-            nextLabel.addGestureRecognizer(labelTap)
-            annotation.rightAccessoryView = nextLabel
-        }
-
-        // only one annotation is shown at any time
-        mapViewC?.clearAnnotations()
-        mapViewC?.addAnnotation(annotation, forPoint: placeOnMap.place.getLocation(),
-                                offset: PlaceOnMap.ANNOTATION_OFFSET)
-        self.selectedPlaceOnMap = placeOnMap
-        */
+        //TODO
     }
     
     private func drawOSMCopyrightNotice() {

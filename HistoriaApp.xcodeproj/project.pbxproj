@@ -24,7 +24,6 @@
 		636AD42B1F753BD600513CFA /* PersistableGeopoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636AD42A1F753BD600513CFA /* PersistableGeopoint.swift */; };
 		636AD42D1F753BEA00513CFA /* LexiconEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636AD42C1F753BEA00513CFA /* LexiconEntry.swift */; };
 		6377AC5F1F5085F8003D729B /* MasterDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6377AC5E1F5085F8003D729B /* MasterDao.swift */; };
-		6377AC611F509387003D729B /* MapUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6377AC601F509387003D729B /* MapUtil.swift */; };
 		63ABDDCC1F682D7A008AE47A /* NavDrawerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63ABDDCB1F682D7A008AE47A /* NavDrawerTableViewCell.swift */; };
 		63ABDDCE1F683BD6008AE47A /* ReadingModeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63ABDDCD1F683BD6008AE47A /* ReadingModeViewController.swift */; };
 		63C8F0EC1F56E8D100F90F7C /* MapstopOnMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C8F0EB1F56E8D100F90F7C /* MapstopOnMap.swift */; };
@@ -80,7 +79,6 @@
 		636AD42A1F753BD600513CFA /* PersistableGeopoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistableGeopoint.swift; sourceTree = "<group>"; };
 		636AD42C1F753BEA00513CFA /* LexiconEntry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LexiconEntry.swift; sourceTree = "<group>"; };
 		6377AC5E1F5085F8003D729B /* MasterDao.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MasterDao.swift; sourceTree = "<group>"; };
-		6377AC601F509387003D729B /* MapUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapUtil.swift; sourceTree = "<group>"; };
 		63ABDDCB1F682D7A008AE47A /* NavDrawerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NavDrawerTableViewCell.swift; path = ../NavDrawerTableViewCell.swift; sourceTree = "<group>"; };
 		63ABDDCD1F683BD6008AE47A /* ReadingModeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadingModeViewController.swift; sourceTree = "<group>"; };
 		63AF21491F47276900DD2973 /* ZipArchive.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ZipArchive.framework; path = Carthage/Build/iOS/ZipArchive.framework; sourceTree = "<group>"; };
@@ -259,7 +257,6 @@
 		63F8C71C1F41EB6300691559 /* service */ = {
 			isa = PBXGroup;
 			children = (
-				6377AC601F509387003D729B /* MapUtil.swift */,
 				63D1812A1F3C6CF5004A2036 /* FileService.swift */,
 				63F8C7211F41F23C00691559 /* ServerResponseReader.swift */,
 				63DAB1431F4B2D50005C69B4 /* DatabaseHelper.swift */,
@@ -385,8 +382,6 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-HistoriaApp/Pods-HistoriaApp-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/GRDB.swift/GRDB.framework",
 				"${BUILT_PRODUCTS_DIR}/MMDrawerController/MMDrawerController.framework",
-				"${PODS_ROOT}/Mapbox-iOS-SDK/dynamic/Mapbox.framework",
-				"${PODS_ROOT}/Mapbox-iOS-SDK/dynamic/Mapbox.framework.dSYM",
 				"${BUILT_PRODUCTS_DIR}/ObjcExceptionBridging/ObjcExceptionBridging.framework",
 				"${BUILT_PRODUCTS_DIR}/SSZipArchive/SSZipArchive.framework",
 				"${BUILT_PRODUCTS_DIR}/XCGLogger/XCGLogger.framework",
@@ -396,8 +391,6 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GRDB.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MMDrawerController.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Mapbox.framework",
-				"${DWARF_DSYM_FOLDER_PATH}/Mapbox.framework.dSYM",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjcExceptionBridging.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SSZipArchive.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XCGLogger.framework",
@@ -458,7 +451,6 @@
 				63344B9C1F7D55AC007D1445 /* UrlSchemes.swift in Sources */,
 				63F8C7261F41F7CB00691559 /* Mapstop.swift in Sources */,
 				63D1810B1F3C5B29004A2036 /* AppDelegate.swift in Sources */,
-				6377AC611F509387003D729B /* MapUtil.swift in Sources */,
 				634805F21F715DA6002200D6 /* TourSelectionViewController.swift in Sources */,
 				63C8F0EE1F56E8EA00F90F7C /* PlaceOnMap.swift in Sources */,
 				6361DA5C1F698DB4003B2DC7 /* TourDownloadViewController.swift in Sources */,

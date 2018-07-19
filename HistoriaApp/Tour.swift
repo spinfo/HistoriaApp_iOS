@@ -2,6 +2,7 @@
 import Foundation
 
 import GRDB
+import MapKit
 
 public class Tour : Record {
 
@@ -63,6 +64,18 @@ public class Tour : Record {
 
     // the tour's track as a series of geo coordinates
     var track: [PersistableGeopoint]?
+
+    var trackCoordinates: [CLLocationCoordinate2D] {
+        return track!.map({ pg in return pg.toCoordinate() })
+    }
+
+    var placeCoordinates: [CLLocationCoordinate2D] {
+        return mapstops.map({ m in return m.coordinate })
+    }
+
+    var coordinates: [CLLocationCoordinate2D] {
+        return trackCoordinates + trackCoordinates
+    }
 
     // point of creation in the backend's db assumed to be in GMT+2
     var createdAt: Date = Date()

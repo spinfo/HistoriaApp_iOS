@@ -2,7 +2,7 @@
 import Foundation
 
 import XCGLogger
-import Mapbox
+import MapKit
 
 class PlaceOnMap {
 
@@ -14,6 +14,10 @@ class PlaceOnMap {
 
     // The place that this is wrapping
     var place: Place
+
+    var coordinate: CLLocationCoordinate2D {
+        return place.coordinate
+    }
 
     init(_ place: Place) {
         self.place = place
@@ -28,28 +32,5 @@ class PlaceOnMap {
             self.hasTourBeginMapstop = true
         }
     }
-
-    // MARK: Display on the map
-
-    // Method to get a geographical point from the place's lat/lon
-    func getCoordinate() -> CLLocationCoordinate2D {
-        return CLLocationCoordinate2D(latitude: place.lat, longitude: place.lon)
-    }
-
-
-
-
-    // an optional label, that the client may add to the annotation to switch
-    // throgh multiple mapstop previews
-    /*
-    func createNextMapstopPreviewLabel() -> UILabel {
-        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 10, height: 20))
-        label.text = ">"
-        label.backgroundColor = UIColor.white
-        label.textColor = UIColor.black
-        label.isUserInteractionEnabled = true
-        return label
-    }
-    */
     
 }

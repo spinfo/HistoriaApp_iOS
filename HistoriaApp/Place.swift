@@ -2,6 +2,7 @@
 import Foundation
 
 import GRDB
+import MapKit
 
 
 class Place : Record {
@@ -20,6 +21,10 @@ class Place : Record {
 
     // the place's area
     var area: Area?
+
+    var coordinate: CLLocationCoordinate2D {
+        return CLLocationCoordinate2D(latitude: lat, longitude: lon)
+    }
 
     // MARK: Record interface
 

@@ -5,9 +5,6 @@ project 'HistoriaApp.xcodeproj'
 target 'HistoriaApp' do
   use_frameworks!
 
-  # Our framework for maps
-  pod 'Mapbox-iOS-SDK', '~> 4.1'
-
   # Yaml parsing
   pod 'Yams', '~> 0.3.5'
 

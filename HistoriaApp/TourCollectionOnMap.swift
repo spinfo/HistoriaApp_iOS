@@ -2,7 +2,7 @@
 import Foundation
 
 import XCGLogger
-import Mapbox
+import MapKit
 
 // A class used to prepare a bunch of tours to be dispplayed on the map
 // - 1st use: Set all relevant attributes of models to be displayed on the map
@@ -55,6 +55,14 @@ public class TourCollectionOnMap {
         }
         // set the result
         self.placesOnMap = Array(placesOnMapById.values)
+    }
+
+    func coordinates() -> [CLLocationCoordinate2D] {
+        var result: [CLLocationCoordinate2D] = Array()
+        for tour in tours {
+            result += tour.coordinates
+        }
+        return result
     }
 
 }
