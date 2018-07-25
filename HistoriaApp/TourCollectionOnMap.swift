@@ -30,6 +30,8 @@ public class TourCollectionOnMap {
             var isFirstStop = true
 
             for mapstop in tour.mapstops {
+                mapstop.tour = tour
+
                 let stopOnMap = MapstopOnMap(mapstop)
 
                 // indicate the first stop in the tour

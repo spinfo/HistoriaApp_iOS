@@ -47,7 +47,6 @@ public class Mapstop : Record {
         name = row["name"]
         description = row["description"]
         placeId = row["place_id"]
-        // pages = Page.filter( == id)
         super.init(row: row)
     }
 

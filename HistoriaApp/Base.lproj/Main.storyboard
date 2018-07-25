@@ -7,6 +7,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -22,7 +23,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" alpha="0.65000000000000002" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hXu-sx-7aw">
+                            <button opaque="NO" alpha="0.65000000000000002" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hXu-sx-7aw">
                                 <rect key="frame" x="0.0" y="647" width="182" height="20"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="11"/>
@@ -37,6 +38,7 @@
                         <constraints>
                             <constraint firstItem="hXu-sx-7aw" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="1Xl-kd-uP8"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="hXu-sx-7aw" secondAttribute="bottom" id="XV9-9d-jma"/>
+                            <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="hXu-sx-7aw" secondAttribute="trailing" priority="250" constant="100" id="wa9-4P-jJN"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="HistoriaApp" id="fRg-8J-DCA">
@@ -48,11 +50,53 @@
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
+                        <outlet property="calloutDetailView" destination="lUx-Cc-vtK" id="EXs-Fk-QUE"/>
                         <outlet property="mapView" destination="8bC-Xf-vdC" id="Txf-WM-mU0"/>
                         <outlet property="osmLicenseLinkButton" destination="hXu-sx-7aw" id="RMP-6t-oWO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <view contentMode="scaleAspectFit" id="lUx-Cc-vtK" customClass="PlaceOnMapCalloutDetailView" customModule="HistoriaApp" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="0.0" width="290" height="128"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="lqn-7O-95A">
+                            <rect key="frame" x="0.0" y="0.0" width="290" height="68.5"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="tourName" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tWA-5u-HxE">
+                                    <rect key="frame" x="0.0" y="0.0" width="290" height="16"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                    <color key="textColor" white="0.2534877232142857" alpha="1" colorSpace="calibratedWhite"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="mapstopName" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0KT-Ja-D1u">
+                                    <rect key="frame" x="0.0" y="24" width="290" height="20.5"/>
+                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="mapstopDescription" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cQa-F9-KOU">
+                                    <rect key="frame" x="0.0" y="52.5" width="290" height="16"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                        </stackView>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="lqn-7O-95A" secondAttribute="trailing" id="OtB-km-GxI"/>
+                        <constraint firstItem="lqn-7O-95A" firstAttribute="leading" secondItem="lUx-Cc-vtK" secondAttribute="leading" id="oLc-K4-dwN"/>
+                        <constraint firstItem="lqn-7O-95A" firstAttribute="top" secondItem="lUx-Cc-vtK" secondAttribute="top" id="uKH-fa-c5L"/>
+                    </constraints>
+                    <connections>
+                        <outlet property="mainStack" destination="lqn-7O-95A" id="77z-Lc-ovM"/>
+                        <outlet property="mapstopDescription" destination="cQa-F9-KOU" id="FU6-h8-Zcc"/>
+                        <outlet property="mapstopName" destination="0KT-Ja-D1u" id="ALd-ak-cFq"/>
+                        <outlet property="tourName" destination="tWA-5u-HxE" id="U5b-yc-GPW"/>
+                    </connections>
+                </view>
             </objects>
             <point key="canvasLocation" x="381.60000000000002" y="93.103448275862078"/>
         </scene>
@@ -349,9 +393,8 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Area" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="waq-oA-XPd" userLabel="areaName">
-                                                    <rect key="frame" x="15" y="48" width="201" height="21"/>
+                                                    <rect key="frame" x="15" y="48" width="206.5" height="21"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="201" id="GDJ-IH-3CT"/>
                                                         <constraint firstAttribute="height" constant="21" id="STf-C9-owr"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -359,16 +402,18 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Progress" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jk5-dj-tyr" userLabel="progress">
-                                                    <rect key="frame" x="224" y="49" width="136" height="21"/>
+                                                    <rect key="frame" x="229.5" y="49" width="130.5" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="jk5-dj-tyr" firstAttribute="leading" secondItem="waq-oA-XPd" secondAttribute="trailing" constant="8" id="5TW-QT-klT"/>
                                                 <constraint firstItem="3pk-VR-HY8" firstAttribute="leading" secondItem="Adk-mN-KYN" secondAttribute="leadingMargin" id="DlO-h1-AD9"/>
                                                 <constraint firstItem="3pk-VR-HY8" firstAttribute="trailing" secondItem="Adk-mN-KYN" secondAttribute="trailingMargin" id="HXh-UH-afY"/>
                                                 <constraint firstItem="3pk-VR-HY8" firstAttribute="top" secondItem="Adk-mN-KYN" secondAttribute="topMargin" id="K27-WN-5zt"/>
+                                                <constraint firstItem="waq-oA-XPd" firstAttribute="width" secondItem="Adk-mN-KYN" secondAttribute="width" multiplier="0.55" id="O6A-Ma-80R"/>
                                                 <constraint firstItem="jk5-dj-tyr" firstAttribute="leading" secondItem="waq-oA-XPd" secondAttribute="trailing" constant="8" symbolic="YES" id="Qdk-c6-DOV"/>
                                                 <constraint firstItem="waq-oA-XPd" firstAttribute="leading" secondItem="3pk-VR-HY8" secondAttribute="leading" id="aTU-2F-ty5"/>
                                                 <constraint firstItem="jk5-dj-tyr" firstAttribute="top" secondItem="3pk-VR-HY8" secondAttribute="bottom" constant="8" symbolic="YES" id="dR5-Ey-yQb"/>

@@ -10,6 +10,8 @@ class MapViewController: UIViewController, UIPageViewControllerDataSource, MKMap
 
     @IBOutlet weak var osmLicenseLinkButton: UIButton!
 
+    @IBOutlet var calloutDetailView: PlaceOnMapCalloutDetailView!
+
     private var tileRenderer: MKTileOverlayRenderer!
 
     private var currentAnnotations: [MKAnnotation] = Array()
@@ -63,8 +65,31 @@ class MapViewController: UIViewController, UIPageViewControllerDataSource, MKMap
     // MARK: -- Map Interaction (and MKMapViewDelegate)
 
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-        log.debug(String(describing: tileRenderer))
         return tileRenderer
+    }
+
+
+    // Determine the view that should be rendered to indicate a point of interest on the map.
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        guard let castAnnotation = annotation as? PlaceOnMapAnnotation else {
+            log.error("Unexpected annotation type: \(type(of: annotation))")
+            return nil
+        }
+        return castAnnotation.getOrCreateAnnotationView(reuseFrom: self.mapView)
+    }
+
+    // what happens when the user clicks on a marker
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        guard let castAnnotation = view.annotation as? PlaceOnMapAnnotation else {
+            log.error("Unexpected annotation type: \(type(of: view.annotation))")
+            return
+        }
+
+        let mapstopOnMap = castAnnotation.placeOnMap.currentMapstopOnMap()
+        calloutDetailView.setButtonValues(with: mapstopOnMap)
+        view.detailCalloutAccessoryView = calloutDetailView
+
+        castAnnotation.removeDummyTitle()
     }
 
     private func setupTileRenderer() {
@@ -74,6 +99,8 @@ class MapViewController: UIViewController, UIPageViewControllerDataSource, MKMap
         mapView.add(overlay, level: .aboveLabels)
         tileRenderer = MKTileOverlayRenderer(overlay: overlay)
     }
+
+
     /*
     // A tap made directly to the map
     func maplyViewController(_ viewC: MaplyViewController!, didTapAt coord: MaplyCoordinate) {

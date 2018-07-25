@@ -7,13 +7,16 @@ import MapKit
 class PlaceOnMap {
 
     // the mapstops on the map located at this place
-    var mapstopsOnMap: [MapstopOnMap]
+    private var mapstopsOnMap: [MapstopOnMap]
 
     // if one of the mapstops at the place is the beginning of tour
     var hasTourBeginMapstop: Bool
 
     // The place that this is wrapping
     var place: Place
+
+    // The index of the current mapstop selected by the user
+    private var currentMapstop : Int
 
     var coordinate: CLLocationCoordinate2D {
         return place.coordinate
@@ -23,6 +26,7 @@ class PlaceOnMap {
         self.place = place
         self.mapstopsOnMap = Array()
         self.hasTourBeginMapstop = false
+        self.currentMapstop = 0
     }
 
     func addMapstopOnMap(_ mapstopOnMap: MapstopOnMap) {
@@ -31,6 +35,15 @@ class PlaceOnMap {
         if(mapstopOnMap.isFirstInTour) {
             self.hasTourBeginMapstop = true
         }
+    }
+
+    func currentMapstopOnMap() -> MapstopOnMap {
+        return mapstopsOnMap[currentMapstop]
+    }
+
+    func nextMapstopOnMap() -> MapstopOnMap {
+        currentMapstop = (currentMapstop + 1) % mapstopsOnMap.count
+        return currentMapstopOnMap()
     }
     
 }

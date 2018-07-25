@@ -18,6 +18,10 @@ public class MapstopOnMap {
         return mapstop.description
     }
 
+    var tourTitle: String? {
+        return mapstop.tour?.name
+    }
+
     init(_ mapstop: Mapstop) {
         self.mapstop = mapstop
         self.isFirstInTour = false
