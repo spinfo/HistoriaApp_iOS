@@ -155,8 +155,7 @@ class ServerResponseReader {
             throw ParseError.General(msg: "Empty input on yaml parsing.")
         }
         // parse the yaml input into a YAMS node and use YAMS' dictionary extension to get a mapping
-        let node = try Parser(yaml: input).singleRoot()
-        return try parseToDict(node: node)
+        return try Yams.load(yaml: input) as! Dictionary<String, Any>
     }
 
     // wrap Yams' basic parsing into a throwing function for convenience
@@ -164,22 +163,15 @@ class ServerResponseReader {
         guard !input.isEmpty else {
             throw ParseError.General(msg: "Empty input on yaml parsing.")
         }
+
         var result = Array<Dictionary<String, Any>>()
-        let parser = try Parser(yaml: input)
-        while let node = try parser.nextRoot() {
-            result.append(try parseToDict(node: node))
+        var sequence = try Yams.load_all(yaml: input)
+        while let single = sequence.next() {
+            log.debug("--> \(String(describing: single))" )
+            result.append(single as! Dictionary<String, Any>)
         }
         return result
     }
-
-    // wrap Yams' basic parsing into a throwing function for convenience
-    private static func parseToDict(node: Node?) throws -> Dictionary<String, Any> {
-        guard let dict = Dictionary<String, Any>.construct_mapping(from: node!) as? Dictionary<String, Any> else {
-            throw ParseError.General(msg: "Cannot construct mapping from input.")
-        }
-        return dict
-    }
-
 }
 
 // An error class used to handle errors while parsing a server response

@@ -6,7 +6,7 @@ target 'HistoriaApp' do
   use_frameworks!
 
   # Yaml parsing
-  pod 'Yams', '~> 0.3.5'
+  pod 'Yams', '~> 1.0.0'
 
   # Unzipping files
   pod 'SSZipArchive', '~> 2.0.3'
@@ -18,6 +18,6 @@ target 'HistoriaApp' do
   pod 'XCGLogger', '~> 6.0.4'
 
   # support for our navigation drawer menu
-  pod 'MMDrawerController', '~> 0.5.7'
+  pod 'MMDrawerController', '~> 0.6.0'
 
 end
