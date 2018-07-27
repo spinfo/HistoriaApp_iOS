@@ -67,4 +67,31 @@ public class TourCollectionOnMap {
         return result
     }
 
+    func createAnnotations() -> [MKAnnotation] {
+        return self.placesOnMap.map( { p in
+            return PlaceOnMapAnnotation(p)
+        })
+    }
+
+    func drawableTourTracks() -> [MKPolyline] {
+        return self.tours.map( { tour -> MKPolyline in
+            let coordinates = tour.trackCoordinates
+            return MKPolyline(coordinates: coordinates, count: coordinates.count)
+        })
+    }
+
+    public static func drawableTourTrackRenderer(for polyline: MKPolyline) -> MKPolylineRenderer {
+        let renderer = MKPolylineRenderer(polyline: polyline)
+        configureDrawableTourTrackRenderer(renderer)
+        return renderer
+    }
+
+    private static func configureDrawableTourTrackRenderer(_ renderer: MKPolylineRenderer) {
+        let color = UIColor(red: CGFloat(0x00) / 255.0, green: CGFloat(0x99) / 255.0, blue: CGFloat(0xCC) / 255.0, alpha: CGFloat(1))
+        renderer.strokeColor = color
+        renderer.lineWidth = CGFloat(2)
+        renderer.lineCap = CGLineCap.square
+        renderer.lineDashPattern = [4, 7]
+    }
+
 }

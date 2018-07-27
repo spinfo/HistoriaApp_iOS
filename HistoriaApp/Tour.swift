@@ -66,7 +66,7 @@ public class Tour : Record {
     var track: [PersistableGeopoint]?
 
     var trackCoordinates: [CLLocationCoordinate2D] {
-        return track!.map({ pg in return pg.toCoordinate() })
+        return track!.map({ geopoint in return geopoint.toCoordinate() })
     }
 
     var placeCoordinates: [CLLocationCoordinate2D] {

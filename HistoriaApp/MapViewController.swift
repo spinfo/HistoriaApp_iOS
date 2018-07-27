@@ -15,6 +15,7 @@ class MapViewController: UIViewController, UIPageViewControllerDataSource, MKMap
     private var tileRenderer: MKTileOverlayRenderer!
 
     private var currentAnnotations: [MKAnnotation] = Array()
+    private var currentPolylines: [MKPolyline] = Array()
 
     // The placeOnMap currently selected
     private var selectedPlaceOnMap: PlaceOnMap?
@@ -65,9 +66,15 @@ class MapViewController: UIViewController, UIPageViewControllerDataSource, MKMap
     // MARK: -- Map Interaction (and MKMapViewDelegate)
 
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-        return tileRenderer
+        if overlay is MKTileOverlay {
+            return tileRenderer
+        } else if overlay is MKPolyline {
+            return TourCollectionOnMap.drawableTourTrackRenderer(for: overlay as! MKPolyline)
+        } else {
+            log.warning("Render request for unknown overlay type: \(String(describing: overlay))")
+            return MKOverlayRenderer()
+        }
     }
-
 
     // Determine the view that should be rendered to indicate a point of interest on the map.
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
@@ -281,7 +288,11 @@ class MapViewController: UIViewController, UIPageViewControllerDataSource, MKMap
     // clear the map of all objects we might have added
     private func clearTheMap() {
 
-        //TODO
+        mapView.removeOverlays(currentPolylines)
+        currentPolylines.removeAll()
+
+        mapView.removeAnnotations(currentAnnotations)
+        currentAnnotations.removeAll()
 
         // close popups
         self.mapPopupController?.close()
@@ -290,14 +301,13 @@ class MapViewController: UIViewController, UIPageViewControllerDataSource, MKMap
     // Remove all other content on the map and only display the given
     // collection of tours
     private func switchMapContents(to tourCollection: TourCollectionOnMap) {
+        clearTheMap()
 
-        // remove everything drawn before
-        self.clearTheMap()
+        currentAnnotations = tourCollection.createAnnotations()
+        mapView.addAnnotations(currentAnnotations)
 
-        for p in tourCollection.placesOnMap {
-            let annotation = PlaceOnMapAnnotation(p)
-            mapView.addAnnotation(annotation)
-        }
+        currentPolylines = tourCollection.drawableTourTracks()
+        mapView.addOverlays(currentPolylines)
 
         zoomTo(tourCollectionOnMap: tourCollection)
     }
