@@ -10,7 +10,7 @@ class MapViewController: UIViewController, UIPageViewControllerDataSource, MKMap
 
     @IBOutlet weak var osmLicenseLinkButton: UIButton!
 
-    @IBOutlet var calloutDetailView: PlaceOnMapCalloutDetailView!
+    @IBOutlet var calloutDetailView: MapstopOnMapCalloutDetailView!
 
     private var tileRenderer: MKTileOverlayRenderer!
 
@@ -49,7 +49,6 @@ class MapViewController: UIViewController, UIPageViewControllerDataSource, MKMap
         let dao = MasterDao()
         let firstTour = dao.getFirstTour()!
         self.tourSelected(firstTour)
- 
     }
 
     override func didReceiveMemoryWarning() {
@@ -93,7 +92,8 @@ class MapViewController: UIViewController, UIPageViewControllerDataSource, MKMap
         }
 
         let mapstopOnMap = castAnnotation.placeOnMap.currentMapstopOnMap()
-        calloutDetailView.setButtonValues(with: mapstopOnMap)
+        calloutDetailView.setMapstopOnMap(mapstopOnMap)
+        calloutDetailView.mapstopSelectionDelegate = self
         view.detailCalloutAccessoryView = calloutDetailView
 
         castAnnotation.removeDummyTitle()
@@ -137,32 +137,6 @@ class MapViewController: UIViewController, UIPageViewControllerDataSource, MKMap
         }
         showNextAnnotation(for: self.selectedPlaceOnMap!)
     }
-
-    // handle a tap to an annotation: show that mapstop's pages
-    func maplyViewController(_ viewC: MaplyViewController!, didTap annotation: MaplyAnnotation!) {
-        guard let mapstop = (annotation as? MapstopAnnotation)?.mapstop else {
-            log.error("No mapstop for annotation")
-            return
-        }
-
-        // set the current pages
-        let theDao = MasterDao()
-        self.pages = theDao.getPages(forMapstop: mapstop.id)
-
-        // initialise a page view controller to manage the mapstop's places
-        self.pageViewController = self.storyboard?.instantiateViewController(withIdentifier: "MapstopPageViewController") as? UIPageViewController
-        self.pageViewController!.dataSource = self
-
-        guard let startingViewController = self.mapstopPageContentViewController(at: 0) else {
-            log.error("Could not get page content controller for start index.")
-            return
-        }
-        self.pageViewController!.setViewControllers([startingViewController], direction: .forward, animated: false, completion: nil)
-
-        // actually display the page view controller as a popup
-        self.displayPopup(controller: pageViewController!)
-    }
-
     */
 
     // MARK: UIPageViewControllerDataSource
@@ -254,6 +228,25 @@ class MapViewController: UIViewController, UIPageViewControllerDataSource, MKMap
         appDelegate.requestCenter(for: self)
 
         self.switchMapContents(to: tourCollectionOnMap)
+    }
+
+    func mapstopSelected(_ mapstop: Mapstop) {
+        // set the current pages
+        let theDao = MasterDao()
+        self.pages = theDao.getPages(forMapstop: mapstop.id)
+
+        // initialise a page view controller to manage the mapstop's places
+        self.pageViewController = self.storyboard?.instantiateViewController(withIdentifier: "MapstopPageViewController") as? UIPageViewController
+        self.pageViewController!.dataSource = self
+
+        guard let startingViewController = self.mapstopPageContentViewController(at: 0) else {
+            log.error("Could not get page content controller for start index.")
+            return
+        }
+        self.pageViewController!.setViewControllers([startingViewController], direction: .forward, animated: false, completion: nil)
+
+        // actually display the page view controller as a popup
+        self.displayPopup(controller: pageViewController!)
     }
 
     // MARK: -- Map popups

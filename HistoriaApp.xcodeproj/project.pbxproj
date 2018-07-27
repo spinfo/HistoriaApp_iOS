@@ -24,7 +24,7 @@
 		636AD42B1F753BD600513CFA /* PersistableGeopoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636AD42A1F753BD600513CFA /* PersistableGeopoint.swift */; };
 		636AD42D1F753BEA00513CFA /* LexiconEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636AD42C1F753BEA00513CFA /* LexiconEntry.swift */; };
 		6377AC5F1F5085F8003D729B /* MasterDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6377AC5E1F5085F8003D729B /* MasterDao.swift */; };
-		638A5F53210732D200B9B742 /* PlaceOnMapCalloutDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638A5F52210732D200B9B742 /* PlaceOnMapCalloutDetailView.swift */; };
+		638A5F53210732D200B9B742 /* MapstopOnMapCalloutDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638A5F52210732D200B9B742 /* MapstopOnMapCalloutDetailView.swift */; };
 		63ABDDCC1F682D7A008AE47A /* NavDrawerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63ABDDCB1F682D7A008AE47A /* NavDrawerTableViewCell.swift */; };
 		63ABDDCE1F683BD6008AE47A /* ReadingModeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63ABDDCD1F683BD6008AE47A /* ReadingModeViewController.swift */; };
 		63C8F0EC1F56E8D100F90F7C /* MapstopOnMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C8F0EB1F56E8D100F90F7C /* MapstopOnMap.swift */; };
@@ -80,7 +80,7 @@
 		636AD42A1F753BD600513CFA /* PersistableGeopoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistableGeopoint.swift; sourceTree = "<group>"; };
 		636AD42C1F753BEA00513CFA /* LexiconEntry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LexiconEntry.swift; sourceTree = "<group>"; };
 		6377AC5E1F5085F8003D729B /* MasterDao.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MasterDao.swift; sourceTree = "<group>"; };
-		638A5F52210732D200B9B742 /* PlaceOnMapCalloutDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceOnMapCalloutDetailView.swift; sourceTree = "<group>"; };
+		638A5F52210732D200B9B742 /* MapstopOnMapCalloutDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapstopOnMapCalloutDetailView.swift; sourceTree = "<group>"; };
 		63ABDDCB1F682D7A008AE47A /* NavDrawerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NavDrawerTableViewCell.swift; path = ../NavDrawerTableViewCell.swift; sourceTree = "<group>"; };
 		63ABDDCD1F683BD6008AE47A /* ReadingModeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadingModeViewController.swift; sourceTree = "<group>"; };
 		63AF21491F47276900DD2973 /* ZipArchive.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ZipArchive.framework; path = Carthage/Build/iOS/ZipArchive.framework; sourceTree = "<group>"; };
@@ -158,7 +158,7 @@
 				63C8F0ED1F56E8EA00F90F7C /* PlaceOnMap.swift */,
 				63C8F0EF1F56E8FD00F90F7C /* TourCollectionOnMap.swift */,
 				634D5C1020FE53FA00BF1C47 /* PlaceOnMapAnnotation.swift */,
-				638A5F52210732D200B9B742 /* PlaceOnMapCalloutDetailView.swift */,
+				638A5F52210732D200B9B742 /* MapstopOnMapCalloutDetailView.swift */,
 			);
 			name = mappables;
 			sourceTree = "<group>";
@@ -445,7 +445,7 @@
 				63ABDDCE1F683BD6008AE47A /* ReadingModeViewController.swift in Sources */,
 				63C8F0F01F56E8FD00F90F7C /* TourCollectionOnMap.swift in Sources */,
 				63344B9A1F7D32DC007D1445 /* AreaSelectionTableViewCell.swift in Sources */,
-				638A5F53210732D200B9B742 /* PlaceOnMapCalloutDetailView.swift in Sources */,
+				638A5F53210732D200B9B742 /* MapstopOnMapCalloutDetailView.swift in Sources */,
 				63344B981F7D2F3E007D1445 /* AreaSelectionViewController.swift in Sources */,
 				63D1810D1F3C5B29004A2036 /* MapViewController.swift in Sources */,
 				63DAD2441F8E245D0024F749 /* LexiconArticleViewController.swift in Sources */,
