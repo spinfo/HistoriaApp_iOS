@@ -32,12 +32,12 @@ class TourShortInfoView: UIView {
         self.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         self.view.translatesAutoresizingMaskIntoConstraints = false
 
+        self.addSubview(view)
+
         for direction in [NSLayoutAttribute.right, NSLayoutAttribute.left] {
             let constraint = NSLayoutConstraint(item: self.view, attribute: direction, relatedBy: .equal, toItem: self, attribute: direction, multiplier: 1.0, constant: 0.0)
             self.addConstraint(constraint)
         }
-
-        self.addSubview(view)
     }
 
     func setTour(with tour: Tour) {
