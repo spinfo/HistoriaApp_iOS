@@ -167,7 +167,6 @@ class ServerResponseReader {
         var result = Array<Dictionary<String, Any>>()
         var sequence = try Yams.load_all(yaml: input)
         while let single = sequence.next() {
-            log.debug("--> \(String(describing: single))" )
             result.append(single as! Dictionary<String, Any>)
         }
         return result
