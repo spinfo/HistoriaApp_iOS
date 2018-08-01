@@ -5,7 +5,7 @@ import GRDB
 import XCGLogger
 
 // For the moment we only use one dao for all db access
-class MasterDao {
+class MainDao {
 
     // TODO This should probably be shared by multiple instances of the DAO
     private let dbQueue: DatabaseQueue

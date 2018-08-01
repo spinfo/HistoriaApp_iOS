@@ -180,7 +180,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIWebViewDelegate, Lexico
                 let entryId = UrlSchemes.parseLexiconEntryIdFromUrl(request.mainDocumentURL!.absoluteString)
                 if (entryId != nil) {
                     log.info("Request to open lexicon article with id: \(String(describing: entryId))")
-                    let dao = MasterDao()
+                    let dao = MainDao()
                     let entry = dao.getLexiconEntry(entryId!)
                     if (entry != nil) {
                         self.switchToLexiconArticle(for: entry!)

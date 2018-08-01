@@ -15,7 +15,7 @@ class DatabaseHelper {
         do {
             let dbQueue = getQueue()!
             try dbQueue.inDatabase({ db in
-                try MasterDao().safeInstallTour(tour, in: db)
+                try MainDao().safeInstallTour(tour, in: db)
             })
         } catch {
             log.error("Failed to install tour: \(error)")

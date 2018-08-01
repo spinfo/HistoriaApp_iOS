@@ -23,7 +23,7 @@ class TourSelectionViewController: UIViewController, UITableViewDataSource, UITa
 
     // we may be told from the outside to refresh our content
     func refreshTours() {
-        let dao = MasterDao()
+        let dao = MainDao()
         // TODO: This has to react to the currently chosen area
         let area = dao.getFirstArea()!
         self.tours = dao.getTours(inAreaWIthId: area.id)

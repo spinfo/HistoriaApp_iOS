@@ -7,7 +7,7 @@ class AreaSelectionViewController: UIViewController, UITableViewDelegate, UITabl
 
     var areas = Array<Area>()
 
-    var theDao = MasterDao()
+    var theDao = MainDao()
 
     var areaSelectionDelegate: AreaSelectionDelegate?
 

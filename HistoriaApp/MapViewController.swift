@@ -49,7 +49,7 @@ class MapViewController: UIViewController, UIPageViewControllerDataSource, MKMap
         calloutDetailView.mapstopSelectionDelegate = self
 
         // actually display a tour
-        let dao = MasterDao()
+        let dao = MainDao()
         let firstTour = dao.getFirstTour()!
         self.tourSelected(firstTour)
     }
@@ -236,7 +236,7 @@ class MapViewController: UIViewController, UIPageViewControllerDataSource, MKMap
         log.info("Request to select tour: \(tour.name)")
         // we need to re-retrieve the tour here because we don't know if all connections are
         // present. (We could test, but they won't be in all current cases anyway.)
-        let dao = MasterDao()
+        let dao = MainDao()
         guard let tourWithAssociations = dao.getTourWithAssociationsForMapping(id: tour.id) else {
             log.error("Unable to retrieve tour (id: \(tour.id)) with associations.")
             return
@@ -252,7 +252,7 @@ class MapViewController: UIViewController, UIPageViewControllerDataSource, MKMap
     }
 
     func areaSelected(_ area: Area) {
-        let dao = MasterDao()
+        let dao = MainDao()
         let tours = dao.getToursWithAssociationsForMapping(inAreaWithId: area.id)
         let tourCollectionOnMap = TourCollectionOnMap(tours: tours)
 
@@ -265,7 +265,7 @@ class MapViewController: UIViewController, UIPageViewControllerDataSource, MKMap
 
     func mapstopSelected(_ mapstop: Mapstop) {
         // set the current pages
-        let theDao = MasterDao()
+        let theDao = MainDao()
         self.pages = theDao.getPages(forMapstop: mapstop.id)
 
         // initialise a page view controller to manage the mapstop's places
