@@ -19,6 +19,12 @@ class PlaceOnMapAnnotation : MKPointAnnotation {
         self.title = "dummy-title"
     }
 
+    // Remove the title that was only needed for mapkit ro accept that this view can show
+    // an annotation
+    public func removeDummyTitle() {
+        self.title = ""
+    }
+
     public func getOrCreateAnnotationView(reuseFrom mapView: MKMapView) -> MKAnnotationView {
         var view = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId())
         if (view == nil) {
@@ -28,10 +34,12 @@ class PlaceOnMapAnnotation : MKPointAnnotation {
         return view!
     }
 
-    // Remove the title that was only needed for mapkit ro accept that this view can show
-    // an annotation
-    public func removeDummyTitle() {
-        self.title = ""
+    private func reuseId() -> String {
+        if (self.placeOnMap.hasTourBeginMapstop) {
+            return "tour-begin-annotation"
+        } else {
+            return "normal-annotation"
+        }
     }
 
     private func createAnnotationView() -> MKAnnotationView {
@@ -41,14 +49,6 @@ class PlaceOnMapAnnotation : MKPointAnnotation {
         view.centerOffset = CGPoint(x: 0, y: (imgSize.height / 2) * -1)
         view.canShowCallout = true
         return view
-    }
-
-    private func reuseId() -> String {
-        if (self.placeOnMap.hasTourBeginMapstop) {
-            return "tour-begin-annotation"
-        } else {
-            return "normal-annotation"
-        }
     }
 
     private func annotationImage() -> UIImage {
