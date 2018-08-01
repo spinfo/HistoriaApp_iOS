@@ -37,6 +37,10 @@ class PlaceOnMap {
         }
     }
 
+    func hasMultipleMapstops() -> Bool {
+        return (self.mapstopsOnMap.count > 1)
+    }
+
     func currentMapstopOnMap() -> MapstopOnMap {
         return mapstopsOnMap[currentMapstop]
     }

@@ -12,6 +12,8 @@ class MapViewController: UIViewController, UIPageViewControllerDataSource, MKMap
 
     @IBOutlet var calloutDetailView: MapstopOnMapCalloutDetailView!
 
+    @IBOutlet var calloutNextMapstopButton: UIButton!
+
     private var tileRenderer: MKTileOverlayRenderer!
 
     private var currentAnnotations: [MKAnnotation] = Array()
@@ -37,13 +39,14 @@ class MapViewController: UIViewController, UIPageViewControllerDataSource, MKMap
             return
         }
 
-        // (re) draw the copyright notice now hidden behind the map view
+        self.setupTileRenderer()
+
         drawOSMCopyrightNotice()
         
         self.title = "HistoriaApp"
 
-        self.setupTileRenderer()
         self.mapView.delegate = self
+        calloutDetailView.mapstopSelectionDelegate = self
 
         // actually display a tour
         let dao = MasterDao()
@@ -63,6 +66,14 @@ class MapViewController: UIViewController, UIPageViewControllerDataSource, MKMap
     }
 
     // MARK: -- Map Interaction (and MKMapViewDelegate)
+
+    private func setupTileRenderer() {
+        let template = "https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png"
+        let overlay = MKTileOverlay(urlTemplate: template)
+        overlay.canReplaceMapContent = true
+        mapView.add(overlay, level: .aboveLabels)
+        tileRenderer = MKTileOverlayRenderer(overlay: overlay)
+    }
 
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         if overlay is MKTileOverlay {
@@ -86,25 +97,47 @@ class MapViewController: UIViewController, UIPageViewControllerDataSource, MKMap
 
     // what happens when the user clicks on a marker
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        guard let castAnnotation = view.annotation as? PlaceOnMapAnnotation else {
-            log.error("Unexpected annotation type: \(type(of: view.annotation))")
+        guard let castAnnotation = castToPlaceOnMapAnnotation(annotation: view.annotation!) else {
             return
         }
 
         let mapstopOnMap = castAnnotation.placeOnMap.currentMapstopOnMap()
-        calloutDetailView.setMapstopOnMap(mapstopOnMap)
-        calloutDetailView.mapstopSelectionDelegate = self
-        view.detailCalloutAccessoryView = calloutDetailView
+        prepareCalloutDetail(for: mapstopOnMap, on: view)
+
+        if castAnnotation.placeOnMap.hasMultipleMapstops() {
+            view.rightCalloutAccessoryView = calloutNextMapstopButton
+        }
 
         castAnnotation.removeDummyTitle()
     }
 
-    private func setupTileRenderer() {
-        let template = "https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png"
-        let overlay = MKTileOverlay(urlTemplate: template)
-        overlay.canReplaceMapContent = true
-        mapView.add(overlay, level: .aboveLabels)
-        tileRenderer = MKTileOverlayRenderer(overlay: overlay)
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        guard let castAnnotation = castToPlaceOnMapAnnotation(annotation: view.annotation!) else {
+            return
+        }
+
+        let mapstopOnMap = castAnnotation.placeOnMap.nextMapstopOnMap()
+        switchCalloutDetailContent(with: mapstopOnMap, on: view)
+    }
+
+    private func castToPlaceOnMapAnnotation(annotation: MKAnnotation) -> PlaceOnMapAnnotation? {
+        if let result = annotation as? PlaceOnMapAnnotation {
+            return result
+        } else {
+            log.error("Unexpected annotation type: \(type(of: annotation))")
+            return nil
+        }
+    }
+
+    private func switchCalloutDetailContent(with mapstopOnMap: MapstopOnMap, on view: MKAnnotationView) {
+        mapView.deselectAnnotation(view.annotation, animated: false)
+        prepareCalloutDetail(for: mapstopOnMap, on: view)
+        mapView.selectAnnotation(view.annotation!, animated: false)
+    }
+
+    private func prepareCalloutDetail(for mapstopOnMap: MapstopOnMap, on view: MKAnnotationView) {
+        calloutDetailView.setMapstopOnMap(mapstopOnMap)
+        view.detailCalloutAccessoryView = calloutDetailView
     }
 
 
