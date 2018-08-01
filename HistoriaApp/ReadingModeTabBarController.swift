@@ -1,7 +1,7 @@
 
 import UIKit
 
-class ReadingModeViewController: UIViewController {
+class ReadingModeTabBarController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
