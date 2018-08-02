@@ -15,45 +15,43 @@ class MapPopupController : UIViewController {
     }
 
     public func setPopup(byController otherViewC: UIViewController) {
-
-        self.removeExistingChildViews()
-
-        self.addChildViewController(otherViewC)
-        self.containerView.addSubview(otherViewC.view!)
-
-        // dynamically add constraints such that the controller's view will fit the popup
-        otherViewC.view.translatesAutoresizingMaskIntoConstraints = false
-        for direction in [NSLayoutAttribute.top, NSLayoutAttribute.right, NSLayoutAttribute.bottom, NSLayoutAttribute.left] {
-            let constraint = NSLayoutConstraint(item: otherViewC.view, attribute: direction, relatedBy: .equal, toItem: self.containerView, attribute: direction, multiplier: 1.0, constant: 0.0)
-            self.view.addConstraint(constraint)
-        }
-
-        // signal to the other view controller where it is now
-        otherViewC.didMove(toParentViewController: self)
+        removeExistingChildViewControllers()
+        setViewControllerAsPopupContent(otherViewC)
     }
 
     @objc public func close() {
-        self.removeExistingChildViews()
-        self.removeViewController(self)
+        self.removeExistingChildViewControllers()
+        MapPopupController.disconnectFromParent(self)
     }
 
     // MARK: -- Private methods
 
-    private func userRequestedRemoval(sender: UIBarButtonItem) {
-        self.close()
-    }
-
-    private func removeExistingChildViews() {
+    private func removeExistingChildViewControllers() {
         for childViewC in self.childViewControllers {
-            self.removeViewController(childViewC)
+            MapPopupController.disconnectFromParent(childViewC)
         }
     }
 
-    // convenience method to un-connect a view controller from it's parent
-    private func removeViewController(_ viewController: UIViewController) {
+    private static func disconnectFromParent(_ viewController: UIViewController) {
         viewController.willMove(toParentViewController: nil)
         viewController.view.removeFromSuperview()
         viewController.removeFromParentViewController()
+    }
+
+    private func setViewControllerAsPopupContent(_ viewController: UIViewController) {
+        addChildViewController(viewController)
+        containerView.addSubview(viewController.view!)
+        viewController.didMove(toParentViewController: self)
+
+        constrainToContainerFrame(viewController.view!)
+    }
+
+    private func constrainToContainerFrame(_ otherView: UIView) {
+        otherView.translatesAutoresizingMaskIntoConstraints = false
+        for direction in [NSLayoutAttribute.top, NSLayoutAttribute.right, NSLayoutAttribute.bottom, NSLayoutAttribute.left] {
+            let constraint = NSLayoutConstraint(item: otherView, attribute: direction, relatedBy: .equal, toItem: self.containerView, attribute: direction, multiplier: 1.0, constant: 0.0)
+            self.view.addConstraint(constraint)
+        }
     }
 
 }

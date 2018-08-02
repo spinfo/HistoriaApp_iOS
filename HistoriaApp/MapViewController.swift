@@ -285,20 +285,23 @@ class MapViewController: UIViewController, UIPageViewControllerDataSource, MKMap
     // MARK: -- Map popups
 
     func displayPopup(controller: UIViewController) {
-        if self.mapPopupController != nil {
-            self.mapPopupController!.close()
-            self.mapPopupController = nil
-        }
+        closePopups()
+        
         // a new MapPopupController is instantiated each time (seems necessary to correctly
         // adapt to the current device orientation)
-        self.mapPopupController = self.storyboard?.instantiateViewController(withIdentifier: "MapPopupController") as? MapPopupController
-        self.view.addSubview(self.mapPopupController!.view)
-        self.mapPopupController!.didMove(toParentViewController: self)
+        instantiateNewPopupController()
         self.mapPopupController!.setPopup(byController: controller)
     }
 
     func closePopups() {
         self.mapPopupController?.close()
+        self.mapPopupController = nil
+    }
+
+    private func instantiateNewPopupController() {
+        self.mapPopupController = self.storyboard?.instantiateViewController(withIdentifier: "MapPopupController") as? MapPopupController
+        self.view.addSubview(self.mapPopupController!.view)
+        self.mapPopupController!.didMove(toParentViewController: self)
     }
 
     // MARK: -- Drawer Navigation
