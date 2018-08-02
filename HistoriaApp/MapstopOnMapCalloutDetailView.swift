@@ -1,10 +1,3 @@
-//
-//  MapstopOnMapCalloutDetail.swift
-//  HistoriaApp
-//
-//  Created by David on 24.07.18.
-//  Copyright © 2018 David. All rights reserved.
-//
 
 import Foundation
 import UIKit
