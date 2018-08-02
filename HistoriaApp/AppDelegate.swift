@@ -256,7 +256,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIWebViewDelegate, Lexico
     private func switchToMapPopup(with viewController: UIViewController) {
         let mapViewC = self.getCenterController("MapViewController") as! MapViewController
         self.requestCenter(for: mapViewC)
-        mapViewC.displayPopup(controller: viewController)
+        mapViewC.displayAsPopup(controller: viewController)
         self.toggleNavDrawer()
     }
 

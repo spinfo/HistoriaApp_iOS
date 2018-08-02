@@ -41,7 +41,7 @@ class MapViewController: UIViewController, UIPageViewControllerDataSource, MKMap
 
         self.setupTileRenderer()
 
-        drawOSMCopyrightNotice()
+        displayOSMCopyrightNotice()
         
         self.title = "HistoriaApp"
 
@@ -139,38 +139,6 @@ class MapViewController: UIViewController, UIPageViewControllerDataSource, MKMap
         calloutDetailView.setMapstopOnMap(mapstopOnMap)
         view.detailCalloutAccessoryView = calloutDetailView
     }
-
-
-    /*
-    // A tap made directly to the map
-    func maplyViewController(_ viewC: MaplyViewController!, didTapAt coord: MaplyCoordinate) {
-        // clear annotations for a selected place on map and remove the selection
-        mapViewC?.clearAnnotations()
-        self.selectedPlaceOnMap = nil
-    }
-
-    // A tap to a marker (or possibly another object)
-    func maplyViewController(_ viewC: MaplyViewController!, didSelect selectedObj: NSObject!) {
-        if let marker = selectedObj as? MaplyScreenMarker {
-            guard let placeOnMap = marker.userObject as? PlaceOnMap else {
-                log.warning("Marker without associated PlaceOnMap.")
-                return
-            }
-            self.showNextAnnotation(for: placeOnMap)
-        } else {
-            log.info("Click to other object: \(selectedObj)")
-        }
-    }
-
-    // handle a click to the "next" label inside a mapstop annotation
-    func onNextMapstopPreviewClick() {
-        guard self.selectedPlaceOnMap != nil else {
-            log.error("No place on map selected.")
-            return
-        }
-        showNextAnnotation(for: self.selectedPlaceOnMap!)
-    }
-    */
 
     // MARK: UIPageViewControllerDataSource
 
@@ -279,12 +247,12 @@ class MapViewController: UIViewController, UIPageViewControllerDataSource, MKMap
         self.pageViewController!.setViewControllers([startingViewController], direction: .forward, animated: false, completion: nil)
 
         // actually display the page view controller as a popup
-        self.displayPopup(controller: pageViewController!)
+        self.displayAsPopup(controller: pageViewController!)
     }
 
     // MARK: -- Map popups
 
-    func displayPopup(controller: UIViewController) {
+    func displayAsPopup(controller: UIViewController) {
         closePopups()
         
         // a new MapPopupController is instantiated each time (seems necessary to correctly
@@ -314,23 +282,8 @@ class MapViewController: UIViewController, UIPageViewControllerDataSource, MKMap
 
     // MARK: -- Private Methods
 
-    // clear the map of all objects we might have added
-    private func clearTheMap() {
-
-        mapView.removeOverlays(currentPolylines)
-        currentPolylines.removeAll()
-
-        mapView.removeAnnotations(currentAnnotations)
-        currentAnnotations.removeAll()
-
-        // close popups
-        self.mapPopupController?.close()
-    }
-
-    // Remove all other content on the map and only display the given
-    // collection of tours
     private func switchMapContents(to tourCollection: TourCollectionOnMap) {
-        clearTheMap()
+        removeMapContents()
 
         currentAnnotations = tourCollection.createAnnotations()
         mapView.addAnnotations(currentAnnotations)
@@ -339,6 +292,26 @@ class MapViewController: UIViewController, UIPageViewControllerDataSource, MKMap
         mapView.addOverlays(currentPolylines)
 
         zoomTo(tourCollectionOnMap: tourCollection)
+    }
+
+    private func removeMapContents() {
+        mapView.removeOverlays(currentPolylines)
+        currentPolylines.removeAll()
+
+        mapView.removeAnnotations(currentAnnotations)
+        currentAnnotations.removeAll()
+
+        self.mapPopupController?.close()
+    }
+
+    private func zoomTo(tourCollectionOnMap: TourCollectionOnMap) {
+        zoomTo(rect: makeRectFor(coords: tourCollectionOnMap.coordinates()))
+    }
+
+    private func zoomTo(rect: MKMapRect) {
+        let n = CGFloat(40.0)
+        let padding = UIEdgeInsets(top: n, left: n, bottom: n, right: n)
+        mapView.setVisibleMapRect(rect, edgePadding: padding, animated: true)
     }
 
     private func makeRectFor(coords: [CLLocationCoordinate2D]) -> MKMapRect {
@@ -351,24 +324,7 @@ class MapViewController: UIViewController, UIPageViewControllerDataSource, MKMap
         return rect
     }
 
-    private func zoomTo(tourCollectionOnMap: TourCollectionOnMap) {
-        zoomTo(rect: makeRectFor(coords: tourCollectionOnMap.coordinates()))
-    }
-
-    private func zoomTo(rect: MKMapRect) {
-        let n = CGFloat(40.0)
-        let inset = UIEdgeInsets(top: n, left: n, bottom: n, right: n)
-        mapView.setVisibleMapRect(rect, edgePadding: inset, animated: true)
-    }
-
-    // Show an annotation view for a place on the map
-    private func showNextAnnotation(for placeOnMap: PlaceOnMap) {
-        //TODO
-    }
-    
-    private func drawOSMCopyrightNotice() {
-        // bring the osm license link back to the front as it might be hidden by the map view
+    private func displayOSMCopyrightNotice() {
         self.view.bringSubview(toFront: self.osmLicenseLinkButton)
-        self.osmLicenseLinkButton.setTitle("© OpenStreetMap contributors", for: .normal)
     }
 }
