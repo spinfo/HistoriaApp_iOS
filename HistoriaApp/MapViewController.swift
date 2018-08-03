@@ -136,7 +136,7 @@ class MapViewController: UIViewController, UIPageViewControllerDataSource, MKMap
     }
 
     private func prepareCalloutDetail(for mapstopOnMap: MapstopOnMap, on view: MKAnnotationView) {
-        calloutDetailView.setMapstopOnMap(mapstopOnMap)
+        calloutDetailView.updateContentForImmediateDisplay(using: mapstopOnMap)
         view.detailCalloutAccessoryView = calloutDetailView
     }
 

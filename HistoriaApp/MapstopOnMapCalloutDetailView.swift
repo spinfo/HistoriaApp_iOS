@@ -24,20 +24,27 @@ class MapstopOnMapCalloutDetailView : UIView {
         }
     }
 
-    public func setMapstopOnMap(_ mapstopOnMap: MapstopOnMap) {
+    public func updateContentForImmediateDisplay(using mapstopOnMap: MapstopOnMap) {
+        updateContent(using: mapstopOnMap)
+        prepareForDisplay()
+    }
+
+    private func updateContent(using mapstopOnMap: MapstopOnMap) {
         self.mapstopOnMap = mapstopOnMap
 
-        self.mapstopName.text = mapstopOnMap.title
-        self.tourName.text = mapstopOnMap.tourTitle
-        self.mapstopDescription.text = mapstopOnMap.subtitle
+        mapstopName.text = mapstopOnMap.title
+        tourName.text = mapstopOnMap.tourTitle
+        mapstopDescription.text = mapstopOnMap.subtitle
+    }
 
-        // the view needs a new size calculated as the subviews changed content
-        self.invalidateIntrinsicContentSize()
+    private func prepareForDisplay() {
+        invalidateIntrinsicContentSize()
+        layoutIfNeeded()
     }
 
     @IBAction func viewTapped(_ sender: Any) {
-        if (self.mapstopSelectionDelegate != nil) {
-            self.mapstopSelectionDelegate?.mapstopSelected(mapstopOnMap.mapstop)
+        if (mapstopSelectionDelegate != nil) {
+            mapstopSelectionDelegate?.mapstopSelected(mapstopOnMap.mapstop)
         }
     }
 
