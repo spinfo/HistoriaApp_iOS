@@ -200,23 +200,45 @@ class MapViewController: UIViewController, UIPageViewControllerDataSource, MKMap
 
     // MARK: -- ModelSelectionDelegate
 
+    func tourSelectedForPreview(_ tour: Tour) {
+        guard let tourWithAsscociations = refetchTourForMapDisplayLoggingOnError(tour) else {
+            return
+        }
+
+        let tourPreviewController = storyboard?.instantiateViewController(withIdentifier: "TourPreviewController") as! TourPreviewController
+        tourPreviewController.tour = tourWithAsscociations
+        tourPreviewController.tourSelectionDelegate = self
+        displayAsPopup(controller: tourPreviewController)
+    }
+
+    func tourPreviewAborted() {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        appDelegate.switchToTourSelection()
+    }
+
     func tourSelected(_ tour: Tour) {
-        log.info("Request to select tour: \(tour.name)")
+        log.debug("Request to select tour: \(tour.name)")
+        guard let tourWithAsscociations = refetchTourForMapDisplayLoggingOnError(tour) else {
+            return
+        }
+        requestCenter()
+        switchMapContents(to: TourCollectionOnMap(tour: tourWithAsscociations))
+    }
+
+    private func refetchTourForMapDisplayLoggingOnError(_ tour: Tour) -> Tour? {
         // we need to re-retrieve the tour here because we don't know if all connections are
-        // present. (We could test, but they won't be in all current cases anyway.)
+        // present.
         let dao = MainDao()
         guard let tourWithAssociations = dao.getTourWithAssociationsForMapping(id: tour.id) else {
             log.error("Unable to retrieve tour (id: \(tour.id)) with associations.")
-            return
+            return nil
         }
-        let tourCollectionOnMap = TourCollectionOnMap(tours: [tourWithAssociations])
+        return tourWithAssociations
+    }
 
-        // the map view should always request to be the center view when a tour is selected
+    private func requestCenter() {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         appDelegate.requestCenter(for: self)
-
-        // initiate the switch only after we are on center so that the animation works
-        self.switchMapContents(to: tourCollectionOnMap)
     }
 
     func areaSelected(_ area: Area) {
@@ -224,9 +246,7 @@ class MapViewController: UIViewController, UIPageViewControllerDataSource, MKMap
         let tours = dao.getToursWithAssociationsForMapping(inAreaWithId: area.id)
         let tourCollectionOnMap = TourCollectionOnMap(tours: tours)
 
-        // the map view should always request to be the center view when an area is selected
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        appDelegate.requestCenter(for: self)
+        requestCenter()
 
         self.switchMapContents(to: tourCollectionOnMap)
     }
@@ -246,7 +266,6 @@ class MapViewController: UIViewController, UIPageViewControllerDataSource, MKMap
         }
         self.pageViewController!.setViewControllers([startingViewController], direction: .forward, animated: false, completion: nil)
 
-        // actually display the page view controller as a popup
         self.displayAsPopup(controller: pageViewController!)
     }
 

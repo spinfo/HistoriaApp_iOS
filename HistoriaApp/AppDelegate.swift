@@ -129,7 +129,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIWebViewDelegate, Lexico
         mapViewC.closePopups()
     }
 
-    // open or close the left navigation drawer
     func toggleNavDrawer() {
         centerContainer?.toggle(.left, animated: true, completion: nil)
     }
@@ -257,7 +256,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIWebViewDelegate, Lexico
         let mapViewC = self.getCenterController("MapViewController") as! MapViewController
         self.requestCenter(for: mapViewC)
         mapViewC.displayAsPopup(controller: viewController)
-        self.toggleNavDrawer()
+        self.closeNavDrawer()
     }
 
 }

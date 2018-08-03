@@ -6,7 +6,9 @@ protocol MapstopSelectionDelegate {
 }
 
 protocol TourSelectionDelegate {
+    func tourSelectedForPreview(_ tour: Tour) -> Void
     func tourSelected(_ tour: Tour) -> Void
+    func tourPreviewAborted() -> Void
 }
 
 protocol AreaSelectionDelegate {

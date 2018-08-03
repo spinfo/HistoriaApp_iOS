@@ -27,6 +27,7 @@
 		638A5F53210732D200B9B742 /* MapstopOnMapCalloutDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638A5F52210732D200B9B742 /* MapstopOnMapCalloutDetailView.swift */; };
 		63ABDDCC1F682D7A008AE47A /* NavDrawerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63ABDDCB1F682D7A008AE47A /* NavDrawerTableViewCell.swift */; };
 		63ABDDCE1F683BD6008AE47A /* ReadingModeTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63ABDDCD1F683BD6008AE47A /* ReadingModeTabBarController.swift */; };
+		63C77B6B211332450054C614 /* TourPreviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C77B6A211332450054C614 /* TourPreviewController.swift */; };
 		63C8F0EC1F56E8D100F90F7C /* MapstopOnMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C8F0EB1F56E8D100F90F7C /* MapstopOnMap.swift */; };
 		63C8F0EE1F56E8EA00F90F7C /* PlaceOnMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C8F0ED1F56E8EA00F90F7C /* PlaceOnMap.swift */; };
 		63C8F0F01F56E8FD00F90F7C /* TourCollectionOnMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C8F0EF1F56E8FD00F90F7C /* TourCollectionOnMap.swift */; };
@@ -86,6 +87,7 @@
 		63ABDDCB1F682D7A008AE47A /* NavDrawerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NavDrawerTableViewCell.swift; path = ../NavDrawerTableViewCell.swift; sourceTree = "<group>"; };
 		63ABDDCD1F683BD6008AE47A /* ReadingModeTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadingModeTabBarController.swift; sourceTree = "<group>"; };
 		63AF21491F47276900DD2973 /* ZipArchive.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ZipArchive.framework; path = Carthage/Build/iOS/ZipArchive.framework; sourceTree = "<group>"; };
+		63C77B6A211332450054C614 /* TourPreviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourPreviewController.swift; sourceTree = "<group>"; };
 		63C8F0EB1F56E8D100F90F7C /* MapstopOnMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapstopOnMap.swift; sourceTree = "<group>"; };
 		63C8F0ED1F56E8EA00F90F7C /* PlaceOnMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceOnMap.swift; sourceTree = "<group>"; };
 		63C8F0EF1F56E8FD00F90F7C /* TourCollectionOnMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TourCollectionOnMap.swift; sourceTree = "<group>"; };
@@ -204,6 +206,7 @@
 				6361DA5F1F6996FE003B2DC7 /* TourDownloadTableViewCell.swift */,
 				634805F11F715DA6002200D6 /* TourSelectionViewController.swift */,
 				634805F31F71615D002200D6 /* TourSelectionTableViewCell.swift */,
+				63C77B6A211332450054C614 /* TourPreviewController.swift */,
 				63344B971F7D2F3E007D1445 /* AreaSelectionViewController.swift */,
 				63344B991F7D32DC007D1445 /* AreaSelectionTableViewCell.swift */,
 				632A060E1F8BD8CC0092093E /* AboutPageViewController.swift */,
@@ -324,7 +327,7 @@
 			attributes = {
 				LastSwiftUpdateCheck = 0820;
 				LastUpgradeCheck = 0940;
-				ORGANIZATIONNAME = David;
+				ORGANIZATIONNAME = "";
 				TargetAttributes = {
 					63D181061F3C5B29004A2036 = {
 						CreatedOnToolsVersion = 8.2;
@@ -457,6 +460,7 @@
 				63D1810D1F3C5B29004A2036 /* MapViewController.swift in Sources */,
 				63DAD2441F8E245D0024F749 /* LexiconArticleViewController.swift in Sources */,
 				63D54A941F74045400EC7084 /* TourShortInfoView.swift in Sources */,
+				63C77B6B211332450054C614 /* TourPreviewController.swift in Sources */,
 				63C8F0EC1F56E8D100F90F7C /* MapstopOnMap.swift in Sources */,
 				636AD42D1F753BEA00513CFA /* LexiconEntry.swift in Sources */,
 				63344B9C1F7D55AC007D1445 /* UrlSchemes.swift in Sources */,

@@ -42,6 +42,9 @@ class TourSelectionViewController: UIViewController, UITableViewDataSource, UITa
 
         let tour = tours[indexPath.row]
         cell.setTour(tour)
+
+        cell.layoutIfNeeded()
+
         return cell
     }
 
@@ -50,7 +53,7 @@ class TourSelectionViewController: UIViewController, UITableViewDataSource, UITa
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let tour = self.tours[indexPath.row]
         if self.tourSelectionDelegate != nil {
-            tourSelectionDelegate?.tourSelected(tour)
+            tourSelectionDelegate?.tourSelectedForPreview(tour)
         } else {
             log.error("Cannot delegate tour selection, no delegate present.")
         }

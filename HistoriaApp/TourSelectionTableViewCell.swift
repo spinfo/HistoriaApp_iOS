@@ -19,7 +19,7 @@ class TourSelectionTableViewCell: UITableViewCell {
 
     public func setTour(_ tour: Tour) {
         self.tour = tour
-        self.tourShortInfoView.setTour(with: tour)
+        self.tourShortInfoView.updateContent(using: tour)
     }
     
 }

@@ -4,17 +4,15 @@ import Foundation
 import XCGLogger
 import MapKit
 
-// A class used to prepare a bunch of tours to be dispplayed on the map
-// - 1st use: Set all relevant attributes of models to be displayed on the map
-// - 2nd use: Provide other direction of association (1 Place -> n Mapstops)
-//            for the tours represented by this collection
 public class TourCollectionOnMap {
 
-    // the tours this represents on the map
     var tours: [Tour]
 
-    // the places contained in the tours represented
     var placesOnMap: [PlaceOnMap]
+
+    convenience init(tour: Tour) {
+        self.init(tours: [tour])
+    }
 
     // creates a TourCollectionOnMap and initializes the nested xOnMap objects
     // with all variables set, ready to be displayed

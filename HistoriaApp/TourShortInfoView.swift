@@ -14,33 +14,22 @@ class TourShortInfoView: UIView {
 
     public override init(frame: CGRect) {
         super.init(frame: frame)
-        self.setup()
+        self.setupWithNib()
     }
 
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        self.setup()
+        self.setupWithNib()
     }
 
-    func setup() {
-        // instantiate from the nib file
+    func setupWithNib() {
         let nib = UINib(nibName: self.nibName, bundle: Bundle(for: type(of: self)))
         self.view = nib.instantiate(withOwner: self, options: nil)[0] as! UIView
 
-        // properly arrange for display
-        // self.view.frame = self.bounds
-        self.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        self.view.translatesAutoresizingMaskIntoConstraints = false
-
         self.addSubview(view)
-
-        for direction in [NSLayoutAttribute.right, NSLayoutAttribute.left] {
-            let constraint = NSLayoutConstraint(item: self.view, attribute: direction, relatedBy: .equal, toItem: self, attribute: direction, multiplier: 1.0, constant: 0.0)
-            self.addConstraint(constraint)
-        }
     }
 
-    func setTour(with tour: Tour) {
+    func updateContent(using tour: Tour) {
         self.nameLabel.text = tour.name
 
         self.infosLabel.text = String(format: "%@, %d min., %.2f km (%@)",
