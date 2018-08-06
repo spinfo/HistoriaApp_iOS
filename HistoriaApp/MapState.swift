@@ -6,7 +6,7 @@ class MapState {
 
     public static let defaultMapRegion = MKMapRectWorld
 
-    public var tours: TourCollectionOnMap
+    public var tourCollection: TourCollectionOnMap
 
     public var visibleMapRegion: MKMapRect
 
@@ -15,11 +15,11 @@ class MapState {
     }
 
     private init() {
-        self.tours = TourCollectionOnMap.empty
+        self.tourCollection = TourCollectionOnMap.empty
         self.visibleMapRegion = MapState.defaultMapRegion
         do {
             let defaults = UserDefaults.standard
-            self.tours = try TourCollectionOnMap.restore(from: defaults)
+            self.tourCollection = try TourCollectionOnMap.restore(from: defaults)
             self.visibleMapRegion = try MKMapRect.restore(from: defaults)
         } catch RestorationError.new(let message) {
             log.warning(message)
@@ -33,10 +33,10 @@ class MapState {
         let dao = MainDao()
         let tour = dao.getFirstTourWithAssociationsForMapping()
         if tour != nil {
-            tours = TourCollectionOnMap(tour: tour!)
+            tourCollection = TourCollectionOnMap(tour: tour!)
         } else {
             log.error("Unable to retrieve any tour from the db.")
-            tours = TourCollectionOnMap.empty
+            tourCollection = TourCollectionOnMap.empty
         }
     }
 
@@ -50,7 +50,7 @@ class MapState {
 
     public func persist() {
         let defaults = UserDefaults.standard
-        tours.save(to: defaults)
+        tourCollection.save(to: defaults)
         visibleMapRegion.save(to: defaults)
         defaults.synchronize()
     }

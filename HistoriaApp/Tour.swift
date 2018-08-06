@@ -28,7 +28,7 @@ public class Tour : Record {
     var id: Int64 = 0
 
     // tour's area_id as given by the backend
-    var area_id: Int64 = 0
+    var areaId: Int64 = 0
 
     // the backends publishing timestamp
     var version: Int64 = 0
@@ -108,6 +108,7 @@ public class Tour : Record {
     /// Initialize from a database row
     public required init(row: Row) {
         id = row["id"]
+        areaId = row["area_id"]
         version = row["version"]
         name = row["name"]
         type = TourType(rawValue: row["type"])!

@@ -188,7 +188,7 @@
                         </connections>
                     </tableView>
                     <connections>
-                        <outlet property="tableView" destination="2jD-gM-U1V" id="VDP-dy-3Rb"/>
+                        <outlet property="tableView" destination="2jD-gM-U1V" id="lQc-8f-wgm"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hod-jD-gkA" userLabel="First Responder" sceneMemberID="firstResponder"/>

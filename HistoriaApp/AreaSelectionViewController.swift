@@ -43,6 +43,7 @@ class AreaSelectionViewController: UIViewController, UITableViewDelegate, UITabl
         let tourAmount = theDao.getTourCount(forAreaWithId: area.id)
         cell.tourAmountLabel.text = String.init(format: "Touren: %d", tourAmount)
 
+        cell.layoutIfNeeded()
         return cell
     }
 

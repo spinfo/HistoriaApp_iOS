@@ -4,7 +4,7 @@ import UIKit
 import MapKit
 import XCGLogger
 
-class MapViewController: UIViewController, UIPageViewControllerDataSource, MKMapViewDelegate, ModelSelectionDelegate {
+class MapViewController: UIViewController, UIPageViewControllerDataSource, MKMapViewDelegate, ModelSelectionDelegate, CurrentAreaProvider {
 
     @IBOutlet var mapView: MKMapView!
 
@@ -46,15 +46,15 @@ class MapViewController: UIViewController, UIPageViewControllerDataSource, MKMap
         renewObserverStatusForAppSuspending()
 
         displayOSMCopyrightNotice()
-        
-        self.title = "HistoriaApp"
 
         self.mapView.delegate = self
         calloutDetailView.mapstopSelectionDelegate = self
 
         mapState = MapState.restoreOrDefault()
-        switchMapContents(to: mapState!.tours)
+        switchMapContents(to: mapState!.tourCollection)
         zoom(basedOn: mapState!)
+
+        determineTitle()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -92,6 +92,14 @@ class MapViewController: UIViewController, UIPageViewControllerDataSource, MKMap
     @IBAction func osmLicenseLinkButtonTapped(_ sender: Any) {
         let url = URL(string: "https://www.openstreetmap.org/copyright/")
         UIApplication.shared.openURL(url!)
+    }
+
+    private func determineTitle() {
+        determineTitle(with: getCurrentArea())
+    }
+
+    private func determineTitle(with area: Area) {
+        self.title = String(format: "HistoriaApp: %@", area.name)
     }
 
     // MARK: -- Map Interaction (and MKMapViewDelegate)
@@ -285,6 +293,7 @@ class MapViewController: UIViewController, UIPageViewControllerDataSource, MKMap
 
         switchMapContents(to: tourCollectionOnMap)
         zoomTo(tourCollectionOnMap: tourCollectionOnMap)
+        determineTitle(with: area)
     }
 
     func mapstopSelected(_ mapstop: Mapstop) {
@@ -303,6 +312,27 @@ class MapViewController: UIViewController, UIPageViewControllerDataSource, MKMap
         self.pageViewController!.setViewControllers([startingViewController], direction: .forward, animated: false, completion: nil)
 
         self.displayAsPopup(controller: pageViewController!)
+    }
+
+    // MARK: -- CurrentAreaProvider
+
+    func getCurrentArea() -> Area {
+        let currentArea = determineCurrentAreaByCurrentTours()
+
+        if (currentArea == nil) {
+            log.warning("No area determinable by map state. Defaulting to first in db.")
+            return MainDao().getFirstArea()!
+        } else {
+            return currentArea!
+        }
+    }
+
+    private func determineCurrentAreaByCurrentTours() -> Area? {
+        if mapState!.tourCollection.isEmpty() {
+            return nil
+        }
+        let areas = MainDao().getAreas(belongingTo: mapState!.tourCollection.tours)
+        return areas.first
     }
 
     // MARK: -- Map popups
@@ -341,8 +371,8 @@ class MapViewController: UIViewController, UIPageViewControllerDataSource, MKMap
         if (!state.hasDefaultRegionSet()) {
             zoomTo(rect: state.visibleMapRegion)
         }
-        else if (!state.tours.isEmpty())  {
-            zoomTo(tourCollectionOnMap: state.tours)
+        else if (!state.tourCollection.isEmpty())  {
+            zoomTo(tourCollectionOnMap: state.tourCollection)
         }
         else {
             log.warning("Cannot zoom based on previous map state, using default region.")
@@ -359,7 +389,7 @@ class MapViewController: UIViewController, UIPageViewControllerDataSource, MKMap
         currentPolylines = tourCollection.drawableTourTracks()
         mapView.addOverlays(currentPolylines)
 
-        mapState?.tours = tourCollection
+        mapState?.tourCollection = tourCollection
     }
 
     private func removeMapContents() {

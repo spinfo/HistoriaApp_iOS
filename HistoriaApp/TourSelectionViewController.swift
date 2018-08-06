@@ -3,16 +3,23 @@ import UIKit
 
 import XCGLogger
 
+protocol CurrentAreaProvider {
+    func getCurrentArea() -> Area
+}
+
 class TourSelectionViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     var tours = Array<Tour>()
 
     var tourSelectionDelegate: TourSelectionDelegate?
 
+    var areaProvider: CurrentAreaProvider?
+
     @IBOutlet var tableView: UITableView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
         self.refreshTours()
     }
 
@@ -23,11 +30,20 @@ class TourSelectionViewController: UIViewController, UITableViewDataSource, UITa
 
     // we may be told from the outside to refresh our content
     func refreshTours() {
+        guard areaProvider != nil else {
+            log.error("Cannot determine area in which to select tours")
+            return
+        }
+
         let dao = MainDao()
-        // TODO: This has to react to the currently chosen area
-        let area = dao.getFirstArea()!
+        let area = areaProvider!.getCurrentArea()
+
         self.tours = dao.getTours(inAreaWIthId: area.id)
-        log.info("Refreshed tour list to display: Have \(tours.count) tours")
+        if (tableView != nil) {
+            tableView.reloadData()
+        }
+
+        log.info("Refreshed tour list to display: Have \(tours.count) tours in \(area.name)")
     }
 
 

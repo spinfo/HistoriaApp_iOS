@@ -71,10 +71,10 @@ class MainDao {
     public func getArea(tour: Tour) -> Area? {
         do {
             return try self.dbQueue.inDatabase({ db in
-                return try unsafeGetArea(id: tour.area_id)
+                return try unsafeGetArea(id: tour.areaId)
             })
         } catch {
-            log.error("Unable to retrieve area (id: '\(tour.area_id)'): \(error)")
+            log.error("Unable to retrieve area (id: '\(tour.areaId)'): \(error)")
             return nil
         }
     }
@@ -96,7 +96,20 @@ class MainDao {
                 return try Area.fetchAll(db)
             })
         } catch {
-            log.error("Unable to retrieve a list of all areas")
+            log.error("Unable to retrieve a list of all areas: \(error)")
+            return []
+        }
+    }
+
+    public func getAreas(belongingTo tours: [Tour]) -> [Area] {
+        do {
+            let ids = tours.map({ t in t.areaId })
+            let uniqueIds = Array(Set(ids))
+            return try self.dbQueue.inDatabase({ db in
+                return try Area.filter(keys: uniqueIds).fetchAll(db)
+            })
+        }  catch {
+            log.error("Unable to retrieve a list of areas for tours: \(error)")
             return []
         }
     }

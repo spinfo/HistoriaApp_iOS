@@ -102,11 +102,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIWebViewDelegate, Lexico
         let tourSelectionC = self.getCenterController("TourSelectionViewController") as! TourSelectionViewController
         let mapViewC = self.getCenterController("MapViewController") as! MapViewController
         tourSelectionC.tourSelectionDelegate = mapViewC
+        tourSelectionC.areaProvider = mapViewC
 
-        // tell the tour controller to refresh it's content
         tourSelectionC.refreshTours()
 
-        // display the tour selection in a map popup
         self.switchToMapPopup(with: tourSelectionC)
     }
 
