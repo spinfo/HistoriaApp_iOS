@@ -27,6 +27,9 @@ public class Tour : Record {
     // the tour's id given by the backend
     var id: Int64 = 0
 
+    // tour's area_id as given by the backend
+    var area_id: Int64 = 0
+
     // the backends publishing timestamp
     var version: Int64 = 0
 

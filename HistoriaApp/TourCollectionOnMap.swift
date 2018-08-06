@@ -6,6 +6,8 @@ import MapKit
 
 public class TourCollectionOnMap {
 
+    public static let empty = TourCollectionOnMap(tours: [])
+
     var tours: [Tour]
 
     var placesOnMap: [PlaceOnMap]
@@ -55,6 +57,10 @@ public class TourCollectionOnMap {
         }
         // set the result
         self.placesOnMap = Array(placesOnMapById.values)
+    }
+
+    func isEmpty() -> Bool {
+        return self.tours.isEmpty
     }
 
     func coordinates() -> [CLLocationCoordinate2D] {

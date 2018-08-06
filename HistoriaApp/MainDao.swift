@@ -57,6 +57,28 @@ class MainDao {
         }
     }
 
+    public func getArea(id: Int64) -> Area? {
+        do {
+            return try self.dbQueue.inDatabase({ db in
+                return try unsafeGetArea(id: id)
+            })
+        } catch {
+            log.error("Unable to retrieve area (id: '\(id)'): \(error)")
+            return nil
+        }
+    }
+
+    public func getArea(tour: Tour) -> Area? {
+        do {
+            return try self.dbQueue.inDatabase({ db in
+                return try unsafeGetArea(id: tour.area_id)
+            })
+        } catch {
+            log.error("Unable to retrieve area (id: '\(tour.area_id)'): \(error)")
+            return nil
+        }
+    }
+
     public func getTourCount(forAreaWithId id: Int64) -> Int  {
         do {
             return try self.dbQueue.inDatabase({ db in
@@ -89,17 +111,35 @@ class MainDao {
         }
     }
 
+    public func getFirstTourWithAssociationsForMapping() -> Tour? {
+        do {
+            let tour = getFirstTour()!
+            try unsafeSetAssociationsForMapping(on: tour)
+            return tour
+        } catch {
+            log.error("Unable to retrieve first tour with associations: \(error)")
+            return nil
+        }
+    }
+
     public func getToursWithAssociationsForMapping(inAreaWithId id: Int64) -> [Tour] {
         do {
             let tours = try unsafeGetTours(inAreaWithId: id)
-            // TODO: atm this introduces quadratic complexity (no of tours * no mapstops)
-            //      and should be refactored
-            for tour in tours {
-                try self.unsafeSetAssociationsForMapping(on: tour)
-            }
+            try unsafeSetAssociationsForMapping(on: tours)
             return tours
         } catch {
             log.error("Unable to retrieve tours for area (id: '\(id)'): \(error)")
+            return []
+        }
+    }
+
+    public func getToursWithAssociationsForMapping(ids: [Int64]) -> [Tour] {
+        do {
+            let tours = try unsafeGetTours(ids: ids)
+            try unsafeSetAssociationsForMapping(on: tours)
+            return tours
+        } catch {
+            log.error("Unable to retrieve tours (ids: '\(ids)'): \(error)")
             return []
         }
     }
@@ -228,6 +268,12 @@ class MainDao {
         })
     }
 
+    private func unsafeGetTours(ids: [Int64]) throws -> [Tour] {
+        return try self.dbQueue.inDatabase({ db in
+            return try Tour.filter(keys: ids).fetchAll(db)
+        })
+    }
+
     private func unsafeGetPlace(id: Int64) throws -> Place {
         return try dbQueue.inDatabase({ db in
             return try Place.fetchOne(db, key: id)!
@@ -256,6 +302,10 @@ class MainDao {
             mapstop.place = try unsafeGetPlace(id: mapstop.placeId)
         }
         tour.track = try unsafeGetTrack(tourId: tour.id)
+    }
+
+    private func unsafeSetAssociationsForMapping(on tours: [Tour]) throws {
+        try tours.forEach({ t in try unsafeSetAssociationsForMapping(on: t) })
     }
 }
 

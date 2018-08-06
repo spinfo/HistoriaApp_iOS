@@ -14,6 +14,8 @@ class MapViewController: UIViewController, UIPageViewControllerDataSource, MKMap
 
     @IBOutlet var calloutNextMapstopButton: UIButton!
 
+    private var mapState: MapState?
+
     private var tileRenderer: MKTileOverlayRenderer!
 
     private var currentAnnotations: [MKAnnotation] = Array()
@@ -41,6 +43,8 @@ class MapViewController: UIViewController, UIPageViewControllerDataSource, MKMap
 
         self.setupTileRenderer()
 
+        renewObserverStatusForAppSuspending()
+
         displayOSMCopyrightNotice()
         
         self.title = "HistoriaApp"
@@ -48,10 +52,35 @@ class MapViewController: UIViewController, UIPageViewControllerDataSource, MKMap
         self.mapView.delegate = self
         calloutDetailView.mapstopSelectionDelegate = self
 
-        // actually display a tour
-        let dao = MainDao()
-        let firstTour = dao.getFirstTour()!
-        self.tourSelected(firstTour)
+        mapState = MapState.restoreOrDefault()
+        switchMapContents(to: mapState!.tours)
+        zoom(basedOn: mapState!)
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        log.debug("Saving map state on view disappearing.")
+        mapState?.persist()
+    }
+
+    @objc func appWillSuspend() {
+        log.debug("Saving map state on app suspending.")
+        mapState?.persist()
+    }
+
+    private func renewObserverStatusForAppSuspending() {
+        stopObservingNotifications()
+        let names = [
+            NSNotification.Name.UIApplicationWillTerminate,
+            NSNotification.Name.UIApplicationWillResignActive
+        ]
+        for name in names {
+            NotificationCenter.default.addObserver(self, selector: #selector(appWillSuspend), name: name, object: nil)
+        }
+    }
+
+    private func stopObservingNotifications() {
+        NotificationCenter.default.removeObserver(self)
     }
 
     override func didReceiveMemoryWarning() {
@@ -140,6 +169,10 @@ class MapViewController: UIViewController, UIPageViewControllerDataSource, MKMap
         view.detailCalloutAccessoryView = calloutDetailView
     }
 
+    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+        mapState?.visibleMapRegion = mapView.visibleMapRect
+    }
+
     // MARK: UIPageViewControllerDataSource
 
     // prepare the mastops page before the current one
@@ -222,7 +255,9 @@ class MapViewController: UIViewController, UIPageViewControllerDataSource, MKMap
             return
         }
         requestCenter()
-        switchMapContents(to: TourCollectionOnMap(tour: tourWithAsscociations))
+        let tourCollection = TourCollectionOnMap(tour: tourWithAsscociations)
+        switchMapContents(to: tourCollection)
+        zoomTo(tourCollectionOnMap: tourCollection)
     }
 
     private func refetchTourForMapDisplayLoggingOnError(_ tour: Tour) -> Tour? {
@@ -248,7 +283,8 @@ class MapViewController: UIViewController, UIPageViewControllerDataSource, MKMap
 
         requestCenter()
 
-        self.switchMapContents(to: tourCollectionOnMap)
+        switchMapContents(to: tourCollectionOnMap)
+        zoomTo(tourCollectionOnMap: tourCollectionOnMap)
     }
 
     func mapstopSelected(_ mapstop: Mapstop) {
@@ -301,6 +337,19 @@ class MapViewController: UIViewController, UIPageViewControllerDataSource, MKMap
 
     // MARK: -- Private Methods
 
+    private func zoom(basedOn state: MapState) {
+        if (!state.hasDefaultRegionSet()) {
+            zoomTo(rect: state.visibleMapRegion)
+        }
+        else if (!state.tours.isEmpty())  {
+            zoomTo(tourCollectionOnMap: state.tours)
+        }
+        else {
+            log.warning("Cannot zoom based on previous map state, using default region.")
+            zoomTo(rect: MapState.defaultMapRegion)
+        }
+    }
+
     private func switchMapContents(to tourCollection: TourCollectionOnMap) {
         removeMapContents()
 
@@ -310,7 +359,7 @@ class MapViewController: UIViewController, UIPageViewControllerDataSource, MKMap
         currentPolylines = tourCollection.drawableTourTracks()
         mapView.addOverlays(currentPolylines)
 
-        zoomTo(tourCollectionOnMap: tourCollection)
+        mapState?.tours = tourCollection
     }
 
     private func removeMapContents() {

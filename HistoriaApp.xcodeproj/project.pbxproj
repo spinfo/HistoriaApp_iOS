@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2339BA3C7FEEE8E52E3E861E /* Pods_HistoriaApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6045C3165F919166DCC28EE /* Pods_HistoriaApp.framework */; };
+		631909832114A75600F0AF4F /* MapState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631909822114A75600F0AF4F /* MapState.swift */; };
 		632A060F1F8BD8CC0092093E /* AboutPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632A060E1F8BD8CC0092093E /* AboutPageViewController.swift */; };
 		63344B981F7D2F3E007D1445 /* AreaSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63344B971F7D2F3E007D1445 /* AreaSelectionViewController.swift */; };
 		63344B9A1F7D32DC007D1445 /* AreaSelectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63344B991F7D32DC007D1445 /* AreaSelectionTableViewCell.swift */; };
@@ -66,6 +67,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		631909822114A75600F0AF4F /* MapState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapState.swift; sourceTree = "<group>"; };
 		632A060E1F8BD8CC0092093E /* AboutPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutPageViewController.swift; sourceTree = "<group>"; };
 		63344B971F7D2F3E007D1445 /* AreaSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AreaSelectionViewController.swift; sourceTree = "<group>"; };
 		63344B991F7D32DC007D1445 /* AreaSelectionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AreaSelectionTableViewCell.swift; sourceTree = "<group>"; };
@@ -193,9 +195,10 @@
 			isa = PBXGroup;
 			children = (
 				63D1810A1F3C5B29004A2036 /* AppDelegate.swift */,
-				63D1810C1F3C5B29004A2036 /* MapViewController.swift */,
 				63E2EB8C1F66DDC300D66F41 /* NavDrawerController.swift */,
 				63ABDDCB1F682D7A008AE47A /* NavDrawerTableViewCell.swift */,
+				63D1810C1F3C5B29004A2036 /* MapViewController.swift */,
+				631909822114A75600F0AF4F /* MapState.swift */,
 				63CFE6291F5D87B100D6F5E0 /* MapstopPageContentViewController.swift */,
 				63FFA2611F604E9F0090A32A /* MapPopupController.swift */,
 				634805F51F7186EA002200D6 /* ModelSelectionDelegate.swift */,
@@ -464,6 +467,7 @@
 				63C8F0EC1F56E8D100F90F7C /* MapstopOnMap.swift in Sources */,
 				636AD42D1F753BEA00513CFA /* LexiconEntry.swift in Sources */,
 				63344B9C1F7D55AC007D1445 /* UrlSchemes.swift in Sources */,
+				631909832114A75600F0AF4F /* MapState.swift in Sources */,
 				63F8C7261F41F7CB00691559 /* Mapstop.swift in Sources */,
 				63D80CBA2111F24D00729B8C /* ReadingModeLexiconViewController.swift in Sources */,
 				63D1810B1F3C5B29004A2036 /* AppDelegate.swift in Sources */,
