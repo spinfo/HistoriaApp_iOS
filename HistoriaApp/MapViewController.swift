@@ -4,7 +4,7 @@ import UIKit
 import MapKit
 import XCGLogger
 
-class MapViewController: UIViewController, UIPageViewControllerDataSource, MKMapViewDelegate, ModelSelectionDelegate, CurrentAreaProvider {
+class MapViewController: UIViewController, UIPageViewControllerDataSource, MKMapViewDelegate, ModelSelectionDelegate, CurrentAreaProvider, CLLocationManagerDelegate {
 
     @IBOutlet var mapView: MKMapView!
 
@@ -14,15 +14,16 @@ class MapViewController: UIViewController, UIPageViewControllerDataSource, MKMap
 
     @IBOutlet var calloutNextMapstopButton: UIButton!
 
+    @IBOutlet weak var userLocationButton: UIButton!
+
     private var mapState: MapState?
+
+    private var locationManager: CLLocationManager!
 
     private var tileRenderer: MKTileOverlayRenderer!
 
     private var currentAnnotations: [MKAnnotation] = Array()
     private var currentPolylines: [MKPolyline] = Array()
-
-    // The placeOnMap currently selected
-    private var selectedPlaceOnMap: PlaceOnMap?
 
     // A controller showing a mapstop's pages if one is selected
     private var pageViewController: UIPageViewController?
@@ -45,7 +46,7 @@ class MapViewController: UIViewController, UIPageViewControllerDataSource, MKMap
 
         renewObserverStatusForAppSuspending()
 
-        displayOSMCopyrightNotice()
+        bringMapUIElementsToTheFront()
 
         self.mapView.delegate = self
         calloutDetailView.mapstopSelectionDelegate = self
@@ -55,6 +56,8 @@ class MapViewController: UIViewController, UIPageViewControllerDataSource, MKMap
         zoom(basedOn: mapState!)
 
         determineTitle()
+
+        setupLocationManager()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -365,18 +368,44 @@ class MapViewController: UIViewController, UIPageViewControllerDataSource, MKMap
     }
 
 
+    // MARK: -- User Location
+
+    private func setupLocationManager() {
+        locationManager = CLLocationManager()
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+    }
+
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        if (status != .authorizedWhenInUse) {
+            return
+        }
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.startUpdatingLocation()
+        mapView.showsUserLocation = true
+    }
+
+    @IBAction func userLocationButtonTapped() {
+        let coordinate = locationManager.location?.coordinate
+        if (coordinate != nil) {
+            mapView.centerCoordinate = coordinate!
+        } else {
+            log.debug("No user location to show.")
+        }
+    }
+
     // MARK: -- Private Methods
 
     private func zoom(basedOn state: MapState) {
         if (!state.hasDefaultRegionSet()) {
-            zoomTo(rect: state.visibleMapRegion)
+            zoomTo(rect: state.visibleMapRegion, padding: 0)
         }
         else if (!state.tourCollection.isEmpty())  {
             zoomTo(tourCollectionOnMap: state.tourCollection)
         }
         else {
             log.warning("Cannot zoom based on previous map state, using default region.")
-            zoomTo(rect: MapState.defaultMapRegion)
+            zoomTo(rect: MapState.defaultMapRegion, padding: 0)
         }
     }
 
@@ -402,14 +431,28 @@ class MapViewController: UIViewController, UIPageViewControllerDataSource, MKMap
         self.mapPopupController?.close()
     }
 
-    private func zoomTo(tourCollectionOnMap: TourCollectionOnMap) {
-        zoomTo(rect: makeRectFor(coords: tourCollectionOnMap.coordinates()))
+    private func changeMapCenter(coord: CLLocationCoordinate2D) {
+        let newCenter = MKMapPointForCoordinate(coord)
+        let newRect = MKMapRect(origin: newCenter, size: mapView.visibleMapRect.size)
+        zoomTo(rect: newRect, padding: 0)
     }
 
-    private func zoomTo(rect: MKMapRect) {
-        let n = CGFloat(40.0)
-        let padding = UIEdgeInsets(top: n, left: n, bottom: n, right: n)
-        mapView.setVisibleMapRect(rect, edgePadding: padding, animated: true)
+    private func zoomTo(tourCollectionOnMap: TourCollectionOnMap) {
+        zoomTo(rect: makeRectFor(coords: tourCollectionOnMap.coordinates()), padding: 40)
+    }
+
+    private func zoomTo(rect: MKMapRect, padding: Int) {
+        if (padding > 0) {
+            let insets = makeEqualSidedEdgeInsets(distance: padding)
+            mapView.setVisibleMapRect(rect, edgePadding: insets, animated: true)
+        } else {
+            mapView.setVisibleMapRect(rect, animated: true)
+        }
+    }
+
+    private func makeEqualSidedEdgeInsets(distance: Int) -> UIEdgeInsets {
+        let n = CGFloat(distance)
+        return UIEdgeInsets(top: n, left: n, bottom: n, right: n)
     }
 
     private func makeRectFor(coords: [CLLocationCoordinate2D]) -> MKMapRect {
@@ -422,7 +465,8 @@ class MapViewController: UIViewController, UIPageViewControllerDataSource, MKMap
         return rect
     }
 
-    private func displayOSMCopyrightNotice() {
+    private func bringMapUIElementsToTheFront() {
         self.view.bringSubview(toFront: self.osmLicenseLinkButton)
+        self.view.bringSubview(toFront: self.userLocationButton)
     }
 }

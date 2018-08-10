@@ -33,11 +33,20 @@
                                     <action selector="osmLicenseLinkButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="B1d-Q0-NkH"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8iU-8d-cdG">
+                                <rect key="frame" x="306" y="84" width="48" height="48"/>
+                                <state key="normal" image="ButtonTrackUser"/>
+                                <connections>
+                                    <action selector="userLocationButtonTapped" destination="BYZ-38-t0r" eventType="touchUpInside" id="igz-Sc-B3T"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="hXu-sx-7aw" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="1Xl-kd-uP8"/>
+                            <constraint firstItem="8iU-8d-cdG" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="20" id="QJK-hU-WjT"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="hXu-sx-7aw" secondAttribute="bottom" id="XV9-9d-jma"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="8iU-8d-cdG" secondAttribute="trailing" constant="5" id="hXM-5N-BkT"/>
                             <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="hXu-sx-7aw" secondAttribute="trailing" priority="250" constant="100" id="wa9-4P-jJN"/>
                         </constraints>
                     </view>
@@ -54,6 +63,7 @@
                         <outlet property="calloutNextMapstopButton" destination="cUm-lR-tZJ" id="6rz-M4-R5W"/>
                         <outlet property="mapView" destination="8bC-Xf-vdC" id="Txf-WM-mU0"/>
                         <outlet property="osmLicenseLinkButton" destination="hXu-sx-7aw" id="RMP-6t-oWO"/>
+                        <outlet property="userLocationButton" destination="8iU-8d-cdG" id="KKB-cP-rlD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -768,6 +778,7 @@
     </scenes>
     <resources>
         <image name="ArrowNext" width="29" height="29"/>
+        <image name="ButtonTrackUser" width="48" height="48"/>
         <image name="MenuToggle" width="22" height="22"/>
     </resources>
 </document>
