@@ -41,22 +41,21 @@ class MapViewController: UIViewController, UIPageViewControllerDataSource, MKMap
             log.error("Database init failed. Nothing to show.")
             return
         }
-
         self.setupTileRenderer()
 
         renewObserverStatusForAppSuspending()
 
         bringMapUIElementsToTheFront()
 
-        self.mapView.delegate = self
+        mapView.delegate = self
         calloutDetailView.mapstopSelectionDelegate = self
 
         mapState = MapState.restoreOrDefault()
         switchMapContents(to: mapState!.tourCollection)
         zoom(basedOn: mapState!)
 
+        mapView.isRotateEnabled = false
         determineTitle()
-
         setupLocationManager()
     }
 
