@@ -108,7 +108,7 @@ class MapViewController: UIViewController, UIPageViewControllerDataSource, MKMap
     // MARK: -- Map Interaction (and MKMapViewDelegate)
 
     private func setupTileRenderer() {
-        let template = "https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png"
+        let template = "http://tile.openstreetmap.com/{z}/{x}/{y}.png"
         let overlay = MKTileOverlay(urlTemplate: template)
         overlay.canReplaceMapContent = true
         mapView.add(overlay, level: .aboveLabels)
