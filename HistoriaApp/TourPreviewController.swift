@@ -19,6 +19,7 @@ class TourPreviewController : UIViewController {
     @IBOutlet weak var scrollview: UIScrollView!
 
     override func viewDidLoad() {
+        super.viewDidLoad()
         log.debug("Tour selected for debug: \(String(describing: tour?.id))")
 
         guard tour != nil else {

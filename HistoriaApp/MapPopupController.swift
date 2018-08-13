@@ -11,6 +11,8 @@ class MapPopupController : UIViewController {
     @IBOutlet weak var containerView: UIView!
 
     override func viewDidLoad() {
+        super.viewDidLoad()
+
         self.closeButton.action = #selector(self.close)
     }
 
