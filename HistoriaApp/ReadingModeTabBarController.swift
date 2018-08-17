@@ -1,12 +1,23 @@
 
 import UIKit
 
-class ReadingModeTabBarController: UITabBarController {
+class ReadingModeTabBarController: UITabBarController, UITabBarControllerDelegate, ReadingModeBackButtonDisplay {
+
+    @IBOutlet var toolbarBackButton: UIBarButtonItem!
+
+    var areaProvider: AreaProvider!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.delegate = self
         self.title = "Lesemodus"
+
+        let tourViewC = self.viewControllers?.first as! ReadingModeToursNavigationController
+        tourViewC.areaProvider = self.areaProvider
+        tourViewC.backButtonDisplay = self
+
+        self.hideBackButton()
     }
 
     override func didReceiveMemoryWarning() {
@@ -19,4 +30,32 @@ class ReadingModeTabBarController: UITabBarController {
             appDelegate.toggleNavDrawer()
     }
 
+    @IBAction func rightBarButtonItemTapped(_ sender: Any) {
+        guard selectedViewController is ReadingModeBackButtonUser else {
+            return
+        }
+        let user = selectedViewController as! ReadingModeBackButtonUser
+        user.backButtonPressed()
+    }
+
+    // -- ReadingModeBackButtonDisplay
+
+    func showBackButton() {
+        if (!rightBarButtonItemIsSet()) {
+            navigationItem.setRightBarButtonItems([toolbarBackButton], animated: true)
+        }
+    }
+
+    func hideBackButton() {
+        navigationItem.rightBarButtonItem = nil
+    }
+
+    private func rightBarButtonItemIsSet() -> Bool {
+        let items = navigationItem.rightBarButtonItems
+        return (items != nil && !(items!.isEmpty))
+    }
+
 }
+
+
+

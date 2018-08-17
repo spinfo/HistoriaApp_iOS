@@ -171,7 +171,7 @@ class MainDao {
     public func getPages(forMapstop id: Int64) -> [Page] {
         do {
             return try dbQueue.inDatabase({ db in
-                return try Page.filter(Column("mapstop_id") == id).fetchAll(db)
+                return try Page.filter(Column("mapstop_id") == id).order(Column("pos")).fetchAll(db)
             })
         } catch {
             log.error("Unable to retrieve pages for mapstop (id: '\(id)'): \(error)")

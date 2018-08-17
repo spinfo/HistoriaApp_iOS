@@ -6,16 +6,26 @@ import XCGLogger
 
 class MapstopPageContentViewController : UIViewController {
 
-    //MARK: Properties
-
     // Shows the main html content of the mapstop's page
     @IBOutlet weak var webView: UIWebView!
 
     // the page number within the range of pages for the mapstop
-    public var pageIndex: Int?
+    private var pageIndex: Int!
 
     // The page to read the html content from
-    public var page: Page?
+    private var page: Page!
+
+    public static func instantiate(from storyboard: UIStoryboard, at idx: Int, showing page: Page) -> MapstopPageContentViewController {
+        let result = storyboard.instantiateViewController(withIdentifier: "MapstopPageContentViewController") as! MapstopPageContentViewController
+        result.pageIndex = idx
+        result.page = page
+        return result
+    }
+
+    public func index() -> Int {
+        return pageIndex
+    }
+
 
     override func viewDidLoad() {
         super.viewDidLoad()

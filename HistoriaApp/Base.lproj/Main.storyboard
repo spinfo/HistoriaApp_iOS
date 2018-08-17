@@ -156,12 +156,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QuE-uQ-usP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2816.8000000000002" y="396.25187406296857"/>
+            <point key="canvasLocation" x="3612" y="395"/>
         </scene>
-        <!--Tour Selection View Controller-->
+        <!--TourSelectionViewController-->
         <scene sceneID="gcc-ZA-3Jq">
             <objects>
-                <tableViewController storyboardIdentifier="TourSelectionViewController" id="gZ1-u1-QyU" customClass="TourSelectionViewController" customModule="HistoriaApp" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="TourSelectionViewController" id="gZ1-u1-QyU" userLabel="TourSelectionViewController" customClass="TourSelectionViewController" customModule="HistoriaApp" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="133" sectionHeaderHeight="50" sectionFooterHeight="50" contentViewInsetsToSafeArea="NO" id="2jD-gM-U1V">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -197,13 +197,128 @@
                             <outlet property="delegate" destination="gZ1-u1-QyU" id="Gic-0g-fCZ"/>
                         </connections>
                     </tableView>
+                    <tabBarItem key="tabBarItem" title="Item" id="bZm-u2-Zul"/>
+                    <navigationItem key="navigationItem" id="EdF-xy-BPD"/>
                     <connections>
                         <outlet property="tableView" destination="2jD-gM-U1V" id="lQc-8f-wgm"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hod-jD-gkA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1953" y="1471"/>
+            <point key="canvasLocation" x="2879" y="1178"/>
+        </scene>
+        <!--Reading Mode Mapstop List Controller-->
+        <scene sceneID="XEJ-ib-reP">
+            <objects>
+                <tableViewController id="oFo-wl-Q3L" customClass="ReadingModeMapstopListController" customModule="HistoriaApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="r9J-Gb-k2e">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="mapstopTableCell" rowHeight="87" id="Ze3-Pf-JFh" customClass="ReadingModeMapstopListTableViewCell" customModule="HistoriaApp" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="375" height="87"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Ze3-Pf-JFh" id="wqi-pc-fpl">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="86.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="wuQ-yo-d8R">
+                                            <rect key="frame" x="9.5" y="5" width="356" height="76.5"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="MapstopListTitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tgf-sw-Y8V">
+                                                    <rect key="frame" x="0.0" y="0.0" width="356" height="49.5"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                                                    <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="MapstopDescription" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R6f-XN-NIk">
+                                                    <rect key="frame" x="0.0" y="59.5" width="356" height="17"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="Tgf-sw-Y8V" firstAttribute="width" secondItem="wuQ-yo-d8R" secondAttribute="width" id="VKV-Kq-f0w"/>
+                                                <constraint firstItem="R6f-XN-NIk" firstAttribute="width" secondItem="wuQ-yo-d8R" secondAttribute="width" id="xNz-Le-oee"/>
+                                            </constraints>
+                                        </stackView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="wuQ-yo-d8R" firstAttribute="top" secondItem="wqi-pc-fpl" secondAttribute="top" constant="5" id="6nn-Zh-H4P"/>
+                                        <constraint firstItem="wuQ-yo-d8R" firstAttribute="centerX" secondItem="wqi-pc-fpl" secondAttribute="centerX" id="78O-qB-TQK"/>
+                                        <constraint firstAttribute="bottom" secondItem="wuQ-yo-d8R" secondAttribute="bottom" constant="5" id="AhY-ec-XMk"/>
+                                        <constraint firstItem="wuQ-yo-d8R" firstAttribute="width" secondItem="wqi-pc-fpl" secondAttribute="width" multiplier="0.95" id="EGE-vQ-t7c"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="mapstopDescription" destination="R6f-XN-NIk" id="dTZ-Fx-h0T"/>
+                                    <outlet property="mapstopTitle" destination="Tgf-sw-Y8V" id="UAr-8B-9RJ"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="oFo-wl-Q3L" id="0Br-aP-5PS"/>
+                            <outlet property="delegate" destination="oFo-wl-Q3L" id="gy4-EI-wQ7"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="gz3-RL-it1"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zJ2-pM-CdC" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3612" y="1178"/>
+        </scene>
+        <!--Reading Mode Mapstop Page View Controller-->
+        <scene sceneID="Ogl-DE-GvG">
+            <objects>
+                <viewController id="t4i-4Z-The" customClass="ReadingModeMapstopPageViewController" customModule="HistoriaApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="gC8-Ew-Dta"/>
+                        <viewControllerLayoutGuide type="bottom" id="sn2-Iu-8ZT"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="LSV-D3-Ers">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dc4-3v-poL">
+                                <rect key="frame" x="16" y="20" width="343" height="647"/>
+                                <connections>
+                                    <segue destination="Gr1-e6-Qp1" kind="embed" identifier="embedMapstopPageViewSegue" id="F1N-s8-YF1"/>
+                                </connections>
+                            </containerView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="Dc4-3v-poL" secondAttribute="trailing" id="94d-yE-dTs"/>
+                            <constraint firstItem="sn2-Iu-8ZT" firstAttribute="top" secondItem="Dc4-3v-poL" secondAttribute="bottom" id="Jby-Qg-Hm9"/>
+                            <constraint firstItem="Dc4-3v-poL" firstAttribute="top" secondItem="gC8-Ew-Dta" secondAttribute="bottom" id="jGq-a5-7BR"/>
+                            <constraint firstItem="Dc4-3v-poL" firstAttribute="leading" secondItem="LSV-D3-Ers" secondAttribute="leadingMargin" id="jNl-mU-GSa"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="W7w-av-GOx" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4396" y="1178"/>
+        </scene>
+        <!--ReadingModeToursNavigationController-->
+        <scene sceneID="AVv-Ej-L8i">
+            <objects>
+                <navigationController id="Kgb-Mh-8ag" userLabel="ReadingModeToursNavigationController" customClass="ReadingModeToursNavigationController" customModule="HistoriaApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="ioD-rv-Cfm"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="rR2-ka-HPx">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="gZ1-u1-QyU" kind="relationship" relationship="rootViewController" id="Rsy-iu-mKM"/>
+                        <segue destination="oFo-wl-Q3L" kind="show" identifier="mapstopListSegue" id="RQS-bi-EvM"/>
+                        <segue destination="t4i-4Z-The" kind="show" identifier="showMapstopPagesInReadingModeSegue" id="Nw0-Hi-VEf"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VrF-Zl-nT0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1354" y="2161"/>
         </scene>
         <!--Area Selection View Controller-->
         <scene sceneID="NJs-P5-NkR">
@@ -263,7 +378,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sbv-sq-p23" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2720.8000000000002" y="1471.2143928035982"/>
+            <point key="canvasLocation" x="1953" y="396"/>
         </scene>
         <!--Tour Preview Controller-->
         <scene sceneID="jUn-R9-2Jn">
@@ -385,46 +500,18 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3F7-dv-CJe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1318" y="2998"/>
+            <point key="canvasLocation" x="1353" y="2893"/>
         </scene>
-        <!--ReadingModeToursViewController-->
-        <scene sceneID="Ogf-0j-Doh">
-            <objects>
-                <viewController storyboardIdentifier="ReadingModeToursViewController" id="2Gc-Hf-VBb" userLabel="ReadingModeToursViewController" customClass="ReadingModeToursViewController" customModule="HistoriaApp" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="bJt-Kq-3LV"/>
-                        <viewControllerLayoutGuide type="bottom" id="ni9-Ww-hpl"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="EZ4-IY-zZJ">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Touren" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HGW-f4-DqQ">
-                                <rect key="frame" x="166" y="323" width="53" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="Item" id="Gyo-Ak-w1p"/>
-                    <navigationItem key="navigationItem" id="tBc-s4-nK5"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="OPT-kO-7ZR" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1321" y="2261"/>
-        </scene>
-        <!--Page View Controller-->
+        <!--Mapstop Page View Controller-->
         <scene sceneID="O1Y-mJ-Tid">
             <objects>
-                <pageViewController storyboardIdentifier="MapstopPageViewController" autoresizesArchivedViewToFullSize="NO" modalPresentationStyle="currentContext" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="Gr1-e6-Qp1" sceneMemberID="viewController">
+                <pageViewController storyboardIdentifier="MapstopPageViewController" autoresizesArchivedViewToFullSize="NO" modalPresentationStyle="currentContext" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="Gr1-e6-Qp1" customClass="MapstopPageViewController" customModule="HistoriaApp" customModuleProvider="target" sceneMemberID="viewController">
                     <extendedEdge key="edgesForExtendedLayout"/>
+                    <navigationItem key="navigationItem" id="dKl-75-Ekm"/>
                 </pageViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mlw-it-blx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2816.8000000000002" y="-296.40179910044981"/>
+            <point key="canvasLocation" x="2878" y="395"/>
         </scene>
         <!--Nav Drawer Controller-->
         <scene sceneID="9Pl-uH-J0u">
@@ -664,7 +751,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qsU-7Q-Cbe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4983" y="804"/>
+            <point key="canvasLocation" x="2300" y="2893"/>
         </scene>
         <!--Map Popup Controller-->
         <scene sceneID="b4G-vI-XGm">
@@ -760,6 +847,11 @@
                                 <action selector="leftBarButtonItemTapped:" destination="G2W-Wd-qlQ" id="4QN-4u-DRj"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Zurück" id="oXP-Ep-wyg">
+                            <connections>
+                        	<action selector="rightBarButtonItemTapped:" destination="G2W-Wd-qlQ" id="AVb-js-fe3"/>
+			    </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="eMA-m9-aAU">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
@@ -767,13 +859,14 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
-                        <segue destination="2Gc-Hf-VBb" kind="relationship" relationship="viewControllers" id="t1t-Vq-geI"/>
-                        <segue destination="Ipi-IV-8nO" kind="relationship" relationship="viewControllers" id="N9V-Hs-UEN"/>
+                        <outlet property="toolbarBackButton" destination="oXP-Ep-wyg" id="b20-Ft-3Nd"/>
+                        <segue destination="Kgb-Mh-8ag" kind="relationship" relationship="viewControllers" id="xuS-d4-V4d"/>
+                        <segue destination="Ipi-IV-8nO" kind="relationship" relationship="viewControllers" id="IWH-g2-Vp4"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="f8V-3d-8Ue" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="382" y="2261"/>
+            <point key="canvasLocation" x="382" y="2259"/>
         </scene>
     </scenes>
     <resources>

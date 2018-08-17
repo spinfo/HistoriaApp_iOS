@@ -56,7 +56,7 @@ class NavDrawerController: UIViewController, UITableViewDataSource, UITableViewD
         case 2:
             appDelegate.switchToTourSelection()
         case 3:
-            appDelegate.switchToCenterController("ReadingModeTabBarController")
+            appDelegate.switchToReadingMode()
         case 4:
             appDelegate.switchToCenterController("TourDownloadViewController")
         case 5:

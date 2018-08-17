@@ -4,7 +4,7 @@ import UIKit
 import MapKit
 import XCGLogger
 
-class MapViewController: UIViewController, UIPageViewControllerDataSource, MKMapViewDelegate, ModelSelectionDelegate, CurrentAreaProvider, CLLocationManagerDelegate {
+class MapViewController: UIViewController, MKMapViewDelegate, ModelSelectionDelegate, AreaProvider, CLLocationManagerDelegate {
 
     @IBOutlet var mapView: MKMapView!
 
@@ -24,12 +24,6 @@ class MapViewController: UIViewController, UIPageViewControllerDataSource, MKMap
 
     private var currentAnnotations: [MKAnnotation] = Array()
     private var currentPolylines: [MKPolyline] = Array()
-
-    // A controller showing a mapstop's pages if one is selected
-    private var pageViewController: UIPageViewController?
-
-    // The currently selected mapstops pages
-    private var pages: [Page]?
 
     // a controller for poups over the map
     private var mapPopupController: MapPopupController?
@@ -183,64 +177,6 @@ class MapViewController: UIViewController, UIPageViewControllerDataSource, MKMap
         mapState?.visibleMapRegion = mapView.visibleMapRect
     }
 
-    // MARK: UIPageViewControllerDataSource
-
-    // prepare the mastops page before the current one
-    func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
-        guard let pageViewC = viewController as? MapstopPageContentViewController else {
-            log.error("Wrong page content view controller type")
-            return nil
-        }
-
-        if (pageViewC.pageIndex == nil || pageViewC.pageIndex! <= 0) {
-            return nil
-        }
-
-        pageViewC.pageIndex! -= 1
-        return self.mapstopPageContentViewController(at: pageViewC.pageIndex!)
-    }
-
-    // prepare the mastops page after the current one
-    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
-        guard let pageViewC = viewController as? MapstopPageContentViewController else {
-            log.error("Wrong page content view controller type")
-            return nil
-        }
-
-        if (pageViewC.pageIndex == nil) {
-            return nil
-        }
-
-        pageViewC.pageIndex! += 1
-        return self.mapstopPageContentViewController(at: pageViewC.pageIndex!)
-    }
-
-    private func mapstopPageContentViewController(at idx: Int) -> MapstopPageContentViewController? {
-        guard self.pages != nil && idx >= 0 && idx < self.pages!.count  else {
-            return nil
-        }
-
-        let controller = self.storyboard?.instantiateViewController(withIdentifier: "MapstopPageContentViewController") as! MapstopPageContentViewController
-
-        controller.pageIndex = idx
-        controller.page = pages?[idx]
-        return controller
-    }
-
-    // tell the caller how many pages the currently selected mapstop has
-    func presentationCount(for pageViewController: UIPageViewController) -> Int {
-        guard self.pages != nil else {
-            log.error("Can't get page count for current mapstop.")
-            return 0
-        }
-        return self.pages!.count
-    }
-
-    // tell the caller that we always start at the first mapstop page
-    func presentationIndex(for pageViewController: UIPageViewController) -> Int {
-        return 0
-    }
-
     // MARK: -- ModelSelectionDelegate
 
     func tourSelectedForPreview(_ tour: Tour) {
@@ -299,24 +235,13 @@ class MapViewController: UIViewController, UIPageViewControllerDataSource, MKMap
     }
 
     func mapstopSelected(_ mapstop: Mapstop) {
-        // set the current pages
-        let theDao = MainDao()
-        self.pages = theDao.getPages(forMapstop: mapstop.id)
-
-        // initialise a page view controller to manage the mapstop's places
-        self.pageViewController = self.storyboard?.instantiateViewController(withIdentifier: "MapstopPageViewController") as? UIPageViewController
-        self.pageViewController!.dataSource = self
-
-        guard let startingViewController = self.mapstopPageContentViewController(at: 0) else {
-            log.error("Could not get page content controller for start index.")
-            return
-        }
-        self.pageViewController!.setViewControllers([startingViewController], direction: .forward, animated: false, completion: nil)
+        let pageViewController = self.storyboard?.instantiateViewController(withIdentifier: "MapstopPageViewController") as? MapstopPageViewController
+        pageViewController!.mapstop = mapstop
 
         self.displayAsPopup(controller: pageViewController!)
     }
 
-    // MARK: -- CurrentAreaProvider
+    // MARK: -- AreaProvider
 
     func getCurrentArea() -> Area {
         let currentArea = determineCurrentAreaByCurrentTours()

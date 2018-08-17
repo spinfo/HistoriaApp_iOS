@@ -89,11 +89,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIWebViewDelegate, Lexico
         self.currentCenterController = controller
     }
 
-    // switch the center view controller to the one identified by the storyboard id
-    // re-using an old one or instantiating a new one as needed
     func switchToCenterController(_ identifier: String) {
-        // retrieve the new center
-        let viewController = self.getCenterController(identifier)
+        switchToCenterController(getCenterController(identifier))
+    }
+
+    func switchToCenterController(_ viewController: UIViewController) {
         self.requestCenter(for: viewController)
     }
 
@@ -103,7 +103,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIWebViewDelegate, Lexico
         let mapViewC = self.getCenterController("MapViewController") as! MapViewController
         tourSelectionC.tourSelectionDelegate = mapViewC
         tourSelectionC.areaProvider = mapViewC
-
         tourSelectionC.refreshTours()
 
         self.switchToMapPopup(with: tourSelectionC)
@@ -124,8 +123,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIWebViewDelegate, Lexico
 
     func switchToPlainMap() {
         let mapViewC = self.getCenterController("MapViewController") as! MapViewController
-        self.requestCenter(for: mapViewC)
+        switchToCenterController(mapViewC)
         mapViewC.closePopups()
+    }
+
+    func switchToReadingMode() {
+        let readingModeViewC = getCenterController("ReadingModeTabBarController") as! ReadingModeTabBarController
+        readingModeViewC.areaProvider = self.getCenterController("MapViewController") as! MapViewController
+        switchToCenterController(readingModeViewC)
     }
 
     func toggleNavDrawer() {
