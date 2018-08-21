@@ -190,6 +190,21 @@ class MainDao {
         }
     }
 
+    public func getLexicon() -> Lexicon {
+        return Lexicon(entries: getAllLexiconEntries())
+    }
+
+    public func getAllLexiconEntries() -> [LexiconEntry] {
+        do {
+            return try dbQueue.inDatabase({ db in
+                return try LexiconEntry.fetchAll(db)
+            })
+        } catch {
+            log.error("Unable to retrieve the lexicon entries.")
+            return []
+        }
+    }
+
     public func getLexiconEntry(_ id: Int64) -> LexiconEntry? {
         do {
             return try dbQueue.inDatabase({ db in

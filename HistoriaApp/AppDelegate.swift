@@ -144,7 +144,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIWebViewDelegate, Lexico
     // since lexicon articles can lead to further lexicon articles, switching to one starts a
     // view controller stack, where the first element is the current center view controller
     // and further lexicon entries may be added to it
-    private func switchToLexiconArticle(for entry: LexiconEntry) {
+    func switchToLexiconArticle(for entry: LexiconEntry) {
         let entryC = self.mainStoryboard.instantiateViewController(withIdentifier: "LexiconArticleViewController") as! LexiconArticleViewController
         entryC.lexiconEntry = entry
         entryC.delegate = self
