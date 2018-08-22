@@ -4,7 +4,7 @@ import UIKit
 import MapKit
 import XCGLogger
 
-class MapViewController: UIViewController, MKMapViewDelegate, ModelSelectionDelegate, AreaProvider, CLLocationManagerDelegate {
+class MapViewController: UIViewController, MKMapViewDelegate, ModelSelectionDelegate, AreaProvider, MapPopupOnCloseDelegate, CLLocationManagerDelegate {
 
     @IBOutlet var mapView: MKMapView!
 
@@ -62,6 +62,11 @@ class MapViewController: UIViewController, MKMapViewDelegate, ModelSelectionDele
     @objc func appWillSuspend() {
         log.debug("Saving map state on app suspending.")
         mapState?.persist()
+    }
+
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        mapPopupController?.viewWillTransition(to: size, with: coordinator)
     }
 
     private func renewObserverStatusForAppSuspending() {
@@ -265,23 +270,25 @@ class MapViewController: UIViewController, MKMapViewDelegate, ModelSelectionDele
     // MARK: -- Map popups
 
     func displayAsPopup(controller: UIViewController) {
-        closePopups()
-        
-        // a new MapPopupController is instantiated each time (seems necessary to correctly
-        // adapt to the current device orientation)
-        instantiateNewPopupController()
+        if (mapPopupController == nil) {
+            instantiateNewPopupController()
+        }
         self.mapPopupController!.setPopup(byController: controller)
     }
 
     func closePopups() {
         self.mapPopupController?.close()
+    }
+
+    func onMapPopupClose() {
         self.mapPopupController = nil
     }
 
     private func instantiateNewPopupController() {
-        self.mapPopupController = self.storyboard?.instantiateViewController(withIdentifier: "MapPopupController") as? MapPopupController
-        self.view.addSubview(self.mapPopupController!.view)
-        self.mapPopupController!.didMove(toParentViewController: self)
+        mapPopupController = self.storyboard?.instantiateViewController(withIdentifier: "MapPopupController") as? MapPopupController
+        view.addSubview(self.mapPopupController!.view)
+        mapPopupController!.closeDelegate = self
+        mapPopupController!.didMove(toParentViewController: self)
     }
 
     // MARK: -- Drawer Navigation

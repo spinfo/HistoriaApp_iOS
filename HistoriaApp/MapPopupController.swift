@@ -3,12 +3,24 @@ import Foundation
 
 import UIKit
 
+protocol MapPopupOnCloseDelegate {
+    func onMapPopupClose()
+}
 
 class MapPopupController : UIViewController {
+
+    // minimum height of the popup on sliding it in or after sliding it out
+    let popupAnimationMinHeight = CGFloat(50.0)
 
     @IBOutlet weak var closeButton: UIBarButtonItem!
 
     @IBOutlet weak var containerView: UIView!
+
+    @IBOutlet weak var popupDistanceFromTop: NSLayoutConstraint!
+
+    var closeDelegate: MapPopupOnCloseDelegate?
+
+    private var lastParentNavigationController: UINavigationController?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,12 +33,61 @@ class MapPopupController : UIViewController {
         setViewControllerAsPopupContent(otherViewC)
     }
 
+    override func viewWillAppear(_ animated: Bool){
+        super.viewWillAppear(animated)
+        adjustPopupHeightToMinHeight()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        UIView.animate(withDuration: 0.23, delay: 0.0, options: UIViewAnimationOptions.beginFromCurrentState, animations: {
+            self.adjustPopupHeightToFitBelowTopBar()
+            self.view.layoutIfNeeded()
+        }, completion: nil)
+    }
+
     @objc public func close() {
-        self.removeExistingChildViewControllers()
+        UIView.animate(withDuration: 0.23, delay: 0.0, options: UIViewAnimationOptions.beginFromCurrentState, animations: {
+            self.adjustPopupHeightToMinHeight()
+            self.view.layoutIfNeeded()
+        }, completion: { _ in
+            self.removeSelfFromViewHierarchies()
+            self.closeDelegate?.onMapPopupClose()
+        })
+    }
+
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        coordinator.animateAlongsideTransition(in: nil, animation: nil, completion: {_ in
+            self.adjustPopupHeightToFitBelowTopBar()
+            self.view.layoutIfNeeded()
+        })
+    }
+
+    private func adjustPopupHeightToMinHeight() {
+        popupDistanceFromTop.constant = view.bounds.height - popupAnimationMinHeight
+    }
+
+    private func adjustPopupHeightToFitBelowTopBar() {
+        popupDistanceFromTop.constant = determineTopBarHeight()
+    }
+
+    private func removeSelfFromViewHierarchies() {
+        removeExistingChildViewControllers()
         MapPopupController.disconnectFromParent(self)
     }
 
-    // MARK: -- Private methods
+    private func determineTopBarHeight() -> CGFloat {
+        let statusBarHeight = UIApplication.shared.statusBarFrame.size.height
+        let navBarHeight = lastParentNavigationController?.navigationBar.frame.height
+
+        return statusBarHeight + (navBarHeight ?? 44.0)
+    }
+
+    override func didMove(toParentViewController parent: UIViewController?) {
+        super.didMove(toParentViewController: parent)
+        if (parent?.navigationController != nil) {
+            lastParentNavigationController = parent!.navigationController
+        }
+    }
 
     private func removeExistingChildViewControllers() {
         for childViewC in self.childViewControllers {
