@@ -683,13 +683,13 @@
         <scene sceneID="cai-QD-zEN">
             <objects>
                 <tableViewController id="NbN-0M-0Ts" userLabel="ReadingModeLexiconViewController" customClass="ReadingModeLexiconViewController" customModule="HistoriaApp" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="44" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="44" sectionFooterHeight="-1" id="GUg-ZJ-3HM">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="44" sectionFooterHeight="44" id="GUg-ZJ-3HM">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="readingModeLexiconTableCell" id="ZG2-Hq-fF6" customClass="ReadingModeLexiconTableViewCell" customModule="HistoriaApp" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="44" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ZG2-Hq-fF6" id="g9f-Na-D65">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
@@ -713,7 +713,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="readingModeLexiconTableViewSectionHeaderCell" rowHeight="70" id="STL-GP-OII" customClass="ReadingModeLexiconTableViewSectionHeaderCell" customModule="HistoriaApp" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="72" width="375" height="70"/>
+                                <rect key="frame" x="0.0" y="88" width="375" height="70"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="STL-GP-OII" id="ScO-Fy-nTq">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="69.5"/>
@@ -727,7 +727,7 @@
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="7pI-BQ-RPu" firstAttribute="leading" secondItem="ScO-Fy-nTq" secondAttribute="leadingMargin" id="0Zh-tE-DY4"/>
+                                        <constraint firstItem="7pI-BQ-RPu" firstAttribute="leading" secondItem="ScO-Fy-nTq" secondAttribute="leading" constant="16" id="0Zh-tE-DY4"/>
                                         <constraint firstItem="7pI-BQ-RPu" firstAttribute="top" secondItem="ScO-Fy-nTq" secondAttribute="topMargin" constant="16" id="teq-vv-oWP"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="7pI-BQ-RPu" secondAttribute="trailing" id="wHe-4s-p5J"/>
                                     </constraints>
