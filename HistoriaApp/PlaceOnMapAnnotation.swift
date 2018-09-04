@@ -15,14 +15,16 @@ class PlaceOnMapAnnotation : MKPointAnnotation {
 
         self.coordinate = placeOnMap.coordinate
 
-        // this needs to be set to a non-empty string for mapkit to show any annotation
-        self.title = "dummy-title"
+        setupDummyTitle()
     }
 
-    // Remove the title that was only needed for mapkit ro accept that this view can show
-    // an annotation
     public func removeDummyTitle() {
         self.title = ""
+    }
+
+    public func setupDummyTitle() {
+        // this needs to be set to a non-empty string for mapkit to show any annotation
+        self.title = "dummy-title"
     }
 
     public func getOrCreateAnnotationView(reuseFrom mapView: MKMapView) -> MKAnnotationView {

@@ -145,8 +145,17 @@ class MapViewController: UIViewController, MKMapViewDelegate, ModelSelectionDele
         if castAnnotation.placeOnMap.hasMultipleMapstops() {
             view.rightCalloutAccessoryView = calloutNextMapstopButton
         }
-
+        // do not show the title that only exists to persuade MapKit to show the annotation
         castAnnotation.removeDummyTitle()
+    }
+
+    func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
+        guard let castAnnotation = castToPlaceOnMapAnnotation(annotation: view.annotation!) else {
+            return
+        }
+        // setup a meaningless title so that MapKit will show the annotation view the next time
+        // the annotation is selected
+        castAnnotation.setupDummyTitle()
     }
 
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
