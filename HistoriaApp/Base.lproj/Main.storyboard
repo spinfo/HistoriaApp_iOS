@@ -24,7 +24,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" alpha="0.65000000000000002" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hXu-sx-7aw">
-                                <rect key="frame" x="0.0" y="647" width="182" height="20"/>
+                                <rect key="frame" x="193" y="647" width="182" height="20"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="11"/>
                                 <inset key="contentEdgeInsets" minX="6" minY="3" maxX="6" maxY="3"/>
@@ -43,11 +43,11 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="hXu-sx-7aw" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="1Xl-kd-uP8"/>
+                            <constraint firstItem="hXu-sx-7aw" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailing" id="1Xl-kd-uP8"/>
                             <constraint firstItem="8iU-8d-cdG" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="20" id="QJK-hU-WjT"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="hXu-sx-7aw" secondAttribute="bottom" id="XV9-9d-jma"/>
                             <constraint firstAttribute="trailingMargin" secondItem="8iU-8d-cdG" secondAttribute="trailing" constant="5" id="hXM-5N-BkT"/>
-                            <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="hXu-sx-7aw" secondAttribute="trailing" priority="250" constant="100" id="wa9-4P-jJN"/>
+                            <constraint firstAttribute="leading" relation="lessThanOrEqual" secondItem="hXu-sx-7aw" secondAttribute="leading" priority="250" constant="100" id="wa9-4P-jJN"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="HistoriaApp" id="fRg-8J-DCA">
