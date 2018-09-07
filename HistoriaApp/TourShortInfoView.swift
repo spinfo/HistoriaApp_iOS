@@ -24,8 +24,7 @@ class TourShortInfoView: UIView {
 
     func setupWithNib() {
         let nib = UINib(nibName: self.nibName, bundle: Bundle(for: type(of: self)))
-        self.view = nib.instantiate(withOwner: self, options: nil)[0] as! UIView
-
+        self.view = nib.instantiate(withOwner: self, options: nil)[0] as? UIView
         self.addSubview(view)
     }
 

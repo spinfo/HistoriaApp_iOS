@@ -253,7 +253,7 @@ fileprivate extension Dictionary where Value: Any {
     func safeGetDate(_ key: Key, formatter: DateFormatter) throws -> Date {
         let dateDescription = try self.safeGetString(key)
         guard let result = formatter.date(from: dateDescription) else {
-            throw ParseError.General(msg: "Invalid date '\(dateDescription)' for format: '\(formatter.dateFormat)'")
+            throw ParseError.General(msg: "Invalid date '\(dateDescription)' for format: '\(String(describing: formatter.dateFormat))'")
         }
         return result
     }
