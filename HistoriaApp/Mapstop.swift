@@ -25,6 +25,9 @@ public class Mapstop : Record {
     // the mapstops main content: (html) pages
     var pages: Array<Page> = Array()
 
+    // the mapstop's position in the tour
+    var pos: Int = 0
+
     var coordinate: CLLocationCoordinate2D {
         return place!.coordinate
     }
@@ -47,6 +50,7 @@ public class Mapstop : Record {
         name = row["name"]
         description = row["description"]
         placeId = row["place_id"]
+        pos = row["pos"]
         super.init(row: row)
     }
 
@@ -57,5 +61,6 @@ public class Mapstop : Record {
         container["tour_id"] = tour?.id
         container["name"] = name
         container["description"] = description
+        container["pos"] = pos
     }
 }

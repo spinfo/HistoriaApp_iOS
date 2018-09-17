@@ -12,7 +12,7 @@ target 'HistoriaApp' do
   pod 'SSZipArchive', '~> 2.0.3'
 
   # an sqlite library
-  pod 'GRDB.swift', '3.2.0'
+  pod 'GRDB.swift', '2.10.0'
 
   # logging
   pod 'XCGLogger', '~> 6.0.4'

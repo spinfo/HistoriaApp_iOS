@@ -80,6 +80,7 @@ class ServerResponseReader {
 
             // creaete and link the tour's mapstops
             let mapstopDicts = try dict.safeGetObjectDictArray("mapstops")
+            var mapstopPos = 0
             for stopDict in mapstopDicts {
                 let mapstop = Mapstop()
 
@@ -87,6 +88,8 @@ class ServerResponseReader {
                 mapstop.id = try stopDict.safeGetInt64("id")
                 mapstop.name = try stopDict.safeGetString("name")
                 mapstop.description = try stopDict.safeGetString("description")
+                mapstop.pos = mapstopPos
+                mapstopPos += 1
 
                 // create and link the place
                 let placeDict = try stopDict.safeGetObjectDict("place")

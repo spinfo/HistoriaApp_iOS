@@ -280,7 +280,8 @@ class MainDao {
 
     private func unsafeGetMapstops(forTour id: Int64) throws -> [Mapstop] {
         return try dbQueue.inDatabase({ db in
-            return try Mapstop.filter(Column("tour_id") == id).fetchAll(db)
+            let s = Mapstop.filter(Column("tour_id") == id).order([Column("pos"), Column("id")])
+            return try s.fetchAll(db)
         })
     }
 

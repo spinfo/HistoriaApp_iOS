@@ -28,16 +28,14 @@ class DatabaseHelper {
     // if not at least one area and one tour is retrievable
     // Returns true if a database is available or false if something went
     // awry
-    // TODO: GRDB seems to support a "DatabasMigrator" that might better be used here
     public class func initDB() -> Bool {
 
+        guard let localQueue = getQueue() else {
+            log.error("Unable to get the db queue.")
+            return false
+        }
         var hasMinimumEntities = false
         do {
-            // initialize the queue as it might not have been
-            guard let localQueue = getQueue() else {
-                log.error("Unable to get the db queue.")
-                return false
-            }
             try localQueue.inDatabase({ db in
                 let numAreas = try Area.fetchCount(db)
                 let numTours = try Tour.fetchCount(db)
@@ -48,10 +46,6 @@ class DatabaseHelper {
         }
 
         if !hasMinimumEntities {
-            guard let localQueue = getQueue() else {
-                log.error("Unable to get the db queue.")
-                return false
-            }
             log.info("Minimum db requirements not met, (re-)installing db.")
             do {
                 try localQueue.inDatabase({ db in
@@ -65,6 +59,13 @@ class DatabaseHelper {
                 log.error("Error on installing the example tour.")
                 return false
             }
+        }
+
+        do {
+            try runMigrations(in: localQueue)
+        } catch {
+            log.error("Could not run migrations: \(error)")
+            return false
         }
 
         return true
@@ -165,5 +166,18 @@ class DatabaseHelper {
         })
     }
 
-}
+    private class func runMigrations(in dbQueue: DatabaseQueue) throws {
 
+        var migrator = DatabaseMigrator()
+
+        migrator.registerMigration("v2", migrate: { db in
+            log.info("Applying database migration to: v2")
+            try db.alter(table: "mapstop") { t in
+                t.add(column: "pos", .integer).defaults(to: 0)
+            }
+        })
+
+        try migrator.migrate(dbQueue)
+    }
+
+}
