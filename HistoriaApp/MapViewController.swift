@@ -38,6 +38,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, ModelSelectionDele
         renewObserverStatusForAppSuspending()
 
         bringMapUIElementsToTheFront()
+        removeMapkitLegalAttributionLabel(in: mapView)
 
         mapView.delegate = self
 
@@ -373,5 +374,15 @@ class MapViewController: UIViewController, MKMapViewDelegate, ModelSelectionDele
     private func bringMapUIElementsToTheFront() {
         self.view.bringSubview(toFront: self.osmLicenseLinkButton)
         self.view.bringSubview(toFront: self.userLocationButton)
+    }
+
+    private func removeMapkitLegalAttributionLabel(in view: UIView) {
+        for subview in view.subviews {
+            if String(describing: type(of: subview)) == "MKAttributionLabel" {
+                subview.removeFromSuperview()
+                return
+            }
+            removeMapkitLegalAttributionLabel(in: subview)
+        }
     }
 }
