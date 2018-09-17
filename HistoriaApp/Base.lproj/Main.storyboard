@@ -459,14 +459,18 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Menüpunkt" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZoK-LA-sDh">
-                                                    <rect key="frame" x="8" y="8" width="359" height="27"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Menüpunkt" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZoK-LA-sDh">
+                                                    <rect key="frame" x="8" y="8" width="359" height="20.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="ZoK-LA-sDh" firstAttribute="top" secondItem="QmT-BR-lOk" secondAttribute="top" constant="8" id="aGu-Xi-1V3"/>
+                                                <constraint firstItem="ZoK-LA-sDh" firstAttribute="leading" secondItem="QmT-BR-lOk" secondAttribute="leading" constant="8" id="cFz-HO-Yom"/>
+                                                <constraint firstAttribute="trailing" secondItem="ZoK-LA-sDh" secondAttribute="trailing" constant="8" id="k3b-gh-hHW"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="menuItemLabel" destination="ZoK-LA-sDh" id="78x-qS-DDO"/>
