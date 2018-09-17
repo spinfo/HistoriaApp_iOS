@@ -19,45 +19,45 @@ class PlaceOnMapAnnotation : MKPointAnnotation {
     }
 
     public func removeDummyTitle() {
-        self.title = ""
+        if (iosVersionNeedsDummyTitle()) {
+            self.title = nil
+        }
     }
 
     public func setupDummyTitle() {
-        // this needs to be set to a non-empty string for mapkit to show any annotation
-        self.title = "dummy-title"
+        if (iosVersionNeedsDummyTitle()) {
+            // this needs to be set to a non-empty string for mapkit to show any annotation
+            self.title = "dummy-title"
+        }
     }
 
-    public func getOrCreateAnnotationView(reuseFrom mapView: MKMapView) -> MKAnnotationView {
+    private func iosVersionNeedsDummyTitle() -> Bool {
+        let version = OperatingSystemVersion(majorVersion: 11, minorVersion: 0, patchVersion: 0)
+        return !(ProcessInfo.processInfo.isOperatingSystemAtLeast(version))
+    }
+
+    public func getOrCreateAnnotationView(reuseFrom mapView: MKMapView) -> PlaceOnMapAnnotationView {
         var view = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId())
         if (view == nil) {
             view = createAnnotationView()
         }
         view!.annotation = self
-        return view!
+        return view as! PlaceOnMapAnnotationView
     }
 
     private func reuseId() -> String {
         if (self.placeOnMap.hasTourBeginMapstop) {
-            return "tour-begin-annotation"
+            return String(describing: PlaceOnMapWithTourBeginAnnotationView.self)
         } else {
-            return "normal-annotation"
+            return String(describing: PlaceOnMapAnnotationView.self)
         }
     }
 
-    private func createAnnotationView() -> MKAnnotationView {
-        let view = MKAnnotationView(annotation: self, reuseIdentifier: reuseId())
-        view.image = annotationImage()
-        let imgSize = view.image!.size
-        view.centerOffset = CGPoint(x: 0, y: (imgSize.height / 2) * -1)
-        view.canShowCallout = true
-        return view
-    }
-
-    private func annotationImage() -> UIImage {
+    private func createAnnotationView() -> PlaceOnMapAnnotationView {
         if (self.placeOnMap.hasTourBeginMapstop) {
-            return #imageLiteral(resourceName: "MarkerIconRed")
+            return PlaceOnMapWithTourBeginAnnotationView(annotation: self, reuseIdentifier: reuseId())
         } else {
-            return #imageLiteral(resourceName: "MarkerIconBlue")
+            return PlaceOnMapAnnotationView(annotation: self, reuseIdentifier: reuseId())
         }
     }
 

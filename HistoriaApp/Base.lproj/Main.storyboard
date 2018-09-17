@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="ChE-ah-cyd">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.13.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="ChE-ah-cyd">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
-        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.9"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -59,7 +57,6 @@
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
-                        <outlet property="calloutDetailView" destination="lUx-Cc-vtK" id="EXs-Fk-QUE"/>
                         <outlet property="calloutNextMapstopButton" destination="cUm-lR-tZJ" id="6rz-M4-R5W"/>
                         <outlet property="mapView" destination="8bC-Xf-vdC" id="Txf-WM-mU0"/>
                         <outlet property="osmLicenseLinkButton" destination="hXu-sx-7aw" id="RMP-6t-oWO"/>
@@ -67,60 +64,12 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
-                <view contentMode="scaleAspectFit" id="lUx-Cc-vtK" customClass="MapstopOnMapCalloutDetailView" customModule="HistoriaApp" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="0.0" width="290" height="128"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                    <subviews>
-                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="lqn-7O-95A">
-                            <rect key="frame" x="0.0" y="0.0" width="290" height="68.5"/>
-                            <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="tourName" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tWA-5u-HxE">
-                                    <rect key="frame" x="0.0" y="0.0" width="290" height="16"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                    <color key="textColor" white="0.2534877232142857" alpha="1" colorSpace="calibratedWhite"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="mapstopName" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0KT-Ja-D1u">
-                                    <rect key="frame" x="0.0" y="24" width="290" height="20.5"/>
-                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
-                                    <nil key="textColor"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="mapstopDescription" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cQa-F9-KOU">
-                                    <rect key="frame" x="0.0" y="52.5" width="290" height="16"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                    <nil key="textColor"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                            </subviews>
-                        </stackView>
-                    </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <gestureRecognizers/>
-                    <constraints>
-                        <constraint firstAttribute="trailing" secondItem="lqn-7O-95A" secondAttribute="trailing" id="OtB-km-GxI"/>
-                        <constraint firstItem="lqn-7O-95A" firstAttribute="leading" secondItem="lUx-Cc-vtK" secondAttribute="leading" id="oLc-K4-dwN"/>
-                        <constraint firstItem="lqn-7O-95A" firstAttribute="top" secondItem="lUx-Cc-vtK" secondAttribute="top" id="uKH-fa-c5L"/>
-                    </constraints>
-                    <connections>
-                        <outlet property="mainStack" destination="lqn-7O-95A" id="77z-Lc-ovM"/>
-                        <outlet property="mapstopDescription" destination="cQa-F9-KOU" id="FU6-h8-Zcc"/>
-                        <outlet property="mapstopName" destination="0KT-Ja-D1u" id="ALd-ak-cFq"/>
-                        <outlet property="tourName" destination="tWA-5u-HxE" id="U5b-yc-GPW"/>
-                        <outletCollection property="gestureRecognizers" destination="RMf-1H-uqK" appends="YES" id="ubB-7r-Sdf"/>
-                    </connections>
-                </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="cUm-lR-tZJ">
                     <rect key="frame" x="0.0" y="0.0" width="44" height="44"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <inset key="contentEdgeInsets" minX="5" minY="0.0" maxX="5" maxY="0.0"/>
                     <state key="normal" title="Button" image="ArrowNext"/>
                 </button>
-                <tapGestureRecognizer id="RMf-1H-uqK">
-                    <connections>
-                        <action selector="viewTapped:" destination="lUx-Cc-vtK" id="ywo-0F-q6b"/>
-                    </connections>
-                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="381.60000000000002" y="93.103448275862078"/>
         </scene>
@@ -176,7 +125,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" horizontalCompressionResistancePriority="740" translatesAutoresizingMaskIntoConstraints="NO" id="eEH-VF-8BS" customClass="TourShortInfoView" customModule="HistoriaApp" customModuleProvider="target">
-                                            <rect key="frame" x="10" y="10" width="356.5" height="134.5"/>
+                                            <rect key="frame" x="9.5" y="10" width="356" height="134.5"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </view>
                                     </subviews>
@@ -811,7 +760,7 @@
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Vm4-eu-reh">
-                                <rect key="frame" x="-0.5" y="70" width="375" height="597"/>
+                                <rect key="frame" x="0.0" y="70" width="375" height="597"/>
                                 <subviews>
                                     <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" translatesAutoresizingMaskIntoConstraints="NO" id="haM-UX-HLN">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>

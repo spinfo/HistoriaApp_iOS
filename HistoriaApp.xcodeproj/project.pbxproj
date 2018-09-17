@@ -11,6 +11,8 @@
 		6302A7B7212181710025A637 /* ReadingModeToursNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6302A7B6212181710025A637 /* ReadingModeToursNavigationController.swift */; };
 		6302A7B92121874B0025A637 /* ReadingModeMapstopListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6302A7B82121874B0025A637 /* ReadingModeMapstopListController.swift */; };
 		6302A7BF2121E10D0025A637 /* MapstopPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6302A7BE2121E10D0025A637 /* MapstopPageViewController.swift */; };
+		630440DC2147C33700A6DAF4 /* MapstopOnMapCalloutDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 630440DB2147C33700A6DAF4 /* MapstopOnMapCalloutDetailView.xib */; };
+		630440DE2147FEB900A6DAF4 /* PlaceOnMapAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630440DD2147FEB900A6DAF4 /* PlaceOnMapAnnotationView.swift */; };
 		631909832114A75600F0AF4F /* MapState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631909822114A75600F0AF4F /* MapState.swift */; };
 		632A060F1F8BD8CC0092093E /* AboutPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632A060E1F8BD8CC0092093E /* AboutPageViewController.swift */; };
 		63344B981F7D2F3E007D1445 /* AreaSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63344B971F7D2F3E007D1445 /* AreaSelectionViewController.swift */; };
@@ -76,6 +78,8 @@
 		6302A7B6212181710025A637 /* ReadingModeToursNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingModeToursNavigationController.swift; sourceTree = "<group>"; };
 		6302A7B82121874B0025A637 /* ReadingModeMapstopListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingModeMapstopListController.swift; sourceTree = "<group>"; };
 		6302A7BE2121E10D0025A637 /* MapstopPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapstopPageViewController.swift; sourceTree = "<group>"; };
+		630440DB2147C33700A6DAF4 /* MapstopOnMapCalloutDetailView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MapstopOnMapCalloutDetailView.xib; sourceTree = "<group>"; };
+		630440DD2147FEB900A6DAF4 /* PlaceOnMapAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceOnMapAnnotationView.swift; sourceTree = "<group>"; };
 		631909822114A75600F0AF4F /* MapState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapState.swift; sourceTree = "<group>"; };
 		632A060E1F8BD8CC0092093E /* AboutPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutPageViewController.swift; sourceTree = "<group>"; };
 		63344B971F7D2F3E007D1445 /* AreaSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AreaSelectionViewController.swift; sourceTree = "<group>"; };
@@ -178,7 +182,9 @@
 				63C8F0ED1F56E8EA00F90F7C /* PlaceOnMap.swift */,
 				63C8F0EF1F56E8FD00F90F7C /* TourCollectionOnMap.swift */,
 				634D5C1020FE53FA00BF1C47 /* PlaceOnMapAnnotation.swift */,
+				630440DD2147FEB900A6DAF4 /* PlaceOnMapAnnotationView.swift */,
 				638A5F52210732D200B9B742 /* MapstopOnMapCalloutDetailView.swift */,
+				630440DB2147C33700A6DAF4 /* MapstopOnMapCalloutDetailView.xib */,
 			);
 			name = mappables;
 			sourceTree = "<group>";
@@ -391,6 +397,7 @@
 			files = (
 				63D181151F3C5B29004A2036 /* LaunchScreen.storyboard in Resources */,
 				63D181121F3C5B29004A2036 /* Assets.xcassets in Resources */,
+				630440DC2147C33700A6DAF4 /* MapstopOnMapCalloutDetailView.xib in Resources */,
 				63D181101F3C5B29004A2036 /* Main.storyboard in Resources */,
 				63D54A921F73FA6300EC7084 /* TourShortInfoView.xib in Resources */,
 			);
@@ -490,6 +497,7 @@
 				63344B9C1F7D55AC007D1445 /* UrlSchemes.swift in Sources */,
 				631909832114A75600F0AF4F /* MapState.swift in Sources */,
 				63F8C7261F41F7CB00691559 /* Mapstop.swift in Sources */,
+				630440DE2147FEB900A6DAF4 /* PlaceOnMapAnnotationView.swift in Sources */,
 				63D80CBA2111F24D00729B8C /* ReadingModeLexiconViewController.swift in Sources */,
 				63D1810B1F3C5B29004A2036 /* AppDelegate.swift in Sources */,
 				634805F21F715DA6002200D6 /* TourSelectionViewController.swift in Sources */,

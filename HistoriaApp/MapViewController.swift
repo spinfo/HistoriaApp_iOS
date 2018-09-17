@@ -10,8 +10,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, ModelSelectionDele
 
     @IBOutlet weak var osmLicenseLinkButton: UIButton!
 
-    @IBOutlet var calloutDetailView: MapstopOnMapCalloutDetailView!
-
     @IBOutlet var calloutNextMapstopButton: UIButton!
 
     @IBOutlet weak var userLocationButton: UIButton!
@@ -42,7 +40,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, ModelSelectionDele
         bringMapUIElementsToTheFront()
 
         mapView.delegate = self
-        calloutDetailView.mapstopSelectionDelegate = self
 
         mapState = MapState.restoreOrDefault()
         switchMapContents(to: mapState!.tourCollection)
@@ -130,7 +127,11 @@ class MapViewController: UIViewController, MKMapViewDelegate, ModelSelectionDele
             log.error("Unexpected annotation type: \(type(of: annotation))")
             return nil
         }
-        return castAnnotation.getOrCreateAnnotationView(reuseFrom: self.mapView)
+
+        let annotationView = castAnnotation.getOrCreateAnnotationView(reuseFrom: self.mapView)
+        annotationView.updateContent(with: castAnnotation.placeOnMap.currentMapstopOnMap())
+
+        return annotationView
     }
 
     // what happens when the user clicks on a marker
@@ -138,9 +139,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, ModelSelectionDele
         guard let castAnnotation = castToPlaceOnMapAnnotation(annotation: view.annotation!) else {
             return
         }
-
-        let mapstopOnMap = castAnnotation.placeOnMap.currentMapstopOnMap()
-        prepareCalloutDetail(for: mapstopOnMap, on: view)
 
         if castAnnotation.placeOnMap.hasMultipleMapstops() {
             view.rightCalloutAccessoryView = calloutNextMapstopButton
@@ -153,6 +151,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, ModelSelectionDele
         guard let castAnnotation = castToPlaceOnMapAnnotation(annotation: view.annotation!) else {
             return
         }
+
         // setup a meaningless title so that MapKit will show the annotation view the next time
         // the annotation is selected
         castAnnotation.setupDummyTitle()
@@ -164,7 +163,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, ModelSelectionDele
         }
 
         let mapstopOnMap = castAnnotation.placeOnMap.nextMapstopOnMap()
-        switchCalloutDetailContent(with: mapstopOnMap, on: view)
+        switchCalloutDetailContent(with: mapstopOnMap, on: view as! PlaceOnMapAnnotationView)
     }
 
     private func castToPlaceOnMapAnnotation(annotation: MKAnnotation) -> PlaceOnMapAnnotation? {
@@ -176,15 +175,10 @@ class MapViewController: UIViewController, MKMapViewDelegate, ModelSelectionDele
         }
     }
 
-    private func switchCalloutDetailContent(with mapstopOnMap: MapstopOnMap, on view: MKAnnotationView) {
+    private func switchCalloutDetailContent(with mapstopOnMap: MapstopOnMap, on view: PlaceOnMapAnnotationView) {
         mapView.deselectAnnotation(view.annotation, animated: false)
-        prepareCalloutDetail(for: mapstopOnMap, on: view)
+        view.updateContent(with: mapstopOnMap)
         mapView.selectAnnotation(view.annotation!, animated: false)
-    }
-
-    private func prepareCalloutDetail(for mapstopOnMap: MapstopOnMap, on view: MKAnnotationView) {
-        calloutDetailView.updateContentForImmediateDisplay(using: mapstopOnMap)
-        view.detailCalloutAccessoryView = calloutDetailView
     }
 
     func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
@@ -371,12 +365,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, ModelSelectionDele
         self.mapPopupController?.close()
     }
 
-    private func changeMapCenter(coord: CLLocationCoordinate2D) {
-        let newCenter = MKMapPointForCoordinate(coord)
-        let newRect = MKMapRect(origin: newCenter, size: mapView.visibleMapRect.size)
-        zoomTo(rect: newRect, padding: 0)
-    }
-
     private func zoomTo(tourCollectionOnMap: TourCollectionOnMap) {
         zoomTo(rect: makeRectFor(coords: tourCollectionOnMap.coordinates()), padding: 40)
     }
@@ -384,9 +372,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, ModelSelectionDele
     private func zoomTo(rect: MKMapRect, padding: Int) {
         if (padding > 0) {
             let insets = makeEqualSidedEdgeInsets(distance: padding)
-            mapView.setVisibleMapRect(rect, edgePadding: insets, animated: true)
+            mapView.setVisibleMapRect(rect, edgePadding: insets, animated: false)
         } else {
-            mapView.setVisibleMapRect(rect, animated: true)
+            mapView.setVisibleMapRect(rect, animated: false)
         }
     }
 
