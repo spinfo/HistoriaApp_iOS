@@ -134,6 +134,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, ModelSelectionDele
         annotationView.mapstopSelectionDelegate = self
         if castAnnotation.placeOnMap.hasMultipleMapstops() {
             annotationView.rightCalloutAccessoryView = calloutNextMapstopButton
+        } else {
+            annotationView.rightCalloutAccessoryView = nil
         }
 
         return annotationView
