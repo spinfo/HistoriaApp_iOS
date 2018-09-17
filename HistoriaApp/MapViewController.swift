@@ -124,37 +124,18 @@ class MapViewController: UIViewController, MKMapViewDelegate, ModelSelectionDele
     // Determine the view that should be rendered to indicate a point of interest on the map.
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard let castAnnotation = annotation as? PlaceOnMapAnnotation else {
-            log.error("Unexpected annotation type: \(type(of: annotation))")
             return nil
         }
 
+        let mapstopOnMap = castAnnotation.setupForCurrentMapstop()
         let annotationView = castAnnotation.getOrCreateAnnotationView(reuseFrom: self.mapView)
-        annotationView.updateContent(with: castAnnotation.placeOnMap.currentMapstopOnMap())
+        annotationView.updateContent(with: mapstopOnMap)
+        annotationView.mapstopSelectionDelegate = self
+        if castAnnotation.placeOnMap.hasMultipleMapstops() {
+            annotationView.rightCalloutAccessoryView = calloutNextMapstopButton
+        }
 
         return annotationView
-    }
-
-    // what happens when the user clicks on a marker
-    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        guard let castAnnotation = castToPlaceOnMapAnnotation(annotation: view.annotation!) else {
-            return
-        }
-
-        if castAnnotation.placeOnMap.hasMultipleMapstops() {
-            view.rightCalloutAccessoryView = calloutNextMapstopButton
-        }
-        // do not show the title that only exists to persuade MapKit to show the annotation
-        castAnnotation.removeDummyTitle()
-    }
-
-    func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
-        guard let castAnnotation = castToPlaceOnMapAnnotation(annotation: view.annotation!) else {
-            return
-        }
-
-        // setup a meaningless title so that MapKit will show the annotation view the next time
-        // the annotation is selected
-        castAnnotation.setupDummyTitle()
     }
 
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
@@ -162,8 +143,10 @@ class MapViewController: UIViewController, MKMapViewDelegate, ModelSelectionDele
             return
         }
 
-        let mapstopOnMap = castAnnotation.placeOnMap.nextMapstopOnMap()
-        switchCalloutDetailContent(with: mapstopOnMap, on: view as! PlaceOnMapAnnotationView)
+        mapView.deselectAnnotation(castAnnotation, animated: false)
+        let mapstop = castAnnotation.setupForNextMapstop()
+        (view as! PlaceOnMapAnnotationView).updateContent(with: mapstop)
+        mapView.selectAnnotation(view.annotation!, animated: false)
     }
 
     private func castToPlaceOnMapAnnotation(annotation: MKAnnotation) -> PlaceOnMapAnnotation? {
@@ -173,12 +156,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, ModelSelectionDele
             log.error("Unexpected annotation type: \(type(of: annotation))")
             return nil
         }
-    }
-
-    private func switchCalloutDetailContent(with mapstopOnMap: MapstopOnMap, on view: PlaceOnMapAnnotationView) {
-        mapView.deselectAnnotation(view.annotation, animated: false)
-        view.updateContent(with: mapstopOnMap)
-        mapView.selectAnnotation(view.annotation!, animated: false)
     }
 
     func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {

@@ -17,7 +17,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="ydO-ud-77R">
-                    <rect key="frame" x="0.0" y="0.0" width="290" height="68.5"/>
+                    <rect key="frame" x="0.0" y="0.0" width="290" height="40"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="tourName" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r8f-iB-S5U">
                             <rect key="frame" x="0.0" y="0.0" width="290" height="16"/>
@@ -25,14 +25,8 @@
                             <color key="textColor" white="0.25348772320000001" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="mapstopName" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aoc-2j-E3D">
-                            <rect key="frame" x="0.0" y="24" width="290" height="20.5"/>
-                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
-                            <nil key="textColor"/>
-                            <nil key="highlightedColor"/>
-                        </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="mapstopDescription" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CDK-5f-cax">
-                            <rect key="frame" x="0.0" y="52.5" width="290" height="16"/>
+                            <rect key="frame" x="0.0" y="24" width="290" height="16"/>
                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -54,7 +48,6 @@
             <connections>
                 <outlet property="mainStack" destination="ydO-ud-77R" id="xD9-ue-gJq"/>
                 <outlet property="mapstopDescription" destination="CDK-5f-cax" id="rVX-9s-AXe"/>
-                <outlet property="mapstopName" destination="aoc-2j-E3D" id="7pQ-hR-eu2"/>
                 <outlet property="tourName" destination="r8f-iB-S5U" id="QIR-7b-zFz"/>
                 <outletCollection property="gestureRecognizers" destination="TCH-Hr-dMc" appends="YES" id="qFi-RI-lcw"/>
             </connections>

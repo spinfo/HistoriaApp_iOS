@@ -2,9 +2,11 @@
 import Foundation
 import MapKit
 
-class PlaceOnMapAnnotationView : MKAnnotationView {
+class PlaceOnMapAnnotationView : MKAnnotationView, MapstopSelectionDelegate {
 
     var mapstopView: MapstopOnMapCalloutDetailView!
+
+    var mapstopSelectionDelegate: MapstopSelectionDelegate?
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -30,11 +32,16 @@ class PlaceOnMapAnnotationView : MKAnnotationView {
 
     private func setupCalloutView() {
         self.mapstopView = MapstopOnMapCalloutDetailView.instanceFromNib()
+        self.mapstopView.mapstopSelectionDelegate = self
         detailCalloutAccessoryView = self.mapstopView
     }
 
-    public func updateContent(with mapstopOnMap: MapstopOnMap) {
-        self.mapstopView.updateContentForImmediateDisplay(using: mapstopOnMap)
+    func updateContent(with mapstopOnMap: MapstopOnMap) {
+        mapstopView.updateContentForImmediateDisplay(using: mapstopOnMap)
+    }
+
+    func mapstopSelected(_ mapstop: Mapstop) {
+        mapstopSelectionDelegate?.mapstopSelected(mapstop)
     }
 }
 

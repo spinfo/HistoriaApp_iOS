@@ -14,26 +14,19 @@ class PlaceOnMapAnnotation : MKPointAnnotation {
         super.init()
 
         self.coordinate = placeOnMap.coordinate
-
-        setupDummyTitle()
     }
 
-    public func removeDummyTitle() {
-        if (iosVersionNeedsDummyTitle()) {
-            self.title = nil
-        }
+    public func setupForCurrentMapstop() -> MapstopOnMap {
+        return setupContent(for: placeOnMap.currentMapstopOnMap())
     }
 
-    public func setupDummyTitle() {
-        if (iosVersionNeedsDummyTitle()) {
-            // this needs to be set to a non-empty string for mapkit to show any annotation
-            self.title = "dummy-title"
-        }
+    public func setupForNextMapstop() -> MapstopOnMap {
+        return setupContent(for: placeOnMap.nextMapstopOnMap())
     }
 
-    private func iosVersionNeedsDummyTitle() -> Bool {
-        let version = OperatingSystemVersion(majorVersion: 11, minorVersion: 0, patchVersion: 0)
-        return !(ProcessInfo.processInfo.isOperatingSystemAtLeast(version))
+    private func setupContent(for mapstopOnMap: MapstopOnMap) -> MapstopOnMap {
+        self.title = mapstopOnMap.title
+        return mapstopOnMap
     }
 
     public func getOrCreateAnnotationView(reuseFrom mapView: MKMapView) -> PlaceOnMapAnnotationView {
