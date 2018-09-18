@@ -39,6 +39,7 @@ class MapstopOnMapCalloutDetailView : UIView {
     private func updateContent(using mapstopOnMap: MapstopOnMap) {
         self.mapstopOnMap = mapstopOnMap
 
+        mapstopName.text = mapstopOnMap.title
         tourName.text = mapstopOnMap.tourTitle
         mapstopDescription.text = mapstopOnMap.subtitle
     }

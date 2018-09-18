@@ -152,6 +152,20 @@ class MapViewController: UIViewController, MKMapViewDelegate, ModelSelectionDele
         mapView.selectAnnotation(view.annotation!, animated: false)
     }
 
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        guard let castAnnotation = castToPlaceOnMapAnnotation(annotation: view.annotation!) else {
+            return
+        }
+        castAnnotation.removeDummyTitle()
+    }
+
+    func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
+        guard let castAnnotation = castToPlaceOnMapAnnotation(annotation: view.annotation!) else {
+            return
+        }
+        castAnnotation.setupDummyTitle()
+    }
+
     private func castToPlaceOnMapAnnotation(annotation: MKAnnotation) -> PlaceOnMapAnnotation? {
         if let result = annotation as? PlaceOnMapAnnotation {
             return result

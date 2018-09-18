@@ -14,6 +14,25 @@ class PlaceOnMapAnnotation : MKPointAnnotation {
         super.init()
 
         self.coordinate = placeOnMap.coordinate
+
+        setupDummyTitle()
+    }
+
+    public func removeDummyTitle() {
+        if iOSVersionNeedsDummyTitle() {
+            self.title = nil
+        }
+    }
+
+    public func setupDummyTitle() {
+        if iOSVersionNeedsDummyTitle() {
+            self.title = "[Title missing]"
+        }
+    }
+
+    public func iOSVersionNeedsDummyTitle() -> Bool {
+        let version = OperatingSystemVersion(majorVersion: 11, minorVersion: 0, patchVersion: 0)
+        return !ProcessInfo.processInfo.isOperatingSystemAtLeast(version)
     }
 
     public func setupForCurrentMapstop() -> MapstopOnMap {
@@ -25,7 +44,7 @@ class PlaceOnMapAnnotation : MKPointAnnotation {
     }
 
     private func setupContent(for mapstopOnMap: MapstopOnMap) -> MapstopOnMap {
-        self.title = mapstopOnMap.title
+        // self.title = mapstopOnMap.title
         return mapstopOnMap
     }
 
