@@ -51,6 +51,7 @@ class DatabaseHelper {
                 try localQueue.inDatabase({ db in
                     try createTables(in: db)
                 })
+                try runMigrations(in: localQueue)
             } catch {
                 log.error("Could not create tables: \(error)")
                 return false
