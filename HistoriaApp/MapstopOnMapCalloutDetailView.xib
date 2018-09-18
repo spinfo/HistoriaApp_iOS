@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.13.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.13.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.9"/>
-        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -37,14 +36,13 @@
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <gestureRecognizers/>
             <constraints>
-                <constraint firstItem="ydO-ud-77R" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="JWg-SD-xF4"/>
-                <constraint firstItem="ydO-ud-77R" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="avR-jh-JAf"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="ydO-ud-77R" secondAttribute="trailing" id="uXm-f7-EHY"/>
+                <constraint firstItem="ydO-ud-77R" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="JWg-SD-xF4"/>
+                <constraint firstItem="ydO-ud-77R" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="avR-jh-JAf"/>
+                <constraint firstAttribute="trailing" secondItem="ydO-ud-77R" secondAttribute="trailing" id="uXm-f7-EHY"/>
             </constraints>
             <nil key="simulatedTopBarMetrics"/>
             <nil key="simulatedBottomBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <connections>
                 <outlet property="mainStack" destination="ydO-ud-77R" id="xD9-ue-gJq"/>
                 <outlet property="mapstopDescription" destination="CDK-5f-cax" id="rVX-9s-AXe"/>
