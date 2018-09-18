@@ -15,12 +15,12 @@ PODS:
   - ObjcExceptionBridging (1.0.1):
     - ObjcExceptionBridging/ObjcExceptionBridging (= 1.0.1)
   - ObjcExceptionBridging/ObjcExceptionBridging (1.0.1)
-  - SSZipArchive (2.0.7)
+  - SSZipArchive (2.0.8)
   - XCGLogger (6.0.4):
     - XCGLogger/Core (= 6.0.4)
   - XCGLogger/Core (6.0.4):
     - ObjcExceptionBridging
-  - Yams (1.0.0)
+  - Yams (1.0.1)
 
 DEPENDENCIES:
   - GRDB.swift (= 2.10.0)
@@ -42,9 +42,9 @@ SPEC CHECKSUMS:
   GRDB.swift: 9859cab1b990eac62ee550d3d2208ec1b44f76af
   MMDrawerController: e3a54a5570388463ad3b36975251575b50c4e1a0
   ObjcExceptionBridging: c30e00eb3700467e695faeea30e26e18bd445001
-  SSZipArchive: 8c197761d66bd33e7f8b5b51ee57dff303971150
+  SSZipArchive: e6ab66e1936fac7e3b5073e9f5eb364d91dfbfc7
   XCGLogger: 4fc1bc0bdd5828cb8dc8da7a843536cda1bea8f3
-  Yams: a01cdee527b3a82a3e192255b34ad5aacdf96b8c
+  Yams: 572f625a8b719b73e0b57fd313c680f3e2161fe9
 
 PODFILE CHECKSUM: f16afd028272b56b20fbc244943f68ada66c1f02
 
