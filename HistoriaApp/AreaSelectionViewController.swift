@@ -26,6 +26,9 @@ class AreaSelectionViewController: UIViewController, UITableViewDelegate, UITabl
 
     func refreshAreas() {
         self.areas = theDao.getAreas()
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
     }
 
     // MARK: -- UITableViewDataSource
