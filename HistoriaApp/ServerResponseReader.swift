@@ -78,7 +78,7 @@ class ServerResponseReader {
                 tour.track!.append(point)
             }
 
-            // creaete and link the tour's mapstops
+            // create and link the tour's mapstops
             let mapstopDicts = try dict.safeGetObjectDictArray("mapstops")
             var mapstopPos = 0
             for stopDict in mapstopDicts {

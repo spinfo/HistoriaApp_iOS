@@ -28,6 +28,14 @@ public class Mapstop : Record {
     // the mapstop's position in the tour
     var pos: Int = 0
 
+    // A mapstop might belong to a scene if it is part of an indoor tour
+    var scene: Scene?
+
+    // A mapstop might have a scene coordinate if it is part of an indoor tour
+    var sceneCoordinate: SceneCoordinate?
+
+    var sceneType: String = ""
+
     var coordinate: CLLocationCoordinate2D {
         return place!.coordinate
     }
@@ -51,6 +59,7 @@ public class Mapstop : Record {
         description = row["description"]
         placeId = row["place_id"]
         pos = row["pos"]
+        sceneType = row["scene_type"]
         super.init(row: row)
     }
 
@@ -62,5 +71,8 @@ public class Mapstop : Record {
         container["name"] = name
         container["description"] = description
         container["pos"] = pos
+        container["scene_id"] = scene?.id
+        container["scene_coordinate_id"] = sceneCoordinate?.id
+        container["scene_type"] = sceneType
     }
 }

@@ -19,6 +19,7 @@
 		63344B9A1F7D32DC007D1445 /* AreaSelectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63344B991F7D32DC007D1445 /* AreaSelectionTableViewCell.swift */; };
 		63344B9C1F7D55AC007D1445 /* UrlSchemes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63344B9B1F7D55AC007D1445 /* UrlSchemes.swift */; };
 		63344B9E1F7D5739007D1445 /* HtmlContentCompletion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63344B9D1F7D5739007D1445 /* HtmlContentCompletion.swift */; };
+		633526652191ACF40087AC89 /* Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633526642191ACF40087AC89 /* Scene.swift */; };
 		634805F21F715DA6002200D6 /* TourSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634805F11F715DA6002200D6 /* TourSelectionViewController.swift */; };
 		634805F41F71615D002200D6 /* TourSelectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634805F31F71615D002200D6 /* TourSelectionTableViewCell.swift */; };
 		634805F61F7186EA002200D6 /* ModelSelectionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634805F51F7186EA002200D6 /* ModelSelectionDelegate.swift */; };
@@ -86,6 +87,7 @@
 		63344B991F7D32DC007D1445 /* AreaSelectionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AreaSelectionTableViewCell.swift; sourceTree = "<group>"; };
 		63344B9B1F7D55AC007D1445 /* UrlSchemes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UrlSchemes.swift; sourceTree = "<group>"; };
 		63344B9D1F7D5739007D1445 /* HtmlContentCompletion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HtmlContentCompletion.swift; sourceTree = "<group>"; };
+		633526642191ACF40087AC89 /* Scene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scene.swift; sourceTree = "<group>"; };
 		634805F11F715DA6002200D6 /* TourSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TourSelectionViewController.swift; sourceTree = "<group>"; };
 		634805F31F71615D002200D6 /* TourSelectionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TourSelectionTableViewCell.swift; sourceTree = "<group>"; };
 		634805F51F7186EA002200D6 /* ModelSelectionDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelSelectionDelegate.swift; sourceTree = "<group>"; };
@@ -289,6 +291,7 @@
 				636AD42A1F753BD600513CFA /* PersistableGeopoint.swift */,
 				636AD42C1F753BEA00513CFA /* LexiconEntry.swift */,
 				63744A882127071500E9A5EE /* Lexicon.swift */,
+				633526642191ACF40087AC89 /* Scene.swift */,
 			);
 			name = data;
 			sourceTree = "<group>";
@@ -498,6 +501,7 @@
 				631909832114A75600F0AF4F /* MapState.swift in Sources */,
 				63F8C7261F41F7CB00691559 /* Mapstop.swift in Sources */,
 				630440DE2147FEB900A6DAF4 /* PlaceOnMapAnnotationView.swift in Sources */,
+				633526652191ACF40087AC89 /* Scene.swift in Sources */,
 				63D80CBA2111F24D00729B8C /* ReadingModeLexiconViewController.swift in Sources */,
 				63D1810B1F3C5B29004A2036 /* AppDelegate.swift in Sources */,
 				634805F21F715DA6002200D6 /* TourSelectionViewController.swift in Sources */,

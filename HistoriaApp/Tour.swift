@@ -11,6 +11,7 @@ public class Tour : Record {
         case Tour = "tour"
         case PublicTransportTour = "public-transport-tour"
         case BikeTour = "bike-tour"
+        case IndoorTour = "indoor-tour"
 
         var representation: String {
             get {
@@ -19,6 +20,7 @@ public class Tour : Record {
                 case .Tour: return "Spaziergang"
                 case .PublicTransportTour: return "ÖPNV-Tour"
                 case .BikeTour: return "Fahrrad-Tour"
+                case .IndoorTour: return "Indoor-Tour"
                 }
             }
         }
@@ -92,6 +94,12 @@ public class Tour : Record {
     // a tour might have Lexicon entries associated during installation
     // the connection to those is however not persisted
     var lexiconEntries: [LexiconEntry] = Array()
+
+    var isIndoorTour: Bool  {
+        get {
+            return self.type == .IndoorTour
+        }
+    }
 
     // MARK: Record interface
 
