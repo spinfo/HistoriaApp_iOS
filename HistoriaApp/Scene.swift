@@ -12,12 +12,14 @@ public class SceneCoordinate : Record {
 
     var id: Int64 = 0
 
-    var x: Float = 0.0
+    var x: Double = 0.0
 
-    var y: Float = 0.0
+    var y: Double = 0.0
 
+    var sceneId: Int64 = 0
     var scene: Scene?
 
+    var mapstopId: Int64 = 0
     var mapstop: Mapstop?
 
     override public class var databaseTableName: String {
@@ -32,6 +34,8 @@ public class SceneCoordinate : Record {
         id = row["id"]
         x = row["x"]
         y = row["y"]
+        sceneId = row["scene_id"]
+        mapstopId = row["mapstop_id"]
         super.init(row: row)
     }
 
@@ -44,8 +48,6 @@ public class SceneCoordinate : Record {
     }
 }
 
-
-// Data object for a Mapstop which is part of a Tour and has a place and a few html pages
 public class Scene : Record {
 
     var id: Int64 = 0
@@ -94,7 +96,7 @@ public class Scene : Record {
         container["name"] = name
         container["title"] = title
         container["description"] = description
-        container["except"] = excerpt
+        container["excerpt"] = excerpt
         container["src"] = src
     }
 

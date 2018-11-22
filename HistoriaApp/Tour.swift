@@ -82,6 +82,8 @@ public class Tour : Record {
         return trackCoordinates + trackCoordinates
     }
 
+    var scenes: Array<Scene> = Array()
+
     // point of creation in the backend's db assumed to be in GMT+2
     var createdAt: Date = Date()
     static let creationDateFormatter = { () -> DateFormatter in

@@ -54,20 +54,22 @@ class FileService {
 
     // installs the example tour included in the app's assets
     public class func installExampleTour() -> Tour? {
+        return installTourFromAssets(assetName: "ExampleTour", fakeId: 0, fakeVersion: 0)
+    }
 
+    private class func installTourFromAssets(assetName: String, fakeId: Int64, fakeVersion: Int) -> Tour? {
         // read the example tour's zip file as binary data from the assets
-        let data = getExampleTourData()
+        let data = getAssetData(assetName: assetName)
 
         // write the zip file into a temporary container
         guard let tempUrl = FileService.writeToTempFile(data) else {
             return nil
         }
 
-        // we need a fake tour record to install the example (tourId and version
-        // are 0 per convention for the example)
+        // we need a fake tour record to install the example
         let record = TourRecord()
-        record.tourId = 0
-        record.version = 0
+        record.tourId = fakeId
+        record.version = fakeVersion
         return installTour(fromZipFile: tempUrl, tourRecord: record)
     }
 
@@ -109,11 +111,6 @@ class FileService {
             fileURLWithPath: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!,
             isDirectory: true
         )
-    }
-    
-    // read the example tour asset and return it's data
-    private class func getExampleTourData() -> Data {
-        return getAssetData(assetName: "ExampleTour")
     }
 
     // convenience function to read asset data and emit a fatal error if the asset is not present

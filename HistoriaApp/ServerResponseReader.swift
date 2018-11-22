@@ -81,6 +81,7 @@ class ServerResponseReader {
             // create and link the tour's mapstops
             let mapstopDicts = try dict.safeGetObjectDictArray("mapstops")
             var mapstopPos = 0
+            var mapstops = [Int64: Mapstop]()
             for stopDict in mapstopDicts {
                 let mapstop = Mapstop()
 
@@ -127,8 +128,12 @@ class ServerResponseReader {
 
                 // link stop to tour and vice versa
                 mapstop.tour = tour
+
+                mapstops[mapstop.id] = mapstop
                 tour.mapstops.append(mapstop)
             }
+
+            try parseScenesOnIndoorTours(dict: dict, tour: tour, mapstops: mapstops)
 
             // create and link the tour's lexicon entries
             if dict["lexiconEntries"] != nil {
@@ -150,6 +155,54 @@ class ServerResponseReader {
         }
 
         return tour
+    }
+
+    private static func parseScenesOnIndoorTours(dict: [String: Any], tour: Tour, mapstops: [Int64: Mapstop]) throws {
+        guard let sceneDicts = dict["scenes"] as? [[String: Any]] else {
+            log.debug("Not an indoor tour. Skipping scenes.")
+            return
+        }
+
+        tour.scenes = try sceneDicts.map { sceneDict in
+            let scene = Scene()
+            scene.id = try sceneDict.safeGetInt64("id")
+            scene.name = try sceneDict.safeGetString("name")
+            scene.pos = try sceneDict.safeGetInt("pos")
+            scene.title = try sceneDict.safeGetString("title")
+            scene.description = try sceneDict.safeGetString("description")
+            scene.excerpt = try sceneDict.safeGetString("excerpt")
+            scene.src = try sceneDict.safeGetString("src")
+
+            if !(sceneDict["mapstops"] is NSNull) {
+                let sceneMapstopDicts = try sceneDict.safeGetObjectDictArray("mapstops")
+                scene.mapstops = try sceneMapstopDicts.map { (sceneMapstopDict: Dictionary<String, Any>) -> Mapstop in
+                    let id = try sceneMapstopDict.safeGetInt64("id")
+                    let mapstop = mapstops[id]!
+                    mapstop.sceneType = try sceneMapstopDict.safeGetString("type")
+                    mapstop.scene = scene
+                    return mapstop
+                }
+            }
+
+            if !(sceneDict["mapstops"] is NSNull) {
+                let sceneCoordinateDicts = try sceneDict.safeGetObjectDictArray("coordinates")
+                scene.coordinates = try sceneCoordinateDicts.map { sceneCoordinateDict -> SceneCoordinate in
+                    let coord = SceneCoordinate()
+                    coord.id = try sceneCoordinateDict.safeGetInt64("id")
+                    coord.x = try Double(exactly: sceneCoordinateDict.safeGetInt("x"))!
+                    coord.y = try Double(exactly: sceneCoordinateDict.safeGetInt("y"))!
+
+                    let mapstopId = try sceneCoordinateDict.safeGetObjectDict("mapstop").safeGetInt64("id")
+                    coord.mapstop = mapstops[mapstopId]!
+                    coord.mapstop?.sceneCoordinate = coord
+
+                    coord.scene = scene
+                    return coord
+                }
+            }
+            scene.tour = tour
+            return scene
+        }
     }
 
     // wrap Yams' basic parsing into a throwing function for convenience

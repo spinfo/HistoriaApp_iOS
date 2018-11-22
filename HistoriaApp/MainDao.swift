@@ -258,6 +258,16 @@ class MainDao {
             }
         }
 
+        for scene: Scene in tour.scenes {
+            try scene.insertOrUpdate(db)
+
+            // insert scene coordinates after deleting all the old ones belonging to the same scene
+            try SceneCoordinate.filter(Column("scene_id") == scene.id).deleteAll(db)
+            for coord: SceneCoordinate in scene.coordinates {
+                try coord.insert(db)
+            }
+        }
+
         // update the tour track by removing all old coordinates and re-inserting the new ones
         if (tour.track != nil && tour.track!.count > 0) {
             try PersistableGeopoint.filter(Column("tour_id") == tour.id).deleteAll(db)
@@ -265,10 +275,7 @@ class MainDao {
                 point.tour = tour
                 try point.insert(db)
             }
-        } else {
-            log.warning("Installing a tour without a track should never happen.")
         }
-
         // save the tour's lexicon entries
         for entry in tour.lexiconEntries {
             try entry.insertOrUpdate(db)
@@ -321,9 +328,54 @@ class MainDao {
         })
     }
 
+    private func unsafeSetAssociationsForMappingOnIndoorTour(_ tour: Tour) throws {
+        tour.scenes = try unsafeGetScenes(tourId: tour.id)
+
+        var mapstopsById = [Int64: Mapstop]()
+        tour.mapstops.forEach( { m in mapstopsById[m.id] = m} )
+
+        for scene in tour.scenes {
+            let coordinates = try unsafeGetSceneCoordinates(sceneId: scene.id)
+            for coord in coordinates {
+                guard let mapstop = mapstopsById.removeValue(forKey: coord.mapstopId) else {
+                    log.error("Coordinate has no mapstop in tour. mapstop_id: \(coord.mapstopId)")
+                    continue
+                }
+                linkSceneToMapstopAndCoordinate(scene: scene, mapstop: mapstop, coord: coord)
+            }
+        }
+
+        if (mapstopsById.count != 0) {
+            log.error("Found mapstops in indoor tour without coordinate representation.")
+        }
+    }
+
+    private func unsafeGetScenes(tourId: Int64) throws -> [Scene] {
+        return try dbQueue.inDatabase({ db in
+            return try Scene.filter(Column("tour_id") == tourId).fetchAll(db)
+        })
+    }
+
+    private func unsafeGetSceneCoordinates(sceneId: Int64) throws -> [SceneCoordinate] {
+        return try dbQueue.inDatabase({ db in
+            return try SceneCoordinate.filter(Column("scene_id") == sceneId).fetchAll(db)
+        })
+    }
+
+    private func linkSceneToMapstopAndCoordinate(scene: Scene, mapstop: Mapstop, coord: SceneCoordinate) {
+        guard (coord.sceneId == scene.id && coord.mapstopId == mapstop.id) else {
+            log.error("Ids do not match: \(coord.sceneId) != \(scene.id) || \(coord.mapstopId) != \(mapstop.id)")
+            return
+        }
+        coord.scene = scene
+        coord.mapstop = mapstop
+        mapstop.sceneCoordinate = coord
+        mapstop.scene = scene
+        scene.coordinates.append(coord)
+        scene.mapstops.append(mapstop)
+    }
+
     // set associations needed for map display on the given tour
-    // NOTE: Very, very problematic. We should be able to at least fetch
-    //      this without the loop over the mapstops
     private func unsafeSetAssociationsForMapping(on tour: Tour) throws {
         tour.mapstops = try unsafeGetMapstops(forTour: tour.id)
 
@@ -331,6 +383,10 @@ class MainDao {
             mapstop.place = try unsafeGetPlace(id: mapstop.placeId)
         }
         tour.track = try unsafeGetTrack(tourId: tour.id)
+
+        if (tour.type == .IndoorTour) {
+            try unsafeSetAssociationsForMappingOnIndoorTour(tour)
+        }
     }
 
     private func unsafeSetAssociationsForMapping(on tours: [Tour]) throws {
@@ -338,11 +394,9 @@ class MainDao {
     }
 }
 
-// Our own extension to GRDB Records
 fileprivate extension Record {
 
     // Insert or update a record in the databse based on it's primary key
-    // NOTE: Not very efficient, but should be seldom needed (on tour install mainly)
     func insertOrUpdate(_ db: Database) throws {
         if try self.exists(db) {
             try self.update(db)

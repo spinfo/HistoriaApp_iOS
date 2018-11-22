@@ -5,9 +5,11 @@ import XCGLogger
 
 class UrlSchemes {
 
-    static let serverBaseUri = "https://historia-app.de/wp-content/uploads/smart-history-tours"
-
+    static let serverBaseUri = "http://historia.ililil.co/wp-content/uploads/smart-history-tours"
     static let availableToursUri = UrlSchemes.serverBaseUri + "/tours.v2.yaml"
+
+    // static let serverBaseUri = "https://5587237654002.hostingkunde.de/wp-content/uploads/smart-history-tours"
+    // static let availableToursUri = UrlSchemes.serverBaseUri + "/tours.yaml"
 
     static let lexicon = "lexcion://"
 

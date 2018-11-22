@@ -41,7 +41,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, ModelSelectionDele
         removeMapkitLegalAttributionLabel(in: mapView)
 
         mapView.delegate = self
-
         mapState = MapState.restoreOrDefault()
         switchMapContents(to: mapState!.tourCollection)
         zoom(basedOn: mapState!)
