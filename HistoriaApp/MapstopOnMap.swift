@@ -7,8 +7,11 @@ public class MapstopOnMap {
     // the mapstop this wraps on the map
     let mapstop: Mapstop
 
-    // Whether this mapstop is the first in it's tour
+    // whether this mapstop is the first in it's tour
     var isFirstInTour: Bool
+
+    // whether this mapstop is part of an indoor tour
+    var isPartOfIndoorTour: Bool
 
     var title: String {
         return mapstop.name
@@ -25,6 +28,7 @@ public class MapstopOnMap {
     init(_ mapstop: Mapstop) {
         self.mapstop = mapstop
         self.isFirstInTour = false
+        self.isPartOfIndoorTour = false
     }
 
 }

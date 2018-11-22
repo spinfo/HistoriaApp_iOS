@@ -75,4 +75,15 @@ public class Mapstop : Record {
         container["scene_coordinate_id"] = sceneCoordinate?.id
         container["scene_type"] = sceneType
     }
+
+    public func isBeforeInSceneOrPosition(to other: Mapstop) -> Bool {
+        guard (self.scene != nil && other.scene != nil) else {
+            log.warning("Compring two mapstops without scene positions.")
+            return self.pos < other.pos
+        }
+        if (self.scene!.pos == other.scene!.pos) {
+            return self.pos < other.pos
+        }
+        return self.scene!.pos < other.scene!.pos
+    }
 }

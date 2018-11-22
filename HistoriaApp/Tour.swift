@@ -79,7 +79,11 @@ public class Tour : Record {
     }
 
     var coordinates: [CLLocationCoordinate2D] {
-        return trackCoordinates + trackCoordinates
+        if (self.isIndoorTour) {
+            return [mapstops.first!.coordinate]
+        } else {
+            return placeCoordinates + trackCoordinates
+        }
     }
 
     var scenes: Array<Scene> = Array()

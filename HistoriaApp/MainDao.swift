@@ -345,6 +345,8 @@ class MainDao {
             }
         }
 
+        tour.mapstops.sort(by: { (m1, m2) in return m1.isBeforeInSceneOrPosition(to: m2) })
+
         if (mapstopsById.count != 0) {
             log.error("Found mapstops in indoor tour without coordinate representation.")
         }

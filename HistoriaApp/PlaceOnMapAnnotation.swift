@@ -57,19 +57,23 @@ class PlaceOnMapAnnotation : MKPointAnnotation {
         return view as! PlaceOnMapAnnotationView
     }
 
-    private func reuseId() -> String {
-        if (self.placeOnMap.hasTourBeginMapstop) {
-            return String(describing: PlaceOnMapWithTourBeginAnnotationView.self)
-        } else {
-            return String(describing: PlaceOnMapAnnotationView.self)
-        }
-    }
-
     private func createAnnotationView() -> PlaceOnMapAnnotationView {
-        if (self.placeOnMap.hasTourBeginMapstop) {
+        if (placeOnMap.hasIndoorTourMapstop) {
+            return PlaceOnMapWithIndoorTourAnnotationView(annotation: self, reuseIdentifier: reuseId())
+        } else if (placeOnMap.hasTourBeginMapstop) {
             return PlaceOnMapWithTourBeginAnnotationView(annotation: self, reuseIdentifier: reuseId())
         } else {
             return PlaceOnMapAnnotationView(annotation: self, reuseIdentifier: reuseId())
+        }
+    }
+
+    private func reuseId() -> String {
+        if (placeOnMap.hasIndoorTourMapstop) {
+            return String(describing: PlaceOnMapWithIndoorTourAnnotationView.self)
+        } else if (placeOnMap.hasTourBeginMapstop) {
+            return String(describing: PlaceOnMapWithTourBeginAnnotationView.self)
+        } else {
+            return String(describing: PlaceOnMapAnnotationView.self)
         }
     }
 
