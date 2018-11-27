@@ -133,6 +133,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIWebViewDelegate, Lexico
         switchToCenterController(readingModeViewC)
     }
 
+    func switchToIndoorTourDisplay(for tour: Tour) {
+        let indoorTourViewC = getCenterController("IndoorTourViewController") as! IndoorTourViewController
+        indoorTourViewC.tour = tour
+        switchToCenterController(indoorTourViewC)
+    }
+
+    func dismissCurrentIndoorTourDisplay() {
+        switchToPlainMap()
+    }
+
     func toggleNavDrawer() {
         centerContainer?.toggle(.left, animated: true, completion: nil)
     }

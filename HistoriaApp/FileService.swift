@@ -89,6 +89,11 @@ class FileService {
     public class func getFile(atBase base: String) -> URL? {
         return getDocumentsFolder().appendingPathComponent(base)
     }
+
+    public class func getFileData(atBase base: String) -> Data? {
+        return FileManager.default.contents(atPath: getFile(atBase: base)!.absoluteString)
+
+    }
     
     // return a url to the map style, unpack that file from the assets if necessary
     public class func getMapStyleUrl() -> URL? {

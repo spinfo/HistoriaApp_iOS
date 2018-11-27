@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.13.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="ChE-ah-cyd">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="ChE-ah-cyd">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.9"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -422,6 +422,64 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="q5H-ux-fYb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3612" y="-296.40179910044981"/>
+        </scene>
+        <!--HistoriaApp - Indoor Tour-->
+        <scene sceneID="g5p-I3-J0b">
+            <objects>
+                <viewController storyboardIdentifier="IndoorTourViewController" id="i1U-Je-Tow" customClass="IndoorTourViewController" customModule="HistoriaApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="5zK-bU-sIj"/>
+                        <viewControllerLayoutGuide type="bottom" id="Rbv-t1-WSa"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="oyW-bu-CNa">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <toolbar clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rV3-u5-EjZ">
+                                <rect key="frame" x="0.0" y="623" width="375" height="44"/>
+                                <items>
+                                    <barButtonItem image="ArrowPrevious" id="We8-xq-HfF"/>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="NWo-ZX-M5V"/>
+                                    <barButtonItem title="Item" image="CloseCircle" id="PDo-Rn-SA0">
+                                        <connections>
+                                            <action selector="closeButtonTapped:" destination="i1U-Je-Tow" id="YIu-CV-33n"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="lHf-vQ-34G"/>
+                                    <barButtonItem title="Item" image="ArrowNext" id="sfq-bR-Bez"/>
+                                </items>
+                            </toolbar>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WDN-f1-4FD">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="rV3-u5-EjZ" firstAttribute="leading" secondItem="oyW-bu-CNa" secondAttribute="leading" id="Bjq-4f-83t"/>
+                            <constraint firstItem="WDN-f1-4FD" firstAttribute="centerX" secondItem="oyW-bu-CNa" secondAttribute="centerX" id="Ewn-YF-BsO"/>
+                            <constraint firstItem="WDN-f1-4FD" firstAttribute="width" secondItem="oyW-bu-CNa" secondAttribute="width" id="FGa-GF-7s3"/>
+                            <constraint firstItem="rV3-u5-EjZ" firstAttribute="width" secondItem="oyW-bu-CNa" secondAttribute="width" id="LR0-AQ-LFm"/>
+                            <constraint firstItem="WDN-f1-4FD" firstAttribute="height" secondItem="oyW-bu-CNa" secondAttribute="height" id="YpX-HS-fQt"/>
+                            <constraint firstItem="Rbv-t1-WSa" firstAttribute="top" secondItem="rV3-u5-EjZ" secondAttribute="bottom" id="amq-ct-AfK"/>
+                            <constraint firstItem="WDN-f1-4FD" firstAttribute="centerY" secondItem="oyW-bu-CNa" secondAttribute="centerY" id="rUp-bf-5ti"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="HistoriaApp - Indoor Tour" id="qgu-VJ-aCh">
+                        <barButtonItem key="leftBarButtonItem" title="Item" image="MenuToggle" id="669-N4-AGQ" userLabel="LeftDrawerButton">
+                            <connections>
+                                <action selector="leftBarButtonItemTapped:" destination="i1U-Je-Tow" id="LcM-he-5CH"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <outlet property="bottomToolbar" destination="rV3-u5-EjZ" id="m83-YK-Aoq"/>
+                        <outlet property="scrollView" destination="WDN-f1-4FD" id="stP-9F-QUa"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dJp-t4-R6S" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="381.60000000000002" y="-686.80659670164926"/>
         </scene>
         <!--Mapstop Page View Controller-->
         <scene sceneID="O1Y-mJ-Tid">
@@ -885,6 +943,7 @@
     <resources>
         <image name="ArrowDown" width="29" height="29"/>
         <image name="ArrowNext" width="29" height="29"/>
+        <image name="ArrowPrevious" width="29" height="29"/>
         <image name="ButtonTrackUser" width="48" height="48"/>
         <image name="CloseCircle" width="29" height="29"/>
         <image name="FlagIcon" width="29" height="29"/>

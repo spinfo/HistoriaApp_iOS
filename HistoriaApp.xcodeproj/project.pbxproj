@@ -50,6 +50,7 @@
 		63D181151F3C5B29004A2036 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 63D181131F3C5B29004A2036 /* LaunchScreen.storyboard */; };
 		63D181201F3C5B29004A2036 /* HistoriaAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D1811F1F3C5B29004A2036 /* HistoriaAppTests.swift */; };
 		63D1812B1F3C6CF5004A2036 /* FileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D1812A1F3C6CF5004A2036 /* FileService.swift */; };
+		63D2792D21AD5D4A00F0CAF4 /* IndoorTourViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D2792C21AD5D4A00F0CAF4 /* IndoorTourViewController.swift */; };
 		63D54A921F73FA6300EC7084 /* TourShortInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63D54A911F73FA6300EC7084 /* TourShortInfoView.xib */; };
 		63D54A941F74045400EC7084 /* TourShortInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D54A931F74045400EC7084 /* TourShortInfoView.swift */; };
 		63D80CBA2111F24D00729B8C /* ReadingModeLexiconViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D80CB92111F24D00729B8C /* ReadingModeLexiconViewController.swift */; };
@@ -125,6 +126,7 @@
 		63D181211F3C5B29004A2036 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		63D1812A1F3C6CF5004A2036 /* FileService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileService.swift; sourceTree = "<group>"; };
 		63D1812D1F3C74B4004A2036 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		63D2792C21AD5D4A00F0CAF4 /* IndoorTourViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndoorTourViewController.swift; sourceTree = "<group>"; };
 		63D54A911F73FA6300EC7084 /* TourShortInfoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TourShortInfoView.xib; sourceTree = "<group>"; };
 		63D54A931F74045400EC7084 /* TourShortInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TourShortInfoView.swift; sourceTree = "<group>"; };
 		63D7D7B71F7AC7D100E39B3E /* WhirlyGlobeMaplyComponent.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WhirlyGlobeMaplyComponent.framework; path = Pods/WhirlyGlobe/WhirlyGlobeMaplyComponent.framework; sourceTree = "<group>"; };
@@ -230,6 +232,7 @@
 				6302A7B82121874B0025A637 /* ReadingModeMapstopListController.swift */,
 				635307D32123266B00D51AA1 /* ReadingModeMapstopPageViewController.swift */,
 				63D80CB92111F24D00729B8C /* ReadingModeLexiconViewController.swift */,
+				63D2792C21AD5D4A00F0CAF4 /* IndoorTourViewController.swift */,
 				6361DA5B1F698DB4003B2DC7 /* TourDownloadViewController.swift */,
 				6361DA5F1F6996FE003B2DC7 /* TourDownloadTableViewCell.swift */,
 				634805F11F715DA6002200D6 /* TourSelectionViewController.swift */,
@@ -506,6 +509,7 @@
 				63D1810B1F3C5B29004A2036 /* AppDelegate.swift in Sources */,
 				634805F21F715DA6002200D6 /* TourSelectionViewController.swift in Sources */,
 				63C8F0EE1F56E8EA00F90F7C /* PlaceOnMap.swift in Sources */,
+				63D2792D21AD5D4A00F0CAF4 /* IndoorTourViewController.swift in Sources */,
 				6361DA5C1F698DB4003B2DC7 /* TourDownloadViewController.swift in Sources */,
 				63CFE62A1F5D87B100D6F5E0 /* MapstopPageContentViewController.swift in Sources */,
 				637592F22126DDD8006266B0 /* ReadingModeBackButtonProtocols.swift in Sources */,
