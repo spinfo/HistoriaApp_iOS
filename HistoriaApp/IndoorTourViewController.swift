@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class IndoorTourViewController : UIViewController {
+class IndoorTourViewController : UIViewController, UIScrollViewDelegate {
 
     var tour: Tour?
 
@@ -18,33 +18,38 @@ class IndoorTourViewController : UIViewController {
 
     var image: UIImage?
 
+    var currentIndex: Int = 0
+
     @IBOutlet weak var bottomToolbar: UIToolbar!
 
     override func viewDidLoad() {
 
+        scrollView.delegate = self
+        scrollView.minimumZoomScale = 0.1
+        scrollView.maximumZoomScale = 5.0
+
         setTitle()
         view.bringSubview(toFront: bottomToolbar)
 
-        let scene = tour!.scenes.first!
-
-        image = getImage(for: scene)
-        setupAsContent(image: image!)
-        scrollToImageCenter()
-    }
-
-
-    @IBAction func leftBarButtonItemTapped(_ sender: Any) {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        appDelegate.toggleNavDrawer()
-    }
-
-    @IBAction func closeButtonTapped(_ sender: Any) {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        appDelegate.dismissCurrentIndoorTourDisplay()
+        loadScene(at: currentIndex)
     }
 
     private func setTitle() {
         title = tour!.name
+    }
+
+    private func loadScene(at offset: Int) {
+        let index = currentIndex + offset
+        guard index >= 0 && index < tour!.scenes.count else {
+            return
+        }
+        let scene = tour!.scenes[index]
+
+        image = getImage(for: scene)
+        setupAsContent(image: image!)
+        zoomToFitImageHeightInCenter()
+
+        currentIndex = index
     }
 
     private func getImage(for scene: Scene) -> UIImage {
@@ -67,28 +72,37 @@ class IndoorTourViewController : UIViewController {
         scrollView.contentSize = image.size
     }
 
-    private func scrollToImageCenter() {
+    private func zoomToFitImageHeightInCenter() {
         let center = imageCenter()
-        let size = screenOrImageFittingSize()
-        let centerRect = rectFrom(center: center, size: size)
-        scrollView.scrollRectToVisible(centerRect, animated: false)
+        let height = max(view.bounds.height, image!.size.height)
+        let size = CGSize(width: view.bounds.width - 1, height: height - 1)
+        let fittingRect = rectFrom(center: center, size: size)
+        scrollView.zoom(to: fittingRect, animated: false)
     }
 
     private func imageCenter() -> CGPoint {
         return CGPoint(x: (image!.size.width / 2), y: (image!.size.height / 2))
     }
 
-    // calculate a size that is the currents view bounds but not bigger than the
-    // image that is currently displayed
-    private func screenOrImageFittingSize() -> CGSize {
-        let width = min(view.bounds.width, scrollView.contentSize.width)
-        let height = min(view.bounds.height, scrollView.contentSize.height)
-        return CGSize(width: width, height: height)
-    }
-
     private func rectFrom(center: CGPoint, size: CGSize) -> CGRect {
         let origin = CGPoint(x: center.x - (size.width / 2), y: center.y - (size.height / 2))
         return CGRect(origin: origin, size: size)
+    }
+
+    @IBAction func leftBarButtonItemTapped(_ sender: Any) {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        appDelegate.toggleNavDrawer()
+    }
+
+    @IBAction func closeButtonTapped(_ sender: Any) {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        appDelegate.dismissCurrentIndoorTourDisplay()
+    }
+
+    // MARK: UIScrollViewDelegate
+
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+        return imageView
     }
 
     private func makeToolbarTransparent() {
