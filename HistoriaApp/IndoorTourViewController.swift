@@ -76,8 +76,8 @@ class IndoorTourViewController : UIViewController, UIScrollViewDelegate {
 
     private func zoomToFitImageHeightInCenter() {
         let center = imageCenter()
-        let height = max(view.bounds.height, image!.size.height)
-        let size = CGSize(width: view.bounds.width - 1, height: height - 1)
+        let height = max(scrollView.bounds.height, image!.size.height)
+        let size = CGSize(width: scrollView.bounds.width - 1, height: height - 1)
         let fittingRect = rectFrom(center: center, size: size)
         scrollView.zoom(to: fittingRect, animated: false)
     }
