@@ -438,7 +438,11 @@
                             <toolbar clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rV3-u5-EjZ">
                                 <rect key="frame" x="0.0" y="623" width="375" height="44"/>
                                 <items>
-                                    <barButtonItem image="ArrowPrevious" id="We8-xq-HfF"/>
+                                    <barButtonItem image="ArrowPrevious" id="We8-xq-HfF">
+                                        <connections>
+                                            <action selector="previousButtonTapped:" destination="i1U-Je-Tow" id="Kl9-Xm-lIy"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="NWo-ZX-M5V"/>
                                     <barButtonItem title="Item" image="CloseCircle" id="PDo-Rn-SA0">
                                         <connections>
@@ -446,7 +450,11 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="lHf-vQ-34G"/>
-                                    <barButtonItem title="Item" image="ArrowNext" id="sfq-bR-Bez"/>
+                                    <barButtonItem title="Item" image="ArrowNext" id="sfq-bR-Bez">
+                                        <connections>
+                                            <action selector="nextButtonTapped:" destination="i1U-Je-Tow" id="dwM-vo-igF"/>
+                                        </connections>
+                                    </barButtonItem>
                                 </items>
                             </toolbar>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WDN-f1-4FD">
@@ -474,6 +482,8 @@
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="bottomToolbar" destination="rV3-u5-EjZ" id="m83-YK-Aoq"/>
+                        <outlet property="nextButton" destination="sfq-bR-Bez" id="Omk-YY-dem"/>
+                        <outlet property="previousButton" destination="We8-xq-HfF" id="Usz-mX-kPb"/>
                         <outlet property="scrollView" destination="WDN-f1-4FD" id="stP-9F-QUa"/>
                     </connections>
                 </viewController>

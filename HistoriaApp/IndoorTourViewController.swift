@@ -10,17 +10,18 @@ import UIKit
 
 class IndoorTourViewController : UIViewController, UIScrollViewDelegate {
 
-    var tour: Tour?
-
     @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var bottomToolbar: UIToolbar!
+    @IBOutlet weak var previousButton: UIBarButtonItem!
+    @IBOutlet weak var nextButton: UIBarButtonItem!
+
+    var tour: Tour?
 
     var imageView: UIImageView?
 
     var image: UIImage?
 
     var currentIndex: Int = 0
-
-    @IBOutlet weak var bottomToolbar: UIToolbar!
 
     override func viewDidLoad() {
 
@@ -31,14 +32,14 @@ class IndoorTourViewController : UIViewController, UIScrollViewDelegate {
         setTitle()
         view.bringSubview(toFront: bottomToolbar)
 
-        loadScene(at: currentIndex)
+        loadScene(offset: currentIndex)
     }
 
     private func setTitle() {
         title = tour!.name
     }
 
-    private func loadScene(at offset: Int) {
+    private func loadScene(offset: Int) {
         let index = currentIndex + offset
         guard index >= 0 && index < tour!.scenes.count else {
             return
@@ -50,6 +51,7 @@ class IndoorTourViewController : UIViewController, UIScrollViewDelegate {
         zoomToFitImageHeightInCenter()
 
         currentIndex = index
+        conditionallyHideToolbarButtons()
     }
 
     private func getImage(for scene: Scene) -> UIImage {
@@ -89,6 +91,16 @@ class IndoorTourViewController : UIViewController, UIScrollViewDelegate {
         return CGRect(origin: origin, size: size)
     }
 
+    private func conditionallyHideToolbarButtons() {
+        previousButton.isEnabled = true
+        nextButton.isEnabled = true
+        if (currentIndex == 0) {
+            previousButton.isEnabled = false
+        } else if (currentIndex == (tour!.scenes.count - 1)) {
+            nextButton.isEnabled = false
+        }
+    }
+
     @IBAction func leftBarButtonItemTapped(_ sender: Any) {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         appDelegate.toggleNavDrawer()
@@ -97,6 +109,14 @@ class IndoorTourViewController : UIViewController, UIScrollViewDelegate {
     @IBAction func closeButtonTapped(_ sender: Any) {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         appDelegate.dismissCurrentIndoorTourDisplay()
+    }
+
+    @IBAction func previousButtonTapped(_ sender: Any) {
+        loadScene(offset: -1)
+    }
+
+    @IBAction func nextButtonTapped(_ sender: Any) {
+        loadScene(offset: 1)
     }
 
     // MARK: UIScrollViewDelegate

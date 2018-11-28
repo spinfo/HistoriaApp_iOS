@@ -354,7 +354,7 @@ class MainDao {
 
     private func unsafeGetScenes(tourId: Int64) throws -> [Scene] {
         return try dbQueue.inDatabase({ db in
-            return try Scene.filter(Column("tour_id") == tourId).fetchAll(db)
+            return try Scene.filter(Column("tour_id") == tourId).order(Column("pos")).fetchAll(db)
         })
     }
 
