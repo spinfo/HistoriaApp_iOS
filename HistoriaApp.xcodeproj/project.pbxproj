@@ -36,6 +36,7 @@
 		6377AC5F1F5085F8003D729B /* MainDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6377AC5E1F5085F8003D729B /* MainDao.swift */; };
 		638A5F53210732D200B9B742 /* MapstopOnMapCalloutDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638A5F52210732D200B9B742 /* MapstopOnMapCalloutDetailView.swift */; };
 		63991320211DF7F500AD2C74 /* AreaProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6399131F211DF7F500AD2C74 /* AreaProvider.swift */; };
+		63A23E0221B02EBE001C97C3 /* SceneCoordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A23E0121B02EBE001C97C3 /* SceneCoordinate.swift */; };
 		63ABDDCC1F682D7A008AE47A /* NavDrawerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63ABDDCB1F682D7A008AE47A /* NavDrawerTableViewCell.swift */; };
 		63ABDDCE1F683BD6008AE47A /* ReadingModeTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63ABDDCD1F683BD6008AE47A /* ReadingModeTabBarController.swift */; };
 		63C77B6B211332450054C614 /* TourPreviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C77B6A211332450054C614 /* TourPreviewController.swift */; };
@@ -106,6 +107,7 @@
 		6377AC5E1F5085F8003D729B /* MainDao.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainDao.swift; sourceTree = "<group>"; };
 		638A5F52210732D200B9B742 /* MapstopOnMapCalloutDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapstopOnMapCalloutDetailView.swift; sourceTree = "<group>"; };
 		6399131F211DF7F500AD2C74 /* AreaProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaProvider.swift; sourceTree = "<group>"; };
+		63A23E0121B02EBE001C97C3 /* SceneCoordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneCoordinate.swift; sourceTree = "<group>"; };
 		63ABDDCB1F682D7A008AE47A /* NavDrawerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NavDrawerTableViewCell.swift; path = ../NavDrawerTableViewCell.swift; sourceTree = "<group>"; };
 		63ABDDCD1F683BD6008AE47A /* ReadingModeTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadingModeTabBarController.swift; sourceTree = "<group>"; };
 		63AF21491F47276900DD2973 /* ZipArchive.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ZipArchive.framework; path = Carthage/Build/iOS/ZipArchive.framework; sourceTree = "<group>"; };
@@ -295,6 +297,7 @@
 				636AD42C1F753BEA00513CFA /* LexiconEntry.swift */,
 				63744A882127071500E9A5EE /* Lexicon.swift */,
 				633526642191ACF40087AC89 /* Scene.swift */,
+				63A23E0121B02EBE001C97C3 /* SceneCoordinate.swift */,
 			);
 			name = data;
 			sourceTree = "<group>";
@@ -487,6 +490,7 @@
 				634805F61F7186EA002200D6 /* ModelSelectionDelegate.swift in Sources */,
 				63E2EB8D1F66DDC300D66F41 /* NavDrawerController.swift in Sources */,
 				63DAB1441F4B2D50005C69B4 /* DatabaseHelper.swift in Sources */,
+				63A23E0221B02EBE001C97C3 /* SceneCoordinate.swift in Sources */,
 				634D5C1120FE53FA00BF1C47 /* PlaceOnMapAnnotation.swift in Sources */,
 				63ABDDCE1F683BD6008AE47A /* ReadingModeTabBarController.swift in Sources */,
 				63C8F0F01F56E8FD00F90F7C /* TourCollectionOnMap.swift in Sources */,

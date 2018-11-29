@@ -1,9 +1,3 @@
-//
-//  IndoorTourViewController.swift
-//  HistoriaApp
-//
-//  Created by David on 27.11.18.
-//
 
 import Foundation
 import UIKit
@@ -17,7 +11,9 @@ class IndoorTourViewController : UIViewController, UIScrollViewDelegate {
 
     var tour: Tour?
 
-    var imageView: UIImageView?
+    var imageView: UIImageView!
+
+    var stopMarkerView: UIView!
 
     var image: UIImage?
 
@@ -26,8 +22,6 @@ class IndoorTourViewController : UIViewController, UIScrollViewDelegate {
     override func viewDidLoad() {
 
         scrollView.delegate = self
-        scrollView.minimumZoomScale = 0.1
-        scrollView.maximumZoomScale = 5.0
 
         setTitle()
         view.bringSubview(toFront: bottomToolbar)
@@ -46,12 +40,26 @@ class IndoorTourViewController : UIViewController, UIScrollViewDelegate {
         }
         let scene = tour!.scenes[index]
 
+        cleanupViews()
+
         image = getImage(for: scene)
         setupAsContent(image: image!)
         zoomToFitImageHeightInCenter()
+        setupStopMarkerView(for: scene)
 
         currentIndex = index
         conditionallyHideToolbarButtons()
+    }
+
+    private func cleanupViews() {
+        if (imageView != nil) {
+            imageView.removeFromSuperview()
+            imageView = nil
+        }
+        if (stopMarkerView != nil) {
+            stopMarkerView.removeFromSuperview()
+            stopMarkerView = nil
+        }
     }
 
     private func getImage(for scene: Scene) -> UIImage {
@@ -75,20 +83,18 @@ class IndoorTourViewController : UIViewController, UIScrollViewDelegate {
     }
 
     private func zoomToFitImageHeightInCenter() {
-        let center = imageCenter()
         let height = max(scrollView.bounds.height, image!.size.height)
-        let size = CGSize(width: scrollView.bounds.width - 1, height: height - 1)
-        let fittingRect = rectFrom(center: center, size: size)
-        scrollView.zoom(to: fittingRect, animated: false)
+        let size = CGSize(width: scrollView.bounds.width, height: height)
+        let fittingRect = CGRect(origin: .zero, size: size)
+        zoomOnceFixingTheNewZoomScale(to: fittingRect)
     }
 
-    private func imageCenter() -> CGPoint {
-        return CGPoint(x: (image!.size.width / 2), y: (image!.size.height / 2))
-    }
-
-    private func rectFrom(center: CGPoint, size: CGSize) -> CGRect {
-        let origin = CGPoint(x: center.x - (size.width / 2), y: center.y - (size.height / 2))
-        return CGRect(origin: origin, size: size)
+    private func zoomOnceFixingTheNewZoomScale(to rect: CGRect) {
+        scrollView.minimumZoomScale = CGFloat.leastNonzeroMagnitude
+        scrollView.maximumZoomScale = CGFloat.greatestFiniteMagnitude
+        scrollView.zoom(to: rect, animated: false)
+        scrollView.minimumZoomScale =  scrollView.zoomScale
+        scrollView.maximumZoomScale = scrollView.zoomScale
     }
 
     private func conditionallyHideToolbarButtons() {
@@ -100,6 +106,68 @@ class IndoorTourViewController : UIViewController, UIScrollViewDelegate {
             nextButton.isEnabled = false
         }
     }
+
+    // MARK: Positioning Mapstop Markers
+
+    private func setupStopMarkerView(for scene: Scene) {
+        if (stopMarkerView == nil) {
+            stopMarkerView = UIView()
+        }
+        scrollView.addSubview(stopMarkerView)
+        scrollView.bringSubview(toFront: stopMarkerView)
+
+        var scrolled = false
+        for stop in scene.mapstops {
+            let markerView = buildStopMarkerView(for: stop)
+            stopMarkerView.addSubview(markerView)
+
+            if (!scrolled) {
+                scrollRightAndCenterOn(x: (markerView.frame.origin.x + (markerView.frame.size.width / 2) ))
+                scrolled = true
+            }
+        }
+    }
+
+
+    private func scrollRightAndCenterOn(x: CGFloat) {
+        let minSize = CGSize(width: 1, height: 1)
+        var xValue = x + (view.frame.size.width / 2)
+        xValue = min(scrollView.contentSize.width, (xValue + minSize.width))
+        let point = CGPoint(x: xValue, y: 1)
+        scrollView.scrollRectToVisible(CGRect(origin: point, size: minSize), animated: false)
+    }
+
+    private func buildStopMarkerView(for stop: Mapstop) -> UIView {
+        let size = CGSize(width: 40, height: 40)
+        let point = deriveStopPosition(stop, markerSize: size)
+        let label = UILabel(frame: CGRect(origin: point, size: size))
+
+        let image: UIImage
+        if (stop.sceneType == "info") {
+            image = #imageLiteral(resourceName: "StopMarkerWhite")
+            label.textColor = .black
+        } else {
+            image = #imageLiteral(resourceName: "StopMarkerBlue")
+            label.textColor = .white
+        }
+
+        label.backgroundColor = UIColor(patternImage: image.imageResize(sizeChange: size))
+        label.textAlignment = .center
+        label.font = UIFont.boldSystemFont(ofSize: label.font.pointSize)
+        label.text = String(stop.pos)
+        return label
+    }
+
+    private func deriveStopPosition(_ stop: Mapstop, markerSize: CGSize) -> CGPoint {
+        guard let coord = stop.sceneCoordinate else {
+            log.warning("Mapstop without coordinate: \(stop.name)")
+            return CGPoint()
+        }
+        let point = coord.positionOnSurface(withSize: scrollView.contentSize)
+        return CGPoint(x: point.x - markerSize.width, y: point.y - markerSize.height)
+    }
+
+    // MARK: Buttons
 
     @IBAction func leftBarButtonItemTapped(_ sender: Any) {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -129,4 +197,22 @@ class IndoorTourViewController : UIViewController, UIScrollViewDelegate {
         bottomToolbar.setBackgroundImage(UIImage(), forToolbarPosition: .any, barMetrics: .default)
         bottomToolbar.setShadowImage(UIImage(), forToolbarPosition: .any)
     }
+}
+
+
+
+fileprivate extension UIImage {
+
+    func imageResize (sizeChange:CGSize)-> UIImage{
+
+        let hasAlpha = true
+        let scale: CGFloat = 0.0 // Use scale factor of main screen
+
+        UIGraphicsBeginImageContextWithOptions(sizeChange, !hasAlpha, scale)
+        self.draw(in: CGRect(origin: CGPoint.zero, size: sizeChange))
+
+        let scaledImage = UIGraphicsGetImageFromCurrentImageContext()
+        return scaledImage!
+    }
+
 }

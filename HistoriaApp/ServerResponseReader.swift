@@ -163,6 +163,7 @@ class ServerResponseReader {
             return
         }
 
+        var pos = 1;
         tour.scenes = try sceneDicts.map { sceneDict in
             let scene = Scene()
             scene.id = try sceneDict.safeGetInt64("id")
@@ -180,6 +181,10 @@ class ServerResponseReader {
                     let mapstop = mapstops[id]!
                     mapstop.sceneType = try sceneMapstopDict.safeGetString("type")
                     mapstop.scene = scene
+                    // NOTE: Overwrites the pos value set sequentially on mapstops
+                    // since position order depends on scene order for indoor tours
+                    mapstop.pos = pos;
+                    pos += 1;
                     return mapstop
                 }
             }
