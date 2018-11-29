@@ -432,11 +432,11 @@
                         <viewControllerLayoutGuide type="bottom" id="Rbv-t1-WSa"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="oyW-bu-CNa">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <toolbar clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rV3-u5-EjZ">
-                                <rect key="frame" x="0.0" y="623" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="559" width="375" height="44"/>
                                 <items>
                                     <barButtonItem image="ArrowPrevious" id="We8-xq-HfF">
                                         <connections>
@@ -458,20 +458,21 @@
                                 </items>
                             </toolbar>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WDN-f1-4FD">
-                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="WDN-f1-4FD" firstAttribute="top" secondItem="5zK-bU-sIj" secondAttribute="bottom" id="AqD-3Y-Y6C"/>
                             <constraint firstItem="rV3-u5-EjZ" firstAttribute="leading" secondItem="oyW-bu-CNa" secondAttribute="leading" id="Bjq-4f-83t"/>
                             <constraint firstItem="WDN-f1-4FD" firstAttribute="leading" secondItem="oyW-bu-CNa" secondAttribute="leading" id="D4E-UD-rde"/>
+                            <constraint firstItem="WDN-f1-4FD" firstAttribute="top" secondItem="5zK-bU-sIj" secondAttribute="bottom" id="D8d-ig-Vc3"/>
                             <constraint firstItem="rV3-u5-EjZ" firstAttribute="width" secondItem="oyW-bu-CNa" secondAttribute="width" id="LR0-AQ-LFm"/>
                             <constraint firstAttribute="trailing" secondItem="WDN-f1-4FD" secondAttribute="trailing" id="PVM-p7-Le9"/>
                             <constraint firstItem="Rbv-t1-WSa" firstAttribute="top" secondItem="rV3-u5-EjZ" secondAttribute="bottom" id="amq-ct-AfK"/>
                             <constraint firstItem="Rbv-t1-WSa" firstAttribute="top" secondItem="WDN-f1-4FD" secondAttribute="bottom" id="b93-wN-QsL"/>
                         </constraints>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <navigationItem key="navigationItem" title="HistoriaApp - Indoor Tour" id="qgu-VJ-aCh">
                         <barButtonItem key="leftBarButtonItem" title="Item" image="MenuToggle" id="669-N4-AGQ" userLabel="LeftDrawerButton">
                             <connections>
