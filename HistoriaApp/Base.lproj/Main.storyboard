@@ -460,9 +460,20 @@
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WDN-f1-4FD">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                             </scrollView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="scenNo" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5gL-ER-OAA">
+                                <rect key="frame" x="165" y="20" width="45" height="45"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="45" id="l9X-T7-9PH"/>
+                                    <constraint firstAttribute="height" constant="45" id="pen-3o-uuW"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="5gL-ER-OAA" firstAttribute="centerX" secondItem="oyW-bu-CNa" secondAttribute="centerX" id="8Mb-DJ-cZC"/>
                             <constraint firstItem="rV3-u5-EjZ" firstAttribute="leading" secondItem="oyW-bu-CNa" secondAttribute="leading" id="Bjq-4f-83t"/>
                             <constraint firstItem="WDN-f1-4FD" firstAttribute="leading" secondItem="oyW-bu-CNa" secondAttribute="leading" id="D4E-UD-rde"/>
                             <constraint firstItem="WDN-f1-4FD" firstAttribute="top" secondItem="5zK-bU-sIj" secondAttribute="bottom" id="D8d-ig-Vc3"/>
@@ -470,6 +481,7 @@
                             <constraint firstAttribute="trailing" secondItem="WDN-f1-4FD" secondAttribute="trailing" id="PVM-p7-Le9"/>
                             <constraint firstItem="Rbv-t1-WSa" firstAttribute="top" secondItem="rV3-u5-EjZ" secondAttribute="bottom" id="amq-ct-AfK"/>
                             <constraint firstItem="Rbv-t1-WSa" firstAttribute="top" secondItem="WDN-f1-4FD" secondAttribute="bottom" id="b93-wN-QsL"/>
+                            <constraint firstItem="5gL-ER-OAA" firstAttribute="top" secondItem="5zK-bU-sIj" secondAttribute="bottom" constant="20" id="nri-MR-tkd"/>
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
@@ -485,6 +497,7 @@
                         <outlet property="bottomToolbar" destination="rV3-u5-EjZ" id="m83-YK-Aoq"/>
                         <outlet property="nextButton" destination="sfq-bR-Bez" id="Omk-YY-dem"/>
                         <outlet property="previousButton" destination="We8-xq-HfF" id="Usz-mX-kPb"/>
+                        <outlet property="sceneNoLabel" destination="5gL-ER-OAA" id="tVK-ci-0c0"/>
                         <outlet property="scrollView" destination="WDN-f1-4FD" id="stP-9F-QUa"/>
                     </connections>
                 </viewController>

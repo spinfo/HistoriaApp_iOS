@@ -8,8 +8,9 @@ class IndoorTourViewController : UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var bottomToolbar: UIToolbar!
     @IBOutlet weak var previousButton: UIBarButtonItem!
     @IBOutlet weak var nextButton: UIBarButtonItem!
-
-    var tour: Tour?
+    @IBOutlet weak var sceneNoLabel: UILabel!
+    
+    var tour: Tour!
 
     var imageView: UIImageView!
 
@@ -24,6 +25,7 @@ class IndoorTourViewController : UIViewController, UIScrollViewDelegate {
         scrollView.delegate = self
 
         setTitle()
+        setupSceneNoLabelBackgroundImage()
         view.bringSubview(toFront: bottomToolbar)
 
         loadScene(offset: currentIndex)
@@ -31,6 +33,11 @@ class IndoorTourViewController : UIViewController, UIScrollViewDelegate {
 
     private func setTitle() {
         title = tour!.name
+    }
+
+    private func setupSceneNoLabelBackgroundImage() {
+        let image = #imageLiteral(resourceName: "SceneNoSquareBackground")
+        sceneNoLabel.backgroundColor = UIColor(patternImage: image.imageResize(sizeChange: sceneNoLabel.frame.size))
     }
 
     private func loadScene(offset: Int) {
@@ -49,6 +56,7 @@ class IndoorTourViewController : UIViewController, UIScrollViewDelegate {
 
         currentIndex = index
         conditionallyHideToolbarButtons()
+        setSceneNoLabelCount()
     }
 
     private func cleanupViews() {
@@ -105,6 +113,10 @@ class IndoorTourViewController : UIViewController, UIScrollViewDelegate {
         } else if (currentIndex == (tour!.scenes.count - 1)) {
             nextButton.isEnabled = false
         }
+    }
+
+    private func setSceneNoLabelCount() {
+        sceneNoLabel.text = String(format: "%d\n%d", (currentIndex + 1), tour.scenes.count)
     }
 
     // MARK: Positioning Mapstop Markers
