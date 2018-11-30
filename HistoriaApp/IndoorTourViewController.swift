@@ -171,7 +171,7 @@ class IndoorTourViewController : UIViewController, UIScrollViewDelegate {
 
         label.backgroundColor = UIColor(patternImage: image.imageResize(sizeChange: size))
         label.textAlignment = .center
-        label.font = UIFont.boldSystemFont(ofSize: label.font.pointSize)
+        label.font = UIFont.boldSystemFont(ofSize: 22)
         label.text = String(stop.pos)
         return label
     }
