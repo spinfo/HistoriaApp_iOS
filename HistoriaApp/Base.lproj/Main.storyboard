@@ -432,11 +432,11 @@
                         <viewControllerLayoutGuide type="bottom" id="Rbv-t1-WSa"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="oyW-bu-CNa">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oxS-Di-j6F">
-                                <rect key="frame" x="16" y="523" width="343" height="80"/>
+                                <rect key="frame" x="16" y="587" width="343" height="80"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LXR-E8-Gg8">
                                         <rect key="frame" x="0.0" y="22" width="72" height="36"/>
@@ -482,10 +482,10 @@
                                 </constraints>
                             </view>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WDN-f1-4FD">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                             </scrollView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="scenNo" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5gL-ER-OAA">
-                                <rect key="frame" x="165" y="20" width="45" height="45"/>
+                                <rect key="frame" x="165" y="84" width="45" height="45"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="45" id="l9X-T7-9PH"/>
                                     <constraint firstAttribute="height" constant="45" id="pen-3o-uuW"/>
@@ -509,7 +509,6 @@
                             <constraint firstItem="5gL-ER-OAA" firstAttribute="top" secondItem="5zK-bU-sIj" secondAttribute="bottom" constant="20" id="nri-MR-tkd"/>
                         </constraints>
                     </view>
-                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <navigationItem key="navigationItem" title="HistoriaApp - Indoor Tour" id="qgu-VJ-aCh">
                         <barButtonItem key="leftBarButtonItem" title="Item" image="MenuToggle" id="669-N4-AGQ" userLabel="LeftDrawerButton">
                             <connections>
@@ -928,6 +927,7 @@
                             <constraint firstItem="bUy-Hd-dmq" firstAttribute="top" secondItem="oF0-ld-Eoj" secondAttribute="bottom" id="pkF-XX-uDN"/>
                         </constraints>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <connections>
                         <outlet property="closeButton" destination="s66-Yy-IgA" id="2z7-6p-SST"/>
                         <outlet property="containerView" destination="G2W-6s-DOL" id="FZb-xw-tYG"/>

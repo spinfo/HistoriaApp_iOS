@@ -2,21 +2,21 @@
 import Foundation
 import UIKit
 
-class IndoorTourViewController : UIViewController, UIScrollViewDelegate {
+class IndoorTourViewController : UIViewController, UIScrollViewDelegate, MapPopupOnCloseDelegate {
 
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var bottomToolbar: UIView!
     @IBOutlet weak var previousButton: UIButton!
     @IBOutlet weak var nextButton: UIButton!
     @IBOutlet weak var sceneNoLabel: UILabel!
-    
-    var tour: Tour!
 
     var imageView: UIImageView!
-
     var stopMarkerView: UIView!
-
     var image: UIImage?
+
+    private var mapPopupController: MapPopupController?
+
+    var tour: Tour!
 
     var currentIndex: Int = 0
 
@@ -129,7 +129,7 @@ class IndoorTourViewController : UIViewController, UIScrollViewDelegate {
 
     private func setupStopMarkerView(for scene: Scene) {
         if (stopMarkerView == nil) {
-            stopMarkerView = UIView()
+            stopMarkerView = UIView(frame: CGRect(origin: view.frame.origin, size: scrollView.contentSize))
         }
         scrollView.addSubview(stopMarkerView)
         scrollView.bringSubview(toFront: stopMarkerView)
@@ -145,7 +145,6 @@ class IndoorTourViewController : UIViewController, UIScrollViewDelegate {
             }
         }
     }
-
 
     private func scrollRightAndCenterOn(x: CGFloat) {
         let minSize = CGSize(width: 1, height: 1)
@@ -173,6 +172,7 @@ class IndoorTourViewController : UIViewController, UIScrollViewDelegate {
         label.textAlignment = .center
         label.font = UIFont.boldSystemFont(ofSize: 22)
         label.text = String(stop.pos)
+        setupCallback(showing: stop, byTappingOn: label)
         return label
     }
 
@@ -218,6 +218,59 @@ class IndoorTourViewController : UIViewController, UIScrollViewDelegate {
     private func centerImageHorizontallyIfTooSmall() {
         let offsetX = max((scrollView.bounds.width - scrollView.contentSize.width) * 0.5, 0)
         scrollView.contentInset = UIEdgeInsetsMake(0, offsetX, 0, 0)
+    }
+
+    // MARK: -- popups
+
+    class TapOnMapstopMarkerGestureRecognizer : UITapGestureRecognizer {
+        var mapstop: Mapstop?
+    }
+
+    private func setupCallback(showing stop: Mapstop, byTappingOn view: UIView) {
+        view.isUserInteractionEnabled = true
+        let tap = TapOnMapstopMarkerGestureRecognizer(target: self, action: #selector(stopMarkerSelected(_:)))
+        tap.mapstop = stop
+        view.addGestureRecognizer(tap)
+    }
+
+    @objc func stopMarkerSelected(_ sender: UITapGestureRecognizer) {
+        guard let stopSender = sender as? TapOnMapstopMarkerGestureRecognizer else {
+            return
+        }
+        mapstopSelected(stopSender.mapstop!)
+    }
+
+    func mapstopSelected(_ mapstop: Mapstop) {
+        let pageViewController = self.storyboard?.instantiateViewController(withIdentifier: "MapstopPageViewController") as? MapstopPageViewController
+        pageViewController!.mapstop = mapstop
+        self.displayAsPopup(controller: pageViewController!)
+    }
+
+    func displayAsPopup(controller: UIViewController) {
+        if (mapPopupController == nil) {
+            instantiateNewPopupController()
+        }
+        self.mapPopupController!.setPopup(byController: controller)
+    }
+
+    func closePopups() {
+        self.mapPopupController?.close()
+    }
+
+    func onMapPopupClose() {
+        self.mapPopupController = nil
+    }
+
+    private func instantiateNewPopupController() {
+        mapPopupController = self.storyboard?.instantiateViewController(withIdentifier: "MapPopupController") as? MapPopupController
+        view.addSubview(self.mapPopupController!.view)
+        mapPopupController!.closeDelegate = self
+        mapPopupController!.didMove(toParentViewController: self)
+    }
+
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        mapPopupController?.viewWillTransition(to: size, with: coordinator)
     }
 }
 
