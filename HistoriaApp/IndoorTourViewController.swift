@@ -5,9 +5,9 @@ import UIKit
 class IndoorTourViewController : UIViewController, UIScrollViewDelegate {
 
     @IBOutlet weak var scrollView: UIScrollView!
-    @IBOutlet weak var bottomToolbar: UIToolbar!
-    @IBOutlet weak var previousButton: UIBarButtonItem!
-    @IBOutlet weak var nextButton: UIBarButtonItem!
+    @IBOutlet weak var bottomToolbar: UIView!
+    @IBOutlet weak var previousButton: UIButton!
+    @IBOutlet weak var nextButton: UIButton!
     @IBOutlet weak var sceneNoLabel: UILabel!
     
     var tour: Tour!
@@ -218,12 +218,6 @@ class IndoorTourViewController : UIViewController, UIScrollViewDelegate {
     private func centerImageHorizontallyIfTooSmall() {
         let offsetX = max((scrollView.bounds.width - scrollView.contentSize.width) * 0.5, 0)
         scrollView.contentInset = UIEdgeInsetsMake(0, offsetX, 0, 0)
-    }
-
-
-    private func makeToolbarTransparent() {
-        bottomToolbar.setBackgroundImage(UIImage(), forToolbarPosition: .any, barMetrics: .default)
-        bottomToolbar.setShadowImage(UIImage(), forToolbarPosition: .any)
     }
 }
 

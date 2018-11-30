@@ -435,28 +435,52 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <toolbar clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rV3-u5-EjZ">
-                                <rect key="frame" x="0.0" y="559" width="375" height="44"/>
-                                <items>
-                                    <barButtonItem image="ArrowPrevious" id="We8-xq-HfF">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oxS-Di-j6F">
+                                <rect key="frame" x="16" y="523" width="343" height="80"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LXR-E8-Gg8">
+                                        <rect key="frame" x="0.0" y="22" width="72" height="36"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="72" id="YHV-In-XnH"/>
+                                        </constraints>
+                                        <state key="normal" image="ArrowPreviousWithWhiteBackground"/>
                                         <connections>
-                                            <action selector="previousButtonTapped:" destination="i1U-Je-Tow" id="Kl9-Xm-lIy"/>
+                                            <action selector="previousButtonTapped:" destination="i1U-Je-Tow" eventType="touchUpInside" id="R4u-gt-FUZ"/>
                                         </connections>
-                                    </barButtonItem>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="NWo-ZX-M5V"/>
-                                    <barButtonItem title="Item" image="CloseCircle" id="PDo-Rn-SA0">
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ahY-lL-Ma2">
+                                        <rect key="frame" x="153.5" y="22" width="36" height="36"/>
+                                        <state key="normal" image="CloseButtonWhiteOnRed"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="imageView.contentMode">
+                                                <integer key="value" value="1"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
-                                            <action selector="closeButtonTapped:" destination="i1U-Je-Tow" id="YIu-CV-33n"/>
+                                            <action selector="closeButtonTapped:" destination="i1U-Je-Tow" eventType="touchUpInside" id="ThI-or-RF8"/>
                                         </connections>
-                                    </barButtonItem>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="lHf-vQ-34G"/>
-                                    <barButtonItem title="Item" image="ArrowNext" id="sfq-bR-Bez">
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nn1-8D-4YQ">
+                                        <rect key="frame" x="267" y="22" width="72" height="36"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="72" id="YCi-4G-h1R"/>
+                                        </constraints>
+                                        <state key="normal" image="ArrowNextWithWhiteBackground"/>
                                         <connections>
-                                            <action selector="nextButtonTapped:" destination="i1U-Je-Tow" id="dwM-vo-igF"/>
+                                            <action selector="nextButtonTapped:" destination="i1U-Je-Tow" eventType="touchUpInside" id="df1-a2-e7n"/>
                                         </connections>
-                                    </barButtonItem>
-                                </items>
-                            </toolbar>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="nn1-8D-4YQ" firstAttribute="centerY" secondItem="oxS-Di-j6F" secondAttribute="centerY" id="Azg-zm-79h"/>
+                                    <constraint firstItem="LXR-E8-Gg8" firstAttribute="centerY" secondItem="oxS-Di-j6F" secondAttribute="centerY" id="cah-Ga-izG"/>
+                                    <constraint firstItem="LXR-E8-Gg8" firstAttribute="leading" secondItem="oxS-Di-j6F" secondAttribute="leading" id="d9P-Lc-gKV"/>
+                                    <constraint firstItem="ahY-lL-Ma2" firstAttribute="centerY" secondItem="oxS-Di-j6F" secondAttribute="centerY" id="qv7-ea-ciB"/>
+                                    <constraint firstAttribute="height" constant="80" id="svy-r2-CCU"/>
+                                    <constraint firstAttribute="trailing" secondItem="nn1-8D-4YQ" secondAttribute="trailing" constant="4" id="uqZ-gT-XLc"/>
+                                </constraints>
+                            </view>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WDN-f1-4FD">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                             </scrollView>
@@ -474,13 +498,14 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="5gL-ER-OAA" firstAttribute="centerX" secondItem="oyW-bu-CNa" secondAttribute="centerX" id="8Mb-DJ-cZC"/>
-                            <constraint firstItem="rV3-u5-EjZ" firstAttribute="leading" secondItem="oyW-bu-CNa" secondAttribute="leading" id="Bjq-4f-83t"/>
                             <constraint firstItem="WDN-f1-4FD" firstAttribute="leading" secondItem="oyW-bu-CNa" secondAttribute="leading" id="D4E-UD-rde"/>
                             <constraint firstItem="WDN-f1-4FD" firstAttribute="top" secondItem="5zK-bU-sIj" secondAttribute="bottom" id="D8d-ig-Vc3"/>
-                            <constraint firstItem="rV3-u5-EjZ" firstAttribute="width" secondItem="oyW-bu-CNa" secondAttribute="width" id="LR0-AQ-LFm"/>
+                            <constraint firstItem="Rbv-t1-WSa" firstAttribute="top" secondItem="oxS-Di-j6F" secondAttribute="bottom" id="FM2-si-kmy"/>
                             <constraint firstAttribute="trailing" secondItem="WDN-f1-4FD" secondAttribute="trailing" id="PVM-p7-Le9"/>
-                            <constraint firstItem="Rbv-t1-WSa" firstAttribute="top" secondItem="rV3-u5-EjZ" secondAttribute="bottom" id="amq-ct-AfK"/>
+                            <constraint firstItem="ahY-lL-Ma2" firstAttribute="centerX" secondItem="oyW-bu-CNa" secondAttribute="centerX" id="V45-3y-8Xf"/>
+                            <constraint firstItem="oxS-Di-j6F" firstAttribute="leading" secondItem="oyW-bu-CNa" secondAttribute="leadingMargin" id="Y4B-H9-dW4"/>
                             <constraint firstItem="Rbv-t1-WSa" firstAttribute="top" secondItem="WDN-f1-4FD" secondAttribute="bottom" id="b93-wN-QsL"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="oxS-Di-j6F" secondAttribute="trailing" id="be6-QN-9RD"/>
                             <constraint firstItem="5gL-ER-OAA" firstAttribute="top" secondItem="5zK-bU-sIj" secondAttribute="bottom" constant="20" id="nri-MR-tkd"/>
                         </constraints>
                     </view>
@@ -494,9 +519,9 @@
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
-                        <outlet property="bottomToolbar" destination="rV3-u5-EjZ" id="m83-YK-Aoq"/>
-                        <outlet property="nextButton" destination="sfq-bR-Bez" id="Omk-YY-dem"/>
-                        <outlet property="previousButton" destination="We8-xq-HfF" id="Usz-mX-kPb"/>
+                        <outlet property="bottomToolbar" destination="oxS-Di-j6F" id="RlL-s6-tmy"/>
+                        <outlet property="nextButton" destination="nn1-8D-4YQ" id="gQM-gq-M9s"/>
+                        <outlet property="previousButton" destination="LXR-E8-Gg8" id="gcc-bD-EOJ"/>
                         <outlet property="sceneNoLabel" destination="5gL-ER-OAA" id="tVK-ci-0c0"/>
                         <outlet property="scrollView" destination="WDN-f1-4FD" id="stP-9F-QUa"/>
                     </connections>
@@ -967,8 +992,10 @@
     <resources>
         <image name="ArrowDown" width="29" height="29"/>
         <image name="ArrowNext" width="29" height="29"/>
-        <image name="ArrowPrevious" width="29" height="29"/>
+        <image name="ArrowNextWithWhiteBackground" width="36" height="36"/>
+        <image name="ArrowPreviousWithWhiteBackground" width="36" height="36"/>
         <image name="ButtonTrackUser" width="48" height="48"/>
+        <image name="CloseButtonWhiteOnRed" width="36" height="36"/>
         <image name="CloseCircle" width="29" height="29"/>
         <image name="FlagIcon" width="29" height="29"/>
         <image name="LexiconIcon" width="29" height="29"/>
