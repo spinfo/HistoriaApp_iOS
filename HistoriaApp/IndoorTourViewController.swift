@@ -119,6 +119,12 @@ class IndoorTourViewController : UIViewController, UIScrollViewDelegate {
         sceneNoLabel.text = String(format: "%d\n%d", (currentIndex + 1), tour.scenes.count)
     }
 
+    override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
+        coordinator.animate(alongsideTransition: { (_) in
+            self.loadScene(offset: 0)
+        }, completion: nil)
+    }
+
     // MARK: Positioning Mapstop Markers
 
     private func setupStopMarkerView(for scene: Scene) {
@@ -204,6 +210,16 @@ class IndoorTourViewController : UIViewController, UIScrollViewDelegate {
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return imageView
     }
+
+    func scrollViewDidZoom(_ scrollView: UIScrollView) {
+        centerImageHorizontallyIfTooSmall()
+    }
+
+    private func centerImageHorizontallyIfTooSmall() {
+        let offsetX = max((scrollView.bounds.width - scrollView.contentSize.width) * 0.5, 0)
+        scrollView.contentInset = UIEdgeInsetsMake(0, offsetX, 0, 0)
+    }
+
 
     private func makeToolbarTransparent() {
         bottomToolbar.setBackgroundImage(UIImage(), forToolbarPosition: .any, barMetrics: .default)
