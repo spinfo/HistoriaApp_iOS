@@ -85,6 +85,7 @@ class IndoorTourViewController : UIViewController, UIScrollViewDelegate, MapPopu
         currentIndex = index
         conditionallyHideToolbarButtons()
         setSceneNoLabelCount()
+        centerImageIfTooSmall()
     }
 
     private func cleanupViews() {
@@ -177,7 +178,7 @@ class IndoorTourViewController : UIViewController, UIScrollViewDelegate, MapPopu
     private func scrollRightAndCenterOn(x: CGFloat) {
         let minSize = CGSize(width: 1, height: 1)
         var xValue = x + (view.frame.size.width / 2)
-        xValue = min(scrollView.contentSize.width, (xValue + minSize.width))
+        xValue = min(scrollView.contentSize.width - minSize.width, (xValue + minSize.width))
         let point = CGPoint(x: xValue, y: 1)
         scrollView.scrollRectToVisible(CGRect(origin: point, size: minSize), animated: false)
     }
@@ -239,13 +240,10 @@ class IndoorTourViewController : UIViewController, UIScrollViewDelegate, MapPopu
         return imageView
     }
 
-    func scrollViewDidZoom(_ scrollView: UIScrollView) {
-        centerImageHorizontallyIfTooSmall()
-    }
-
-    private func centerImageHorizontallyIfTooSmall() {
+    private func centerImageIfTooSmall() {
+        let offsetY = max((scrollView.bounds.height - scrollView.contentSize.height) * 0.5, 0)
         let offsetX = max((scrollView.bounds.width - scrollView.contentSize.width) * 0.5, 0)
-        scrollView.contentInset = UIEdgeInsetsMake(0, offsetX, 0, 0)
+        scrollView.contentInset = UIEdgeInsetsMake(offsetY, offsetX, 0, 0)
     }
 
     // MARK: -- popups
