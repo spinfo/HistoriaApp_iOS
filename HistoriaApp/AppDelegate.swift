@@ -8,7 +8,7 @@ import MMDrawerController
 let log = XCGLogger.default
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, UIWebViewDelegate, LexiconArticleCloseDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UIWebViewDelegate, LexiconArticleCloseDelegate, IndoorTourProvider {
     
     // MARK: Properties for Navigation
 
@@ -21,6 +21,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIWebViewDelegate, Lexico
     private var currentCenterController: UIViewController?
 
     private var lexiconDisplayControllerStack = Array<UIViewController>()
+
+    private var selectedIndoorTour: Tour?
 
     // MARK: Normal AppDelegate stuff
 
@@ -135,7 +137,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIWebViewDelegate, Lexico
 
     func switchToIndoorTourDisplay(for tour: Tour) {
         let indoorTourViewC = getCenterController("IndoorTourViewController") as! IndoorTourViewController
-        indoorTourViewC.tour = tour
+        selectedIndoorTour = tour
+        indoorTourViewC.tourProvider = self
         switchToCenterController(indoorTourViewC)
     }
 
@@ -271,6 +274,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIWebViewDelegate, Lexico
         self.requestCenter(for: mapViewC)
         mapViewC.displayAsPopup(controller: viewController)
         self.closeNavDrawer()
+    }
+
+    // MARK: IndoorTourProvider
+
+    func getTour() -> Tour {
+        return selectedIndoorTour!
     }
 
 }

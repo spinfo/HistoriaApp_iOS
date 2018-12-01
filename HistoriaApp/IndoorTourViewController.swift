@@ -2,6 +2,17 @@
 import Foundation
 import UIKit
 
+// A view class that passes all touch events to the views underneath
+class PassthroughView : UIView {
+    override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
+        return false
+    }
+}
+
+protocol IndoorTourProvider {
+    func getTour() -> Tour
+}
+
 class IndoorTourViewController : UIViewController, UIScrollViewDelegate, MapPopupOnCloseDelegate {
 
     @IBOutlet weak var scrollView: UIScrollView!
@@ -9,26 +20,43 @@ class IndoorTourViewController : UIViewController, UIScrollViewDelegate, MapPopu
     @IBOutlet weak var previousButton: UIButton!
     @IBOutlet weak var nextButton: UIButton!
     @IBOutlet weak var sceneNoLabel: UILabel!
-
+    @IBOutlet weak var swipeHintContainerView: PassthroughView!
+    
     var imageView: UIImageView!
     var stopMarkerView: UIView!
     var image: UIImage?
 
     private var mapPopupController: MapPopupController?
 
-    var tour: Tour!
+    private var tour: Tour!
 
-    var currentIndex: Int = 0
+    var tourProvider: IndoorTourProvider!
+
+    private var currentIndex: Int = 0
+
+    private var shouldShowSwipeHint = true
 
     override func viewDidLoad() {
-
         scrollView.delegate = self
-
-        setTitle()
-        setupSceneNoLabelBackgroundImage()
         view.bringSubview(toFront: bottomToolbar)
 
-        loadScene(offset: currentIndex)
+        // only on first controller start show the user a hint that the he can scroll through the scene
+        swipeHintContainerView.isHidden = false
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0, execute: {
+            self.swipeHintContainerView.isHidden = true
+        })
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        if (tour == nil || tourProvider.getTour().id != tour.id) {
+            tour = tourProvider.getTour()
+            currentIndex = 0
+            setTitle()
+            setupSceneNoLabelBackgroundImage()
+            loadScene(offset: currentIndex)
+        }
     }
 
     private func setTitle() {

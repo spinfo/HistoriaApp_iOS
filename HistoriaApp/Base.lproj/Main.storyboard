@@ -494,19 +494,43 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GOH-ux-cSB" customClass="PassthroughView" customModule="HistoriaApp" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SwipeHint" translatesAutoresizingMaskIntoConstraints="NO" id="Hqe-Fo-hE9">
+                                        <rect key="frame" x="137.5" y="283.5" width="100" height="100"/>
+                                        <accessibility key="accessibilityConfiguration">
+                                            <accessibilityTraits key="traits" image="YES" notEnabled="YES"/>
+                                        </accessibility>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="100" id="Igh-yW-Qia"/>
+                                            <constraint firstAttribute="width" constant="100" id="kzv-iA-ZS1"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.1248127140410959" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="Hqe-Fo-hE9" firstAttribute="centerX" secondItem="GOH-ux-cSB" secondAttribute="centerX" id="Sk8-uP-5ho"/>
+                                    <constraint firstItem="Hqe-Fo-hE9" firstAttribute="centerY" secondItem="GOH-ux-cSB" secondAttribute="centerY" id="VaD-aI-VVN"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="5gL-ER-OAA" firstAttribute="centerX" secondItem="oyW-bu-CNa" secondAttribute="centerX" id="8Mb-DJ-cZC"/>
+                            <constraint firstItem="GOH-ux-cSB" firstAttribute="height" secondItem="oyW-bu-CNa" secondAttribute="height" id="8jJ-dT-Rp2"/>
                             <constraint firstItem="WDN-f1-4FD" firstAttribute="leading" secondItem="oyW-bu-CNa" secondAttribute="leading" id="D4E-UD-rde"/>
-                            <constraint firstItem="WDN-f1-4FD" firstAttribute="top" secondItem="5zK-bU-sIj" secondAttribute="bottom" id="D8d-ig-Vc3"/>
-                            <constraint firstItem="Rbv-t1-WSa" firstAttribute="top" secondItem="oxS-Di-j6F" secondAttribute="bottom" id="FM2-si-kmy"/>
+                            <constraint firstItem="GOH-ux-cSB" firstAttribute="centerX" secondItem="oyW-bu-CNa" secondAttribute="centerX" id="DEd-vj-fTP"/>
+                            <constraint firstItem="Rbv-t1-WSa" firstAttribute="top" secondItem="WDN-f1-4FD" secondAttribute="bottom" id="EtZ-Pf-rdx"/>
+                            <constraint firstItem="Rbv-t1-WSa" firstAttribute="top" secondItem="oxS-Di-j6F" secondAttribute="bottom" id="J1s-Xf-I6n"/>
                             <constraint firstAttribute="trailing" secondItem="WDN-f1-4FD" secondAttribute="trailing" id="PVM-p7-Le9"/>
                             <constraint firstItem="ahY-lL-Ma2" firstAttribute="centerX" secondItem="oyW-bu-CNa" secondAttribute="centerX" id="V45-3y-8Xf"/>
+                            <constraint firstItem="5gL-ER-OAA" firstAttribute="top" secondItem="5zK-bU-sIj" secondAttribute="bottom" constant="20" id="WfD-kQ-gkO"/>
                             <constraint firstItem="oxS-Di-j6F" firstAttribute="leading" secondItem="oyW-bu-CNa" secondAttribute="leadingMargin" id="Y4B-H9-dW4"/>
-                            <constraint firstItem="Rbv-t1-WSa" firstAttribute="top" secondItem="WDN-f1-4FD" secondAttribute="bottom" id="b93-wN-QsL"/>
                             <constraint firstAttribute="trailingMargin" secondItem="oxS-Di-j6F" secondAttribute="trailing" id="be6-QN-9RD"/>
-                            <constraint firstItem="5gL-ER-OAA" firstAttribute="top" secondItem="5zK-bU-sIj" secondAttribute="bottom" constant="20" id="nri-MR-tkd"/>
+                            <constraint firstItem="WDN-f1-4FD" firstAttribute="top" secondItem="5zK-bU-sIj" secondAttribute="bottom" id="ge6-Vm-Kqf"/>
+                            <constraint firstItem="GOH-ux-cSB" firstAttribute="centerY" secondItem="oyW-bu-CNa" secondAttribute="centerY" id="gxt-oJ-Uwd"/>
+                            <constraint firstItem="GOH-ux-cSB" firstAttribute="width" secondItem="oyW-bu-CNa" secondAttribute="width" id="upb-nt-9By"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="HistoriaApp - Indoor Tour" id="qgu-VJ-aCh">
@@ -523,6 +547,7 @@
                         <outlet property="previousButton" destination="LXR-E8-Gg8" id="gcc-bD-EOJ"/>
                         <outlet property="sceneNoLabel" destination="5gL-ER-OAA" id="tVK-ci-0c0"/>
                         <outlet property="scrollView" destination="WDN-f1-4FD" id="stP-9F-QUa"/>
+                        <outlet property="swipeHintContainerView" destination="GOH-ux-cSB" id="M1x-y2-dHD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dJp-t4-R6S" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1000,5 +1025,6 @@
         <image name="FlagIcon" width="29" height="29"/>
         <image name="LexiconIcon" width="29" height="29"/>
         <image name="MenuToggle" width="22" height="22"/>
+        <image name="SwipeHint" width="128" height="128"/>
     </resources>
 </document>
