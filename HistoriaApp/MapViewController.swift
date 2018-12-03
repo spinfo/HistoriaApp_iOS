@@ -48,6 +48,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, ModelSelectionDele
         mapView.isRotateEnabled = false
         determineTitle()
         setupLocationManager()
+
+        FileService.installExampleIndoorTour()
     }
 
     override func viewWillDisappear(_ animated: Bool) {

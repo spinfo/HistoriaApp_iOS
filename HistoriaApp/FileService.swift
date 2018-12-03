@@ -57,6 +57,10 @@ class FileService {
         return installTourFromAssets(assetName: "ExampleTour", fakeId: 0, fakeVersion: 0)
     }
 
+    public class func installExampleIndoorTour() -> Tour? {
+        return installTourFromAssets(assetName: "ExampleTourIndoor", fakeId: 77423, fakeVersion: 1535964013)
+    }
+
     private class func installTourFromAssets(assetName: String, fakeId: Int64, fakeVersion: Int) -> Tour? {
         // read the example tour's zip file as binary data from the assets
         let data = getAssetData(assetName: assetName)
