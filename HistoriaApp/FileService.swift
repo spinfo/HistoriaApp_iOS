@@ -58,7 +58,7 @@ class FileService {
     }
 
     public class func installExampleIndoorTour() -> Tour? {
-        return installTourFromAssets(assetName: "ExampleTourIndoor", fakeId: 77423, fakeVersion: 1535964013)
+        return installTourFromAssets(assetName: "ExampleTourIndoor", fakeId: 5, fakeVersion: 1535964013)
     }
 
     private class func installTourFromAssets(assetName: String, fakeId: Int64, fakeVersion: Int) -> Tour? {
