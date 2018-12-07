@@ -1,27 +1,46 @@
 
+import Foundation
 import UIKit
 
-class AboutPageViewController: UIViewController {
+class AssetHtmlWebViewController: UIViewController {
 
     @IBOutlet weak var versionNoLabel: UIBarButtonItem!
 
     @IBOutlet weak var webView: UIWebView!
+
+    var assetName = ""
+
+    var showsVersionLabel = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.title = "HistoriaApp"
-
-        // setup the about page to load and the app delegate to handle link clicks etc.
         self.webView.delegate = UIApplication.shared.delegate as! AppDelegate
-        self.webView.loadHTMLString(self.getAboutPageContent(), baseURL: nil)
+    }
 
-        // get and display the apps current version
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        self.webView.loadHTMLString(FileService.getAssetFile(assetName), baseURL: nil)
+
+        if (showsVersionLabel) {
+            displayVersionLabel()
+        } else {
+            hideVersionLabel()
+        }
+    }
+
+    private func displayVersionLabel() {
         guard let versionStr = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String else {
-            self.versionNoLabel.title = ""
+            hideVersionLabel()
             return
         }
         self.versionNoLabel.title = "Version \(versionStr)"
+    }
+
+    private func hideVersionLabel() {
+        self.versionNoLabel.title = ""
     }
 
     override func didReceiveMemoryWarning() {
@@ -32,20 +51,5 @@ class AboutPageViewController: UIViewController {
     @IBAction func leftBarButtonItemTapped(_ sender: Any) {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         appDelegate.toggleNavDrawer()
-    }
-
-    // -- MARK: Private methods
-
-    private func getAboutPageContent() -> String {
-        // retrieve the asset data as a string
-        guard let asset = NSDataAsset(name: "AboutPage") else {
-            log.error("About page asset data not present.")
-            return ""
-        }
-        guard let aboutPageHtml = String(data: asset.data, encoding: .utf8) else {
-            log.error("Cannot parse about page asset data into string.")
-            return ""
-        }
-        return aboutPageHtml
     }
 }

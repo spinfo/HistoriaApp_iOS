@@ -7,10 +7,12 @@ class NavDrawerController: UIViewController, UITableViewDataSource, UITableViewD
     let menuItems = [
         "Karte wechseln",
         " - Zur Karte",
-        "Touren wählen",
-        "Lesemodus",
-        "Touren laden",
-        "Über uns"
+        "Tour starten",
+        "Bibliothek",
+        "Magazin",
+        "Über die App",
+        "Impressum",
+        "Datenschutz"
     ]
 
     // keep references to the view controllers that we switched back from
@@ -60,7 +62,11 @@ class NavDrawerController: UIViewController, UITableViewDataSource, UITableViewD
         case 4:
             appDelegate.switchToCenterController("TourDownloadViewController")
         case 5:
-            appDelegate.switchToCenterController("AboutPageViewController")
+            appDelegate.switchToAssetHtmlPage(assetName: "PageAbout", showsVersionLabel: true)
+        case 6:
+            appDelegate.switchToAssetHtmlPage(assetName: "PageImpressum", showsVersionLabel: false)
+        case 7:
+            appDelegate.switchToAssetHtmlPage(assetName: "PagePrivacyPolicy", showsVersionLabel: false)
         default:
             log.warning("Unknown menu item index: \(indexPath)")
         }

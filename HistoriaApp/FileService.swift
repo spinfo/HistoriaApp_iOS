@@ -112,6 +112,15 @@ class FileService {
         return url;
     }
 
+    public class func getAssetFile(_ name: String) -> String {
+        let assetData = getAssetData(assetName: name)
+        guard let aboutPageHtml = String(data: assetData, encoding: .utf8) else {
+            log.error("Cannot parse asset data into string. Asset name: \(name)")
+            return ""
+        }
+        return aboutPageHtml
+    }
+
     //MARK: Private methods
 
     // return the url for our app's document folder

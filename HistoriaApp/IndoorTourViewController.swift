@@ -222,8 +222,20 @@ class IndoorTourViewController : UIViewController, UIScrollViewDelegate, MapPopu
     }
 
     @IBAction func closeButtonTapped(_ sender: Any) {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        appDelegate.dismissCurrentIndoorTourDisplay()
+        let closeDialog = buildTourCloseDialog()
+        self.present(closeDialog, animated: true, completion: nil)
+    }
+
+    private func buildTourCloseDialog() -> UIAlertController {
+        let title = "Tour verlassen"
+        let message = "Wollen Sie die Tour wirklich verlassen?"
+        let closeDialog = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        closeDialog.addAction(UIAlertAction(title: "OK", style: .destructive, handler: { _ in
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            appDelegate.dismissCurrentIndoorTourDisplay()
+        }))
+        closeDialog.addAction(UIAlertAction(title: "Abbrechen", style: .default, handler: nil))
+        return closeDialog
     }
 
     @IBAction func previousButtonTapped(_ sender: Any) {
