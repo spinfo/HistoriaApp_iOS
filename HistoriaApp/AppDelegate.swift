@@ -146,6 +146,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIWebViewDelegate, Lexico
         switchToPlainMap()
     }
 
+    func switchToAssetHtmlPage(assetName: String, showsVersionLabel: Bool) {
+        let assetHtmlViewC = instantiateCenterController("AssetHtmlWebViewController") as! AssetHtmlWebViewController
+        assetHtmlViewC.assetName = assetName
+        assetHtmlViewC.showsVersionLabel = showsVersionLabel
+        switchToCenterController(assetHtmlViewC)
+    }
+
     func toggleNavDrawer() {
         centerContainer?.toggle(.left, animated: true, completion: nil)
     }
@@ -262,9 +269,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIWebViewDelegate, Lexico
         if (self.centerViewControllers[identifier] != nil) {
             result = self.centerViewControllers[identifier]!
         } else {
-            result = self.mainStoryboard.instantiateViewController(withIdentifier: identifier)
-            self.centerViewControllers[identifier] = result
+            result = instantiateCenterController(identifier)
         }
+        return result
+    }
+
+    private func instantiateCenterController(_ identifier: String) -> UIViewController {
+        let result = self.mainStoryboard.instantiateViewController(withIdentifier: identifier)
+        self.centerViewControllers[identifier] = result
         return result
     }
 
