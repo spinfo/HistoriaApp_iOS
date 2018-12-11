@@ -6,7 +6,8 @@
   "data" : [
     {
       "idiom" : "universal",
-      "filename" : "impressum.html"
+      "filename" : "impressum.html",
+      "universal-type-identifier" : "public.html"
     }
   ]
 }

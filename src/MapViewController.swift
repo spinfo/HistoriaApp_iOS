@@ -98,7 +98,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, ModelSelectionDele
     }
 
     private func determineTitle(with area: Area) {
-        self.title = String(format: "HistoriaApp: %@", area.name)
+        self.title = String(format: "StadtsprachenApp: %@", area.name)
     }
 
     // MARK: -- Map Interaction (and MKMapViewDelegate)

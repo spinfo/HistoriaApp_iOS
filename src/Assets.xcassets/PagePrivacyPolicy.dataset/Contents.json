@@ -6,7 +6,8 @@
   "data" : [
     {
       "idiom" : "universal",
-      "filename" : "privacy_policy.html"
+      "filename" : "privacy_policy.html",
+      "universal-type-identifier" : "public.html"
     }
   ]
 }

@@ -15,7 +15,7 @@ class AssetHtmlWebViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.title = "HistoriaApp"
+        self.title = "StadtsprachenApp"
         self.webView.delegate = UIApplication.shared.delegate as! AppDelegate
     }
 
