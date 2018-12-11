@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:HistoriaApp.xcodeproj">
+      location = "self:StadtsprachenApp.xcodeproj">
    </FileRef>
 </Workspace>

@@ -1,8 +1,8 @@
 platform :ios, '10.2'
 
-project 'HistoriaApp.xcodeproj'
+project 'StadtsprachenApp.xcodeproj'
 
-target 'HistoriaApp' do
+target 'StadtsprachenApp' do
   use_frameworks!
 
   # Yaml parsing
