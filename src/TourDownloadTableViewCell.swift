@@ -7,8 +7,6 @@ class TourDownloadTableViewCell: UITableViewCell, URLSessionDownloadDelegate  {
 
     @IBOutlet weak var tourName: UILabel!
 
-    @IBOutlet weak var areaName: UILabel!
-
     @IBOutlet weak var progress: UILabel!
 
     var tourRecord: TourRecord?
@@ -36,14 +34,11 @@ class TourDownloadTableViewCell: UITableViewCell, URLSessionDownloadDelegate  {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
 
     public func setTourRecord(_ record: TourRecord) {
         self.tourRecord = record
         self.tourName.text = record.name
-        self.areaName.text = record.areaName
         self.progress.text = self.defaultProgressText(record: record)
     }
 
@@ -69,7 +64,7 @@ class TourDownloadTableViewCell: UITableViewCell, URLSessionDownloadDelegate  {
         case .FailedInstalling:
             text = "Installation fehlgeschlagen"
         case .Installed:
-            text = "OK"
+            text = "Installiert"
         }
 
         DispatchQueue.main.async {
@@ -143,7 +138,7 @@ class TourDownloadTableViewCell: UITableViewCell, URLSessionDownloadDelegate  {
     // -- MARK: Private methods
 
     private func defaultProgressText(record: TourRecord) -> String {
-        return "ca. \(record.downloadSize / 1000000) MB"
+        return String(format: "%.2f MB", (Float(record.downloadSize) / 1000000))
     }
 
 }

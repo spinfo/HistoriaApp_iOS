@@ -60,7 +60,7 @@ class NavDrawerController: UIViewController, UITableViewDataSource, UITableViewD
         case 3:
             appDelegate.switchToReadingMode()
         case 4:
-            appDelegate.switchToCenterController("TourDownloadViewController")
+            appDelegate.switchToCenterController("TourDownloadAreaSelectionViewController")
         case 5:
             appDelegate.switchToAssetHtmlPage(assetName: "PageAbout", showsVersionLabel: true)
         case 6:

@@ -90,6 +90,17 @@ class MainDao {
         }
     }
 
+    public func getTourIds(inAreaWithId id: Int64) -> Set<Int64> {
+        do {
+            return try self.dbQueue.inDatabase({ db in
+                return try Set(Int64.fetchAll(db, Tour.select(Column("id")).filter((Column("area_id") == id))))
+            })
+        } catch {
+            log.error("Unable to retrieve a list of installed tours in area with id: \(id)")
+            return []
+        }
+    }
+
     public func getAreas() -> [Area] {
         do {
             return try self.dbQueue.inDatabase({ db in
