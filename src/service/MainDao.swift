@@ -79,6 +79,15 @@ class MainDao {
         }
     }
 
+    public func getTourCount() -> Int {
+        do {
+            return try self.dbQueue.inDatabase({ db in try Tour.fetchCount(db )})
+        } catch {
+            log.error("Unable to retrieve a tour count.")
+            return 0
+        }
+    }
+
     public func getTourCount(forAreaWithId id: Int64) -> Int  {
         do {
             return try self.dbQueue.inDatabase({ db in
@@ -202,6 +211,19 @@ class MainDao {
         }
     }
 
+    public func getMediaitems(inTourWithId id: Int64) -> [Mediaitem] {
+        do {
+            return try dbQueue.inDatabase({ db in
+                let mapstopIds = try Int64.fetchAll(db, Mapstop.select(Column("id")).filter(Column("tour_id") == id))
+                let pageIds = try Int64.fetchAll(db, Page.select(Column("id")).filter(mapstopIds.contains(Column("mapstop_id"))))
+                return try Mediaitem.filter(pageIds.contains(Column("page_id"))).fetchAll(db)
+            })
+        } catch {
+            log.error("Unable to retrieve mediaitems for tour (id: '\(id)'): \(error)")
+            return []
+        }
+    }
+
     public func getLexicon() -> Lexicon {
         return Lexicon(entries: getAllLexiconEntries())
     }
@@ -303,6 +325,29 @@ class MainDao {
         for entry in tour.lexiconEntries {
             try entry.insertOrUpdate(db)
         }
+    }
+
+    public func deleteTour(withId id: Int64) -> Bool {
+        do {
+            let tour = try unsafeGetTour(id: id)
+            let _ = try dbQueue.inDatabase({ db in
+                try Tour.deleteOne(db, key: id)
+            })
+            try unsafeDeleteAreaIfItIsNotConnectedToAnyTours(areaId: tour.areaId)
+            return true
+        } catch {
+            log.error("Error on deleting a tour: \(error).")
+            return false
+        }
+    }
+
+    private func unsafeDeleteAreaIfItIsNotConnectedToAnyTours(areaId: Int64) throws {
+        try dbQueue.inDatabase({ db in
+            let count = try Tour.filter(Column("area_id") == areaId).fetchCount(db)
+            if (count == 0) {
+                try Area.deleteOne(db, key: areaId)
+            }
+         })
     }
 
     // MARK: Private unsafe fetches

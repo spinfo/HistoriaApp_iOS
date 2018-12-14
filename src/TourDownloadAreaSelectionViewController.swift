@@ -9,7 +9,12 @@ class TourDownloadAreaSelectionViewController : UIViewController, UITableViewDat
     @IBOutlet weak var tableView: UITableView!
 
     override func viewDidLoad() {
+        super.viewDidLoad()
         self.title = "Magazin"
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
 
         // retrieve a list of tour records from the server
         self.performUrlRequest(UrlSchemes.availableToursUri) { data in
@@ -32,6 +37,7 @@ class TourDownloadAreaSelectionViewController : UIViewController, UITableViewDat
             }
         }
     }
+
 
     @IBAction func leftBarButtonItemTapped(_ sender: Any) {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate

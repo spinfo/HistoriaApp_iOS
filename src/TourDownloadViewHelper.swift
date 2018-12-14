@@ -16,6 +16,17 @@ class TourDownloadViewHelper {
         }
     }
 
+    class func determineInstallActionString(status: TourRecord.InstallStatus) -> String {
+        switch status {
+        case .upToDate:
+            return "Erneut installieren"
+        case .notInstalled:
+            return "Installieren"
+        case .updateAvailable:
+            return "Update"
+        }
+    }
+
     class func formatUpdateVersionText(_ version: Int, prefix: String) -> String {
         guard version > 0 else {
             return ""
@@ -32,6 +43,10 @@ class TourDownloadViewHelper {
 
     class func formatFileSize(bytesAmount: Int) -> String {
         return String(format: "%.2f MB", (Float(bytesAmount) / 1000000))
+    }
+
+    class func shouldShowDeleteOption(status: TourRecord.InstallStatus) -> Bool {
+        return status != .notInstalled
     }
 
 }

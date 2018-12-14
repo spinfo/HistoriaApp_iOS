@@ -3,7 +3,7 @@ import UIKit
 
 import XCGLogger
 
-class TourDownloadViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class TourDownloadViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, DialogPresentationDelegate {
 
     var tourRecords: [TourRecord]!
 
@@ -11,6 +11,10 @@ class TourDownloadViewController: UIViewController, UITableViewDataSource, UITab
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        if (tourRecords.count > 0) {
+            title = String(format: "Magazin: %@", tourRecords[0].areaName)
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -33,6 +37,7 @@ class TourDownloadViewController: UIViewController, UITableViewDataSource, UITab
         let record = tourRecords[indexPath.row]
         cell.setTourRecord(record)
         cell.setInstallStatus(MainDao().determineInstallStatus(forRecord: record))
+        cell.dialogPresentationDelegate = self
         return cell
     }
 
@@ -43,6 +48,11 @@ class TourDownloadViewController: UIViewController, UITableViewDataSource, UITab
             log.error("Can't get cell at \(indexPath)")
             return
         }
-        cell.toggleTourDownload()
+        cell.toggle()
+    }
+
+    // MARK: -- DialogPresentationDelegate
+    func present(dialog: UIAlertController) {
+        self.present(dialog, animated: true, completion: nil)
     }
 }

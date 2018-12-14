@@ -51,6 +51,22 @@ class FileService {
         }
     }
 
+    public class func removeTour(withId id: Int64) -> Bool {
+        let dao = MainDao()
+        let mediaitems = dao.getMediaitems(inTourWithId: id)
+        let dbDeleteWasOk = dao.deleteTour(withId: id)
+        if (dbDeleteWasOk) {
+            mediaitems.forEach({ m in
+                removeFile(atBase: m.basename)
+            })
+            if (dao.getTourCount() == 0) {
+                let _ = installExampleTour()
+            }
+            return true
+        }
+        return false
+    }
+
 
     // installs the example tour included in the app's assets
     public class func installExampleTour() -> Tour? {
@@ -86,6 +102,24 @@ class FileService {
     // return the file url with the given basename from our documents folder
     public class func getFile(atBase base: String) -> URL? {
         return getDocumentsFolder().appendingPathComponent(base)
+    }
+
+    public class func removeFile(atBase base: String) {
+        guard let url = getFile(atBase: base) else {
+            log.error("Unable to delete file. Can't build url from base: \(base)")
+            return
+        }
+        var isDir = ObjCBool(true)
+        let exists = FileManager.default.fileExists(atPath: url.path, isDirectory: &isDir)
+        let deletable = FileManager.default.isDeletableFile(atPath: url.path)
+        guard (exists && !isDir.boolValue && deletable) else {
+            log.error("Will not delete file that is a directory \(isDir.boolValue), does not exist \(exists) or is not deletable \(deletable) from path: \(url.path)")
+            return
+        }
+        do { try FileManager.default.removeItem(at: url) } catch {
+            log.error("Could not delete file, reason: \(error)")
+        }
+
     }
     
     // return a url to the map style, unpack that file from the assets if necessary

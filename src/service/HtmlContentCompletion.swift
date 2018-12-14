@@ -32,7 +32,7 @@ class HtmlContentCompletion {
         var newContent = content
 
         for mediaitem in media {
-            let basename = (mediaitem.guid as NSString).lastPathComponent
+            let basename = mediaitem.basename
             guard (!basename.isEmpty && basename != "/") else {
                 log.warning("Could not determine basename for guid: \(mediaitem.guid)")
                 continue

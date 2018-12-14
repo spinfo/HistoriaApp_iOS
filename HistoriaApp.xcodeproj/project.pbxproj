@@ -41,6 +41,7 @@
 		63ABDDCC1F682D7A008AE47A /* NavDrawerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63ABDDCB1F682D7A008AE47A /* NavDrawerTableViewCell.swift */; };
 		63ABDDCE1F683BD6008AE47A /* ReadingModeTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63ABDDCD1F683BD6008AE47A /* ReadingModeTabBarController.swift */; };
 		63B156CE21C3F8E7003EEB3D /* TourDownloadViewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B156CD21C3F8E7003EEB3D /* TourDownloadViewHelper.swift */; };
+		63B156D021C408BD003EEB3D /* TourDownloadDialogBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B156CF21C408BD003EEB3D /* TourDownloadDialogBuilder.swift */; };
 		63C77B6B211332450054C614 /* TourPreviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C77B6A211332450054C614 /* TourPreviewController.swift */; };
 		63C8F0EC1F56E8D100F90F7C /* MapstopOnMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C8F0EB1F56E8D100F90F7C /* MapstopOnMap.swift */; };
 		63C8F0EE1F56E8EA00F90F7C /* PlaceOnMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C8F0ED1F56E8EA00F90F7C /* PlaceOnMap.swift */; };
@@ -114,6 +115,7 @@
 		63ABDDCD1F683BD6008AE47A /* ReadingModeTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadingModeTabBarController.swift; sourceTree = "<group>"; };
 		63AF21491F47276900DD2973 /* ZipArchive.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ZipArchive.framework; path = Carthage/Build/iOS/ZipArchive.framework; sourceTree = "<group>"; };
 		63B156CD21C3F8E7003EEB3D /* TourDownloadViewHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourDownloadViewHelper.swift; sourceTree = "<group>"; };
+		63B156CF21C408BD003EEB3D /* TourDownloadDialogBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourDownloadDialogBuilder.swift; sourceTree = "<group>"; };
 		63C77B6A211332450054C614 /* TourPreviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourPreviewController.swift; sourceTree = "<group>"; };
 		63C8F0EB1F56E8D100F90F7C /* MapstopOnMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapstopOnMap.swift; sourceTree = "<group>"; };
 		63C8F0ED1F56E8EA00F90F7C /* PlaceOnMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceOnMap.swift; sourceTree = "<group>"; };
@@ -239,6 +241,7 @@
 				6375B03521C2CFA7007CDB3F /* TourDownloadAreaSelectionViewController.swift */,
 				6361DA5B1F698DB4003B2DC7 /* TourDownloadViewController.swift */,
 				6361DA5F1F6996FE003B2DC7 /* TourDownloadTableViewCell.swift */,
+				63B156CF21C408BD003EEB3D /* TourDownloadDialogBuilder.swift */,
 				63B156CD21C3F8E7003EEB3D /* TourDownloadViewHelper.swift */,
 				634805F11F715DA6002200D6 /* TourSelectionViewController.swift */,
 				634805F31F71615D002200D6 /* TourSelectionTableViewCell.swift */,
@@ -514,6 +517,7 @@
 				631909832114A75600F0AF4F /* MapState.swift in Sources */,
 				63F8C7261F41F7CB00691559 /* Mapstop.swift in Sources */,
 				630440DE2147FEB900A6DAF4 /* PlaceOnMapAnnotationView.swift in Sources */,
+				63B156D021C408BD003EEB3D /* TourDownloadDialogBuilder.swift in Sources */,
 				63D80CBA2111F24D00729B8C /* ReadingModeLexiconViewController.swift in Sources */,
 				63D1810B1F3C5B29004A2036 /* AppDelegate.swift in Sources */,
 				634805F21F715DA6002200D6 /* TourSelectionViewController.swift in Sources */,
