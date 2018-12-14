@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -32,7 +33,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8iU-8d-cdG">
-                                <rect key="frame" x="306" y="84" width="48" height="48"/>
+                                <rect key="frame" x="258" y="84" width="96" height="96"/>
                                 <state key="normal" image="ButtonTrackUser"/>
                                 <connections>
                                     <action selector="userLocationButtonTapped" destination="BYZ-38-t0r" eventType="touchUpInside" id="igz-Sc-B3T"/>
@@ -491,10 +492,10 @@
             </objects>
             <point key="canvasLocation" x="1042.4000000000001" y="94.902548725637189"/>
         </scene>
-        <!--Tour Gebiet-->
+        <!--Tour Download Area-->
         <scene sceneID="YVI-fU-Bhm">
             <objects>
-                <tableViewController storyboardIdentifier="TourDownloadAreaSelectionViewController" id="TRJ-ce-Ge7" customClass="TourDownloadAreaSelectionViewController" customModule="HistoriaApp" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="TourDownloadAreaSelectionViewController" id="TRJ-ce-Ge7" userLabel="Tour Download Area" customClass="TourDownloadAreaSelectionViewController" customModule="HistoriaApp" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="hW4-Bv-yW0">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -508,23 +509,23 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="qub-Nr-cud">
-                                            <rect key="frame" x="9.5" y="5" width="356" height="95.5"/>
+                                            <rect key="frame" x="10" y="10" width="355" height="85.5"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Area Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WHd-CL-TP4">
-                                                    <rect key="frame" x="0.0" y="0.0" width="356" height="38"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="355" height="34"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                                     <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Update: 01.01.1970" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Dr-4E-hOc">
-                                                    <rect key="frame" x="0.0" y="48" width="356" height="17"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <rect key="frame" x="0.0" y="44" width="355" height="14.5"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="12"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3/17 installiert" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yq1-RI-wvf">
-                                                    <rect key="frame" x="0.0" y="75" width="356" height="20.5"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <rect key="frame" x="0.0" y="68.5" width="355" height="17"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -537,10 +538,10 @@
                                         </stackView>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="bottom" secondItem="qub-Nr-cud" secondAttribute="bottom" constant="5" id="3ac-kv-amW"/>
-                                        <constraint firstItem="qub-Nr-cud" firstAttribute="centerX" secondItem="9oP-PM-4Un" secondAttribute="centerX" id="avj-Nr-OIA"/>
-                                        <constraint firstItem="qub-Nr-cud" firstAttribute="top" secondItem="9oP-PM-4Un" secondAttribute="top" constant="5" id="fD4-Yt-WKz"/>
-                                        <constraint firstItem="qub-Nr-cud" firstAttribute="width" secondItem="9oP-PM-4Un" secondAttribute="width" multiplier="0.95" id="jP1-U7-d1r"/>
+                                        <constraint firstItem="qub-Nr-cud" firstAttribute="leading" secondItem="9oP-PM-4Un" secondAttribute="leading" constant="10" id="L0Y-1k-8Mw"/>
+                                        <constraint firstAttribute="trailing" secondItem="qub-Nr-cud" secondAttribute="trailing" constant="10" id="XB9-fh-a49"/>
+                                        <constraint firstItem="qub-Nr-cud" firstAttribute="top" secondItem="9oP-PM-4Un" secondAttribute="top" constant="10" id="a45-ku-V6U"/>
+                                        <constraint firstAttribute="bottom" secondItem="qub-Nr-cud" secondAttribute="bottom" constant="10" id="axz-rg-FpM"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
@@ -556,7 +557,7 @@
                             <outlet property="delegate" destination="TRJ-ce-Ge7" id="abl-Ly-gRL"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Tour Gebiet" id="Au6-Je-Nio">
+                    <navigationItem key="navigationItem" title="Magazin" id="Au6-Je-Nio">
                         <barButtonItem key="leftBarButtonItem" image="MenuToggle" id="DFc-7z-J37">
                             <connections>
                                 <action selector="leftBarButtonItemTapped:" destination="TRJ-ce-Ge7" id="fRx-q0-tp4"/>
@@ -572,10 +573,10 @@
             </objects>
             <point key="canvasLocation" x="382" y="798"/>
         </scene>
-        <!--Touren Laden-->
+        <!--Tour Download-->
         <scene sceneID="uFE-hI-C4d">
             <objects>
-                <viewController storyboardIdentifier="TourDownloadViewController" id="eFe-bI-dJN" customClass="TourDownloadViewController" customModule="HistoriaApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="TourDownloadViewController" id="eFe-bI-dJN" userLabel="Tour Download" customClass="TourDownloadViewController" customModule="HistoriaApp" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="m4T-5U-j7B"/>
                         <viewControllerLayoutGuide type="bottom" id="ffv-9U-qtG"/>
@@ -588,28 +589,34 @@
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TourDownloadTableViewCell" rowHeight="80" id="EJ3-0V-iFI" userLabel="TourDownloadTableViewCell" customClass="TourDownloadTableViewCell" customModule="HistoriaApp" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="80"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TourDownloadTableViewCell" rowHeight="106" id="EJ3-0V-iFI" userLabel="TourDownloadTableViewCell" customClass="TourDownloadTableViewCell" customModule="HistoriaApp" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="106"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="EJ3-0V-iFI" id="Adk-mN-KYN">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="79.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="105.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="10" baselineRelativeArrangement="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GGY-6d-B4R" userLabel="MainHorizontal">
-                                                    <rect key="frame" x="9.5" y="5" width="356" height="69.5"/>
+                                                <stackView opaque="NO" contentMode="scaleToFill" spacingType="standard" baselineRelativeArrangement="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GGY-6d-B4R" userLabel="MainHorizontal">
+                                                    <rect key="frame" x="10" y="10" width="345" height="85.5"/>
                                                     <subviews>
-                                                        <stackView opaque="NO" contentMode="scaleAspectFit" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="8HO-I1-oMU" userLabel="LeftOfButton">
-                                                            <rect key="frame" x="0.0" y="0.0" width="83.5" height="69.5"/>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="8HO-I1-oMU" userLabel="LeftOfButton">
+                                                            <rect key="frame" x="0.0" y="0.0" width="98" height="85.5"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Tour Name" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3pk-VR-HY8" userLabel="tourName">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="83.5" height="33"/>
-                                                                    <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="17"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="98" height="35"/>
+                                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                                                     <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="Update: 01.01.1970" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SwK-bl-p6i">
+                                                                    <rect key="frame" x="0.0" y="45" width="98" height="13.5"/>
+                                                                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="11"/>
+                                                                    <nil key="textColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Progress" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jk5-dj-tyr" userLabel="progress">
-                                                                    <rect key="frame" x="0.0" y="49" width="83.5" height="20.5"/>
-                                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                    <rect key="frame" x="0.0" y="68.5" width="98" height="17"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
@@ -617,10 +624,11 @@
                                                             <constraints>
                                                                 <constraint firstItem="jk5-dj-tyr" firstAttribute="width" secondItem="8HO-I1-oMU" secondAttribute="width" id="N3l-rc-qAI"/>
                                                                 <constraint firstItem="3pk-VR-HY8" firstAttribute="width" secondItem="8HO-I1-oMU" secondAttribute="width" id="Qgp-6n-dnc"/>
+                                                                <constraint firstItem="SwK-bl-p6i" firstAttribute="width" secondItem="8HO-I1-oMU" secondAttribute="width" id="TIj-hq-LOt"/>
                                                             </constraints>
                                                         </stackView>
-                                                        <imageView userInteractionEnabled="NO" contentMode="right" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="TourDownloadDownload" translatesAutoresizingMaskIntoConstraints="NO" id="0Xv-Yl-lh8">
-                                                            <rect key="frame" x="93.5" y="0.0" width="262.5" height="69.5"/>
+                                                        <imageView userInteractionEnabled="NO" contentMode="right" horizontalHuggingPriority="251" verticalHuggingPriority="251" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" image="TourDownloadDownload" translatesAutoresizingMaskIntoConstraints="NO" id="0Xv-Yl-lh8">
+                                                            <rect key="frame" x="106" y="0.0" width="239" height="85.5"/>
                                                         </imageView>
                                                     </subviews>
                                                     <constraints>
@@ -629,15 +637,17 @@
                                                 </stackView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="GGY-6d-B4R" firstAttribute="centerX" secondItem="Adk-mN-KYN" secondAttribute="centerX" id="Gui-7x-1W5"/>
-                                                <constraint firstItem="GGY-6d-B4R" firstAttribute="top" secondItem="Adk-mN-KYN" secondAttribute="top" constant="5" id="NQH-wg-Qdz"/>
-                                                <constraint firstItem="GGY-6d-B4R" firstAttribute="width" secondItem="Adk-mN-KYN" secondAttribute="width" multiplier="0.95" id="OWe-sx-wgh"/>
-                                                <constraint firstAttribute="bottom" secondItem="GGY-6d-B4R" secondAttribute="bottom" constant="5" id="wbg-iw-FC5"/>
+                                                <constraint firstAttribute="bottom" secondItem="GGY-6d-B4R" secondAttribute="bottom" constant="10" id="LVV-A4-diE"/>
+                                                <constraint firstAttribute="trailing" secondItem="GGY-6d-B4R" secondAttribute="trailing" constant="20" id="OAC-oX-Y5r"/>
+                                                <constraint firstItem="GGY-6d-B4R" firstAttribute="top" secondItem="Adk-mN-KYN" secondAttribute="top" constant="10" id="UEp-AB-cCj"/>
+                                                <constraint firstItem="GGY-6d-B4R" firstAttribute="leading" secondItem="Adk-mN-KYN" secondAttribute="leading" constant="10" id="sod-LH-E7L"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="installStatusImageView" destination="0Xv-Yl-lh8" id="mIe-g9-PAL"/>
                                             <outlet property="progress" destination="jk5-dj-tyr" id="m57-QA-FOd"/>
                                             <outlet property="tourName" destination="3pk-VR-HY8" id="t4W-BA-Peh"/>
+                                            <outlet property="updateVersionLabel" destination="SwK-bl-p6i" id="ZKI-tr-Wzl"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -655,7 +665,7 @@
                             <constraint firstItem="KB7-lO-rRK" firstAttribute="leading" secondItem="GOy-lG-TaS" secondAttribute="leading" id="wzx-rw-34V"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Touren Laden" id="EXo-ly-aNv">
+                    <navigationItem key="navigationItem" title="Magazin" id="EXo-ly-aNv">
                         <barButtonItem key="leftBarButtonItem" image="MenuToggle" id="z6n-hZ-vgQ">
                             <connections>
                                 <action selector="leftBarButtonItemTapped:" destination="eFe-bI-dJN" id="spi-1c-t00"/>
@@ -938,12 +948,12 @@
             </objects>
             <point key="canvasLocation" x="-302" y="95"/>
         </scene>
-        <!--Lesemodus-->
+        <!--Bibliothek-->
         <scene sceneID="cWw-X8-7AW">
             <objects>
                 <tabBarController storyboardIdentifier="ReadingModeTabBarController" automaticallyAdjustsScrollViewInsets="NO" id="G2W-Wd-qlQ" customClass="ReadingModeTabBarController" customModule="HistoriaApp" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="Lesemodus" id="Cut-xq-hI6">
+                    <navigationItem key="navigationItem" title="Bibliothek" id="Cut-xq-hI6">
                         <barButtonItem key="leftBarButtonItem" image="MenuToggle" id="BD7-6X-uF4">
                             <connections>
                                 <action selector="leftBarButtonItemTapped:" destination="G2W-Wd-qlQ" id="4QN-4u-DRj"/>

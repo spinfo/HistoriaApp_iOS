@@ -10,9 +10,9 @@ class DatabaseHelper {
 
     private static var theQueue: DatabaseQueue?
 
-    // TODO: Move to Dao
-    public class func save(tour: Tour) -> Bool {
+    public class func save(tour: Tour, withVersion version: Int64) -> Bool {
         do {
+            tour.version = version
             let dbQueue = getQueue()!
             try dbQueue.inDatabase({ db in
                 try MainDao().safeInstallTour(tour, in: db)

@@ -9,7 +9,7 @@ class TourDownloadAreaSelectionViewController : UIViewController, UITableViewDat
     @IBOutlet weak var tableView: UITableView!
 
     override func viewDidLoad() {
-        self.title = "Touren laden"
+        self.title = "Magazin"
 
         // retrieve a list of tour records from the server
         self.performUrlRequest(UrlSchemes.availableToursUri) { data in
@@ -27,7 +27,7 @@ class TourDownloadAreaSelectionViewController : UIViewController, UITableViewDat
             let availableTours = AvailableTours(records!)
             // update our data and reload the table on the main thread
             DispatchQueue.main.async {
-                self.areaDownloadStatusList = availableTours.buildAreaDownloadStatus()
+                self.areaDownloadStatusList = availableTours.buildAreaDownloadStatusList()
                 self.tableView.reloadData()
             }
         }
@@ -98,16 +98,14 @@ class TourDownloadAreaSelectionViewController : UIViewController, UITableViewDat
 
 class TourDownloadAreaSelectionTableViewCell : UITableViewCell {
 
-    let updateVersionTemplate = "Letztes Update: %@"
+    let updateVersionTemplate = "Letztes Update: "
     let installRatioTemplate = "%d/%d installiert"
-    let sizeTemplate = " (%.2f MB)"
+    let sizeTemplate = " (%@)"
 
     var idx: Int = 0
 
     @IBOutlet weak var areaName: UILabel!
-
     @IBOutlet weak var lastUpdateVersion: UILabel!
-
     @IBOutlet weak var installRatio: UILabel!
 
     func setStatus(_ status: AreaDownloadStatus) {
@@ -119,23 +117,12 @@ class TourDownloadAreaSelectionTableViewCell : UITableViewCell {
     private func installRatioLabelText(_ status: AreaDownloadStatus) -> String {
         var result = String(format: installRatioTemplate, status.downloadedToursAmount, status.downloadableToursAmount)
         if (status.downloadedToursAmount > 0) {
-            result += String(format: sizeTemplate, status.downloadedTourSize / 1000000)
+            result += String(format: sizeTemplate, TourDownloadViewHelper.formatFileSize(bytesAmount: Int(status.downloadedTourSize)))
         }
         return result
     }
 
     private func versionLabelText(_ status: AreaDownloadStatus) -> String {
-        return String(format: updateVersionTemplate, formatDate(fromTimestamp: status.lastVersion))
-    }
-
-    private func formatDate(fromTimestamp stamp: Int) -> String {
-        guard let interval = TimeInterval(exactly: stamp) else {
-            log.error("Cannot format date from timestamp: \(stamp)")
-            return ""
-        }
-        let date = Date(timeIntervalSince1970: interval)
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd.MM.YYYY"
-        return dateFormatter.string(from: date)
+        return TourDownloadViewHelper.formatUpdateVersionText(status.lastVersion, prefix: updateVersionTemplate)
     }
 }

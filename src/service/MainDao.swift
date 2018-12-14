@@ -90,6 +90,7 @@ class MainDao {
         }
     }
 
+
     public func getTourIds(inAreaWithId id: Int64) -> Set<Int64> {
         do {
             return try self.dbQueue.inDatabase({ db in
@@ -224,6 +225,24 @@ class MainDao {
         } catch {
             log.error("Unable to retrieve lexicon entry for (id: '\(id)'): \(error)")
             return nil
+        }
+    }
+
+    public func determineInstallStatus(forRecord record: TourRecord) -> TourRecord.InstallStatus {
+        do {
+            return try dbQueue.inDatabase({ db in
+                let version = try Int64.fetchOne(db, Tour.select(Column("version")).filter(Column("id") == record.tourId))
+                if (version == nil) {
+                    return .notInstalled
+                } else if (version! < Int64(record.version)) {
+                    return .updateAvailable
+                } else {
+                    return .upToDate
+                }
+            })
+        } catch {
+            log.error("Unable to determine the install status for tour record: \(error)")
+            return .notInstalled
         }
     }
 

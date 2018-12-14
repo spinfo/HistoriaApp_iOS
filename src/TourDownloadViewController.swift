@@ -30,9 +30,9 @@ class TourDownloadViewController: UIViewController, UITableViewDataSource, UITab
 
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TourDownloadTableViewCell", for: indexPath) as! TourDownloadTableViewCell
-
         let record = tourRecords[indexPath.row]
         cell.setTourRecord(record)
+        cell.setInstallStatus(MainDao().determineInstallStatus(forRecord: record))
         return cell
     }
 

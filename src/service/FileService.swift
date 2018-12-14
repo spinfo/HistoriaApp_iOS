@@ -42,7 +42,7 @@ class FileService {
             return nil
         }
         // Save to db or fail
-        if DatabaseHelper.save(tour: tour) {
+        if DatabaseHelper.save(tour: tour, withVersion: Int64(tourRecord.version)) {
             return tour
         } else {
             log.error("Tour could not be saved to db.")

@@ -11,7 +11,7 @@ class ReadingModeTabBarController: UITabBarController, UITabBarControllerDelegat
         super.viewDidLoad()
 
         self.delegate = self
-        self.title = "Lesemodus"
+        self.title = "Bibliothek"
 
         let tourViewC = self.viewControllers?.first as! ReadingModeToursNavigationController
         tourViewC.areaProvider = self.areaProvider

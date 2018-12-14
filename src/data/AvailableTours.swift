@@ -32,9 +32,11 @@ class AvailableTours {
         return result == nil ? Array() : result!
     }
 
-    func buildAreaDownloadStatus() -> [AreaDownloadStatus] {
+    func buildAreaDownloadStatusList() -> [AreaDownloadStatus] {
         return recordsByAreaId.map({ (areaid, records) in
             return AreaDownloadStatus(areaId: areaid, name: records[0].areaName, records: records)
+        }).sorted(by: {(as1, as2) in
+            as1.name.localizedCaseInsensitiveCompare(as2.name).rawValue < 0
         })
     }
 }
