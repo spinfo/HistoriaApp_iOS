@@ -60,7 +60,7 @@ class FileService {
                 removeFile(atBase: m.basename)
             })
             if (dao.getTourCount() == 0) {
-                let _ = installExampleTour()
+                installExampleTours()
             }
             return true
         }
@@ -69,8 +69,9 @@ class FileService {
 
 
     // installs the example tour included in the app's assets
-    public class func installExampleTour() -> Tour? {
-        return installTourFromAssets(assetName: "ExampleTour", fakeId: 0, fakeVersion: 0)
+    public class func installExampleTours() {
+        let _ = installTourFromAssets(assetName: "ExampleTour", fakeId: 105, fakeVersion: 1546376701)
+        let _ = installTourFromAssets(assetName: "ExampleIndoorTour", fakeId: 106, fakeVersion: 1546376718)
     }
 
     private class func installTourFromAssets(assetName: String, fakeId: Int64, fakeVersion: Int) -> Tour? {

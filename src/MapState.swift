@@ -31,9 +31,13 @@ class MapState {
 
     private func setDefaultTours() {
         let dao = MainDao()
-        let tour = dao.getFirstTourWithAssociationsForMapping()
-        if tour != nil {
-            tourCollection = TourCollectionOnMap(tour: tour!)
+        guard let area = dao.getFirstArea() else {
+            log.error("Unable to retrieve an area.")
+            return
+        }
+        let tours = dao.getToursWithAssociationsForMapping(inAreaWithId: area.id)
+        if !tours.isEmpty {
+            tourCollection = TourCollectionOnMap(tours: tours)
         } else {
             log.error("Unable to retrieve any tour from the db.")
             tourCollection = TourCollectionOnMap.empty

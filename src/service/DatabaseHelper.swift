@@ -56,10 +56,7 @@ class DatabaseHelper {
                 log.error("Could not create tables: \(error)")
                 return false
             }
-            guard let _ = FileService.installExampleTour() else {
-                log.error("Error on installing the example tour.")
-                return false
-            }
+            FileService.installExampleTours()
         }
 
         do {
