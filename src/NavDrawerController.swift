@@ -6,7 +6,7 @@ class NavDrawerController: UIViewController, UITableViewDataSource, UITableViewD
 
     let menuItems = [
         "Karte wechseln",
-        " - Zur Karte",
+        "Karte erkunden",
         "Tour starten",
         "Bibliothek",
         "Magazin",
