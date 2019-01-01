@@ -1,7 +1,7 @@
 
 import Foundation
 
-class AreaDownloadStatus {
+class AreaDownloadStatus: ObjectWithName {
 
     let areaId: Int64
 

@@ -5,7 +5,7 @@ import GRDB
 
 // An area basically is a name connected to a geographic rectangle.
 // Tours take place in an area.
-public class Area : Record {
+public class Area : Record, ObjectWithName {
 
     // the backend's id for this area
     var id: Int64 = 0
