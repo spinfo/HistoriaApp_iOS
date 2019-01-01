@@ -375,7 +375,7 @@ class MainDao {
 
     private func unsafeGetTours(inAreaWithId id: Int64) throws -> [Tour] {
         return try self.dbQueue.inDatabase({ db in
-            return try Tour.filter(Column("area_id") == id).fetchAll(db)
+            return try Tour.filter(Column("area_id") == id).order([Column("version").desc]).fetchAll(db)
         })
     }
 
