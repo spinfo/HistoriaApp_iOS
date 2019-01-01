@@ -1,0 +1,89 @@
+body {
+    max-width: 720px;
+    font-family: sans-serif;
+    line-height: 160%;
+    letter-spacing: 0.015em;
+    padding: 0 1rem;
+    hyphens: auto;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    line-height: 200%;
+}
+
+h1, h2 {
+    font-size: x-large;
+    margin: 0em 0 0.8em;
+    align: center;
+}
+
+h3, h4, h5, h6 {
+    margin: 1em 0 0em;
+}
+
+
+h3 {
+    font-size: large;
+}
+
+h4 {
+    font-size: larger;
+}
+
+h5 {
+    font-size: medium;
+}
+
+p, hr {
+    margin: 0.35rem 0 1.15rem;
+}
+
+img {
+    max-width: 95%;
+    height: auto !important;
+}
+
+figure {
+    max-width: 100%;
+    margin: 1rem 0.5rem 1rem;
+}
+
+figcaption {
+    font-size: small;
+    color: #9f9f9f;
+}
+
+blockquote {
+    font-style: italic;
+    color: #404040;
+    margin-left: 2.5rem;
+}
+
+em {
+    color: #404040;
+}
+
+ul, ol {
+    padding: 0 0 0 2.5rem;
+}
+
+li {
+    line-height: 180%;
+}
+
+a:link {
+    color: #3c8eff;
+}
+
+a:visited {
+    color: #3071cc;
+}
+
+a:hover, a:active {
+    color: #a5caff;
+}
+
+a[href^='http']::after {
+    margin: 0 0.2em;
+    content: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAAXklEQVQoka2QwQ3AMAwCs1N28k7eiZ3oI7IcU6efBomXOREyxhUZ2brTdNAcVB2BaJgCVcDAalJLXsB+iLAjm1pAwzHWHD3gWMcMg/ERMjKfFOHVqMEGqEM/gKP/6gE2f+h+Z5P45wAAAABJRU5ErkJggg==);
+}
