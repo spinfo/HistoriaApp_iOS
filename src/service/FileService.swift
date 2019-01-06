@@ -70,8 +70,8 @@ class FileService {
 
     // installs the example tour included in the app's assets
     public class func installExampleTours() {
-        let _ = installTourFromAssets(assetName: "ExampleTour", fakeId: 105, fakeVersion: 1546376701)
-        let _ = installTourFromAssets(assetName: "ExampleIndoorTour", fakeId: 106, fakeVersion: 1546376718)
+        let _ = installTourFromAssets(assetName: "ExampleTour", fakeId: 105, fakeVersion: 1546518297)
+        let _ = installTourFromAssets(assetName: "ExampleIndoorTour", fakeId: 106, fakeVersion: 1546518273)
     }
 
     private class func installTourFromAssets(assetName: String, fakeId: Int64, fakeVersion: Int) -> Tour? {
