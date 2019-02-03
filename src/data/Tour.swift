@@ -20,7 +20,7 @@ public class Tour : Record {
                 case .Tour: return "Spaziergang"
                 case .PublicTransportTour: return "ÖPNV-Tour"
                 case .BikeTour: return "Fahrrad-Tour"
-                case .IndoorTour: return "Indoor-Tour"
+                case .IndoorTour: return "Katalog-Tour"
                 }
             }
         }

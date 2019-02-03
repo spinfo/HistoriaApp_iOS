@@ -862,11 +862,11 @@
             </objects>
             <point key="canvasLocation" x="382" y="1491"/>
         </scene>
-        <!--Lexicon-->
+        <!--Lexikon-->
         <scene sceneID="byM-mj-326">
             <objects>
                 <navigationController id="Bhz-e8-BNs" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Lexicon" image="LexiconIcon" id="htm-ct-K3q"/>
+                    <tabBarItem key="tabBarItem" title="Lexikon" image="LexiconIcon" id="htm-ct-K3q"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Jff-Kl-bzH">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
