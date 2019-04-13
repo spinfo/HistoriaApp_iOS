@@ -53,3 +53,10 @@ class PlaceOnMapWithTourBeginAnnotationView : PlaceOnMapAnnotationView {
 
 }
 
+class PlaceOnMapWithIndoorTourAnnotationView : PlaceOnMapAnnotationView {
+
+    override func annotationImage() -> UIImage {
+        return #imageLiteral(resourceName: "MarkerIconBlack")
+    }
+}
+

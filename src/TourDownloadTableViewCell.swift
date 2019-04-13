@@ -3,18 +3,26 @@ import UIKit
 
 import XCGLogger
 
-class TourDownloadTableViewCell: UITableViewCell, URLSessionDownloadDelegate  {
+protocol DialogPresentationDelegate {
+    func present(dialog: UIAlertController) -> Void
+}
+
+class TourDownloadTableViewCell: UITableViewCell, URLSessionDownloadDelegate, TourDownloadActionsDelegate  {
 
     @IBOutlet weak var tourName: UILabel!
-
-    @IBOutlet weak var areaName: UILabel!
-
+    @IBOutlet weak var updateVersionLabel: UILabel!
     @IBOutlet weak var progress: UILabel!
+    @IBOutlet weak var installStatusImageView: UIImageView!
 
-    var tourRecord: TourRecord?
+    // initialized by the client
+    var tourRecord: TourRecord!
+    var installStatus: TourRecord.InstallStatus!
+    var dialogPresentationDelegate: DialogPresentationDelegate!
+
+    // initialized lazily by us
+    var dialogBuilder: TourDownloadDialogBuilder!
 
     var downloadTask: URLSessionDownloadTask?
-
     var backgroundSession: URLSession?
 
     private enum DownloadStatus {
@@ -25,6 +33,9 @@ class TourDownloadTableViewCell: UITableViewCell, URLSessionDownloadDelegate  {
         case InstallingTour
         case FailedInstalling
         case Installed
+        case Removing
+        case RemovalFailed
+        case RemovalOk
     }
 
     private var status: DownloadStatus = .Idle
@@ -36,19 +47,26 @@ class TourDownloadTableViewCell: UITableViewCell, URLSessionDownloadDelegate  {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
 
     public func setTourRecord(_ record: TourRecord) {
-        self.tourRecord = record
-        self.tourName.text = record.name
-        self.areaName.text = record.areaName
-        self.progress.text = self.defaultProgressText(record: record)
+        tourRecord = record
+        tourName.text = record.name
+        progress.text = self.defaultProgressText(record: record)
+        updateVersionLabel.text = TourDownloadViewHelper.formatUpdateVersionText(record.version, prefix: "Update: ")
+    }
+
+    public func setInstallStatus(_ status: TourRecord.InstallStatus) {
+        installStatus = status
+        installStatusImageView.image = TourDownloadViewHelper.determineImage(forStatus: status)
     }
 
     // update the progress depending on the provided status
     // marks the status as set
+    private func updateProgress(_ status: DownloadStatus) {
+        updateProgress(status, bytesWritten: 0)
+    }
+
     private func updateProgress(_ status: DownloadStatus, bytesWritten: Int64) {
         self.status = status
 
@@ -69,7 +87,15 @@ class TourDownloadTableViewCell: UITableViewCell, URLSessionDownloadDelegate  {
         case .FailedInstalling:
             text = "Installation fehlgeschlagen"
         case .Installed:
-            text = "OK"
+            text = "Installiert"
+            setInstallStatus(.upToDate)
+        case .Removing:
+            text = "Wird entfernt..."
+        case .RemovalFailed:
+            text = "Entfernen gescheitert"
+        case .RemovalOk:
+            text = "Entfernt"
+            setInstallStatus(.notInstalled)
         }
 
         DispatchQueue.main.async {
@@ -77,8 +103,15 @@ class TourDownloadTableViewCell: UITableViewCell, URLSessionDownloadDelegate  {
         }
     }
 
-    public func toggleTourDownload() {
-        // TODO: Handle stop and restart
+    public func toggle() {
+        if (dialogBuilder == nil) {
+            dialogBuilder = TourDownloadDialogBuilder(delegate: self)
+        }
+        let dialog = dialogBuilder.build(forRecord: tourRecord, withStatus: installStatus)
+        dialogPresentationDelegate.present(dialog: dialog)
+    }
+
+    private func toggleTourDownload() {
         if self.status == .Running {
             return
         }
@@ -107,7 +140,7 @@ class TourDownloadTableViewCell: UITableViewCell, URLSessionDownloadDelegate  {
     // Attempt to install the tour after a successfull download
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
         if FileManager.default.fileExists(atPath: location.path) {
-            log.info("Downloaded file to \(location.path)")
+            log.debug("Downloaded file to \(location.path)")
             self.updateProgress(.InstallingTour, bytesWritten: 0)
         } else {
             log.error("Downloaded file not at expected location: \(location.path)")
@@ -117,7 +150,7 @@ class TourDownloadTableViewCell: UITableViewCell, URLSessionDownloadDelegate  {
         let tour = FileService.installTour(fromZipFile: location, tourRecord: self.tourRecord!)
 
         if tour != nil {
-            log.info("Tour installed: \(tour!.name)")
+            log.debug("Tour installed: \(tour!.name)")
             self.updateProgress(.Installed, bytesWritten: 0)
         } else {
             log.error("Empty tour after handing to install")
@@ -140,10 +173,27 @@ class TourDownloadTableViewCell: UITableViewCell, URLSessionDownloadDelegate  {
         log.error("Download finished with error: \(String(describing: error))")
     }
 
+
+    // -- MARK: TourDownloadActionsDelegate
+
+    func install(record: TourRecord) {
+        toggleTourDownload()
+    }
+
+    func remove(record: TourRecord) {
+        log.debug("Will remove tour: \(record.name)")
+        updateProgress(.Removing)
+        DispatchQueue.main.async {
+            let result = FileService.removeTour(withId: record.tourId)
+            self.updateProgress(result ? .RemovalOk : .RemovalFailed)
+        }
+
+    }
+
     // -- MARK: Private methods
 
     private func defaultProgressText(record: TourRecord) -> String {
-        return "ca. \(record.downloadSize / 1000000) MB"
+        return TourDownloadViewHelper.formatFileSize(bytesAmount: record.downloadSize)
     }
 
 }

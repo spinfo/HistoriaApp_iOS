@@ -5,20 +5,29 @@ import XCGLogger
 
 class HtmlContentCompletion {
 
-    private static let replaceMe = "to replace"
+    private static let contentPlaceholder = "PlaceholderForContent"
+    private static let cssPlaceholder = "PlaceholderForStyles"
+    private static let lexiconHeadingPlaceholder = "LexiconHeadingPlaceholder"
     private static let htmlTemplate =
-        "<html>" +
+        "<html lang=\"de-DE\">" +
             "<head>" +
                 "<meta charset=\"UTF-8\">" +
-                "<style>" +
-                    "img { max-width: 95%; height: auto !important; }" +
-                    "figure { max-width: 100%; margin: 1em 0 1em; }" +
-                "</style>" +
+                "<style>\n" +
+                    HtmlContentCompletion.cssPlaceholder +
+                "</style>\n" +
             "</head>" +
             "<body>" +
-                HtmlContentCompletion.replaceMe +
+                HtmlContentCompletion.contentPlaceholder +
             "</body>" +
         "</html>";
+    private static let lexiconHeadingTemplate =
+        "<div style=\"text-align:center;margin-top:12px;\">" +
+            "<hr>" +
+            "<h1>" +
+                HtmlContentCompletion.lexiconHeadingPlaceholder +
+            "</h1>" +
+            "<hr>" +
+        "</div>\n";
 
 
 
@@ -32,7 +41,7 @@ class HtmlContentCompletion {
         var newContent = content
 
         for mediaitem in media {
-            let basename = (mediaitem.guid as NSString).lastPathComponent
+            let basename = mediaitem.basename
             guard (!basename.isEmpty && basename != "/") else {
                 log.warning("Could not determine basename for guid: \(mediaitem.guid)")
                 continue
@@ -56,12 +65,15 @@ class HtmlContentCompletion {
 
     // wraps a snippet of html into a full html page with a bit of custom styling
     static func wrapInPage(_ innerHtml: String) -> String {
-        return htmlTemplate.replacingOccurrences(of: replaceMe, with: innerHtml)
+        let styles = FileService.getAssetFile("AppArticleCss")
+        let templateWithStyles = htmlTemplate.replacingOccurrences(of: cssPlaceholder, with: styles)
+        return templateWithStyles.replacingOccurrences(of: contentPlaceholder, with: innerHtml)
     }
 
     // set the given title at the start of the html snippet and return it
     static func setTitle(_ title: String, on content: String) -> String {
-        return "<h1>\(title)</h1>\(content)"
+        let titleHtml = lexiconHeadingTemplate.replacingOccurrences(of: lexiconHeadingPlaceholder, with: title)
+        return titleHtml + content
     }
 
 }

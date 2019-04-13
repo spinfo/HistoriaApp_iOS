@@ -3,6 +3,12 @@ import Foundation
 
 class TourRecord {
 
+    public enum InstallStatus {
+        case notInstalled
+        case updateAvailable
+        case upToDate
+    }
+
     // id of the record (not the tour) assigned by the server
     var id: Int64 = 0
 

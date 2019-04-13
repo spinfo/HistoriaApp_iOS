@@ -41,7 +41,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, ModelSelectionDele
         removeMapkitLegalAttributionLabel(in: mapView)
 
         mapView.delegate = self
-
         mapState = MapState.restoreOrDefault()
         switchMapContents(to: mapState!.tourCollection)
         zoom(basedOn: mapState!)
@@ -202,10 +201,15 @@ class MapViewController: UIViewController, MKMapViewDelegate, ModelSelectionDele
         guard let tourWithAsscociations = refetchTourForMapDisplayLoggingOnError(tour) else {
             return
         }
-        requestCenter()
-        let tourCollection = TourCollectionOnMap(tour: tourWithAsscociations)
-        switchMapContents(to: tourCollection)
-        zoomTo(tourCollectionOnMap: tourCollection)
+        if tour.isIndoorTour {
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            appDelegate.switchToIndoorTourDisplay(for: tour)
+        } else {
+            requestCenter()
+            let tourCollection = TourCollectionOnMap(tour: tourWithAsscociations)
+            switchMapContents(to: tourCollection)
+            zoomTo(tourCollectionOnMap: tourCollection)
+        }
     }
 
     private func refetchTourForMapDisplayLoggingOnError(_ tour: Tour) -> Tour? {

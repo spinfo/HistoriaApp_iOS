@@ -25,7 +25,7 @@ class AreaSelectionViewController: UIViewController, UITableViewDelegate, UITabl
     }
 
     func refreshAreas() {
-        self.areas = theDao.getAreas()
+        self.areas = AreaSortUtil.sort(theDao.getAreas())
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }

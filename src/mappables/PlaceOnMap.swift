@@ -12,6 +12,9 @@ class PlaceOnMap {
     // if one of the mapstops at the place is the beginning of tour
     var hasTourBeginMapstop: Bool
 
+    // if one of the mapstops at the place is part of an indoor tour
+    var hasIndoorTourMapstop: Bool
+
     // The place that this is wrapping
     var place: Place
 
@@ -26,6 +29,7 @@ class PlaceOnMap {
         self.place = place
         self.mapstopsOnMap = Array()
         self.hasTourBeginMapstop = false
+        self.hasIndoorTourMapstop = false
         self.currentMapstop = 0
     }
 
@@ -34,6 +38,9 @@ class PlaceOnMap {
 
         if(mapstopOnMap.isFirstInTour) {
             self.hasTourBeginMapstop = true
+        }
+        if(mapstopOnMap.isPartOfIndoorTour) {
+            self.hasIndoorTourMapstop = true
         }
     }
 

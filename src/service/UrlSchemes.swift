@@ -6,8 +6,7 @@ import XCGLogger
 class UrlSchemes {
 
     static let serverBaseUri = "https://stadtsprachenapp.de/wp-content/uploads/smart-history-tours"
-
-    static let availableToursUri = UrlSchemes.serverBaseUri + "/tours.yaml"
+    static let availableToursUri = UrlSchemes.serverBaseUri + "/tours.v2.yaml"
 
     static let lexicon = "lexcion://"
 

@@ -8,7 +8,7 @@ import MMDrawerController
 let log = XCGLogger.default
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, UIWebViewDelegate, LexiconArticleCloseDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UIWebViewDelegate, LexiconArticleCloseDelegate, IndoorTourProvider {
     
     // MARK: Properties for Navigation
 
@@ -21,6 +21,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIWebViewDelegate, Lexico
     private var currentCenterController: UIViewController?
 
     private var lexiconDisplayControllerStack = Array<UIViewController>()
+
+    private var selectedIndoorTour: Tour?
 
     // MARK: Normal AppDelegate stuff
 
@@ -131,6 +133,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIWebViewDelegate, Lexico
         let readingModeViewC = getCenterController("ReadingModeTabBarController") as! ReadingModeTabBarController
         readingModeViewC.areaProvider = self.getCenterController("MapViewController") as! MapViewController
         switchToCenterController(readingModeViewC)
+    }
+
+    func switchToIndoorTourDisplay(for tour: Tour) {
+        let indoorTourViewC = getCenterController("IndoorTourViewController") as! IndoorTourViewController
+        selectedIndoorTour = tour
+        indoorTourViewC.tourProvider = self
+        switchToCenterController(indoorTourViewC)
+    }
+
+    func dismissCurrentIndoorTourDisplay() {
+        switchToPlainMap()
     }
 
     func switchToAssetHtmlPage(assetName: String, showsVersionLabel: Bool) {
@@ -273,6 +286,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIWebViewDelegate, Lexico
         self.requestCenter(for: mapViewC)
         mapViewC.displayAsPopup(controller: viewController)
         self.closeNavDrawer()
+    }
+
+    // MARK: IndoorTourProvider
+
+    func getTour() -> Tour {
+        return selectedIndoorTour!
     }
 
 }

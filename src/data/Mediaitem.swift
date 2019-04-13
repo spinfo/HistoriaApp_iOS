@@ -17,6 +17,9 @@ public class Mediaitem : Record {
     // the page this media item belongs to
     var page: Page?
 
+    var basename: String {
+        get { return (guid as NSString).lastPathComponent }
+    }
 
     // MARK: Record interface
 

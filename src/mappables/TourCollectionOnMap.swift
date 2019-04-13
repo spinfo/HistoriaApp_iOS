@@ -39,6 +39,9 @@ public class TourCollectionOnMap {
                     stopOnMap.isFirstInTour = true
                     isFirstStop = false
                 }
+                if (tour.isIndoorTour) {
+                    stopOnMap.isPartOfIndoorTour = true
+                }
 
                 guard let place = mapstop.place else {
                     log.warning("No place for mapstop. Skipping.")
@@ -51,8 +54,12 @@ public class TourCollectionOnMap {
                     placeOnMap = PlaceOnMap(place)
                 }
                 placeOnMap!.addMapstopOnMap(stopOnMap)
-
                 placesOnMapById[place.id] = placeOnMap
+
+                // only the first mapstop of an indoor tour is shown on the map
+                if (tour.isIndoorTour) {
+                    break
+                }
             }
         }
         // set the result

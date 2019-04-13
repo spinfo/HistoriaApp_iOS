@@ -8,6 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		0E302EE3BB2D154D9D99EB61 /* Pods_StadtsprachenApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB675B3C97C71243AC650F30 /* Pods_StadtsprachenApp.framework */; };
+		6316DCA82261E3B00053D408 /* Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6316DCA42261E3B00053D408 /* Scene.swift */; };
+		6316DCA92261E3B00053D408 /* AreaDownloadStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6316DCA52261E3B00053D408 /* AreaDownloadStatus.swift */; };
+		6316DCAA2261E3B00053D408 /* AvailableTours.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6316DCA62261E3B00053D408 /* AvailableTours.swift */; };
+		6316DCAB2261E3B00053D408 /* SceneCoordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6316DCA72261E3B00053D408 /* SceneCoordinate.swift */; };
+		6316DCAD2261E3BB0053D408 /* AreaSortUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6316DCAC2261E3BB0053D408 /* AreaSortUtil.swift */; };
+		6316DCAF2261E3D20053D408 /* IndoorTourViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6316DCAE2261E3D20053D408 /* IndoorTourViewController.swift */; };
+		6316DCB32261E4490053D408 /* TourDownloadDialogBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6316DCB02261E4490053D408 /* TourDownloadDialogBuilder.swift */; };
+		6316DCB42261E4490053D408 /* TourDownloadViewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6316DCB12261E4490053D408 /* TourDownloadViewHelper.swift */; };
+		6316DCB52261E4490053D408 /* TourDownloadAreaSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6316DCB22261E4490053D408 /* TourDownloadAreaSelectionViewController.swift */; };
 		636E3A8021BFFACB00679137 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636E3A7F21BFFACB00679137 /* AppDelegate.swift */; };
 		636E3A8521BFFACB00679137 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 636E3A8321BFFACB00679137 /* Main.storyboard */; };
 		636E3A8A21BFFACC00679137 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 636E3A8821BFFACC00679137 /* LaunchScreen.storyboard */; };
@@ -66,6 +75,15 @@
 
 /* Begin PBXFileReference section */
 		5A6844BAC331BD0FAF296CF0 /* Pods-StadtsprachenApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StadtsprachenApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-StadtsprachenApp/Pods-StadtsprachenApp.debug.xcconfig"; sourceTree = "<group>"; };
+		6316DCA42261E3B00053D408 /* Scene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scene.swift; sourceTree = "<group>"; };
+		6316DCA52261E3B00053D408 /* AreaDownloadStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AreaDownloadStatus.swift; sourceTree = "<group>"; };
+		6316DCA62261E3B00053D408 /* AvailableTours.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvailableTours.swift; sourceTree = "<group>"; };
+		6316DCA72261E3B00053D408 /* SceneCoordinate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneCoordinate.swift; sourceTree = "<group>"; };
+		6316DCAC2261E3BB0053D408 /* AreaSortUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AreaSortUtil.swift; sourceTree = "<group>"; };
+		6316DCAE2261E3D20053D408 /* IndoorTourViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IndoorTourViewController.swift; sourceTree = "<group>"; };
+		6316DCB02261E4490053D408 /* TourDownloadDialogBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TourDownloadDialogBuilder.swift; sourceTree = "<group>"; };
+		6316DCB12261E4490053D408 /* TourDownloadViewHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TourDownloadViewHelper.swift; sourceTree = "<group>"; };
+		6316DCB22261E4490053D408 /* TourDownloadAreaSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TourDownloadAreaSelectionViewController.swift; sourceTree = "<group>"; };
 		636E3A7C21BFFACB00679137 /* StadtsprachenApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StadtsprachenApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		636E3A7F21BFFACB00679137 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		636E3A8421BFFACB00679137 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -138,6 +156,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6316DCA32261E30A0053D408 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				636E3AA721C0036A00679137 /* Assets.xcassets */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
 		636E3A7321BFFACB00679137 = {
 			isa = PBXGroup;
 			children = (
@@ -145,6 +171,7 @@
 				636E3A7D21BFFACB00679137 /* Products */,
 				87BFB9DD831DB6CDF4A8F402 /* Pods */,
 				CC4338C734C9A7C272E11D39 /* Frameworks */,
+				6316DCA32261E30A0053D408 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -159,6 +186,10 @@
 		636E3A7E21BFFACB00679137 /* StadtsprachenApp */ = {
 			isa = PBXGroup;
 			children = (
+				6316DCB22261E4490053D408 /* TourDownloadAreaSelectionViewController.swift */,
+				6316DCB02261E4490053D408 /* TourDownloadDialogBuilder.swift */,
+				6316DCB12261E4490053D408 /* TourDownloadViewHelper.swift */,
+				6316DCAE2261E3D20053D408 /* IndoorTourViewController.swift */,
 				636E3A9821C0036A00679137 /* AreaProvider.swift */,
 				636E3A7F21BFFACB00679137 /* AppDelegate.swift */,
 				636E3A9521C0036900679137 /* NavDrawerController.swift */,
@@ -215,6 +246,10 @@
 		636E3AED21C005EB00679137 /* data */ = {
 			isa = PBXGroup;
 			children = (
+				6316DCA52261E3B00053D408 /* AreaDownloadStatus.swift */,
+				6316DCA62261E3B00053D408 /* AvailableTours.swift */,
+				6316DCA42261E3B00053D408 /* Scene.swift */,
+				6316DCA72261E3B00053D408 /* SceneCoordinate.swift */,
 				636E3AF721C0060700679137 /* Area.swift */,
 				636E3AF021C0060700679137 /* Lexicon.swift */,
 				636E3AF121C0060700679137 /* LexiconEntry.swift */,
@@ -232,6 +267,7 @@
 		636E3B0221C0060D00679137 /* service */ = {
 			isa = PBXGroup;
 			children = (
+				6316DCAC2261E3BB0053D408 /* AreaSortUtil.swift */,
 				636E3B0721C0062000679137 /* DatabaseHelper.swift */,
 				636E3B0621C0062000679137 /* FileService.swift */,
 				636E3B0421C0062000679137 /* HtmlContentCompletion.swift */,
@@ -398,25 +434,33 @@
 				636E3AB521C0036B00679137 /* NavDrawerController.swift in Sources */,
 				636E3AB921C0036B00679137 /* ReadingModeMapstopListController.swift in Sources */,
 				636E3B0B21C0062100679137 /* MainDao.swift in Sources */,
+				6316DCAB2261E3B00053D408 /* SceneCoordinate.swift in Sources */,
 				636E3B0E21C0062100679137 /* ServerResponseReader.swift in Sources */,
 				636E3AD021C0036B00679137 /* MapState.swift in Sources */,
 				636E3AC521C0036B00679137 /* TourSelectionViewController.swift in Sources */,
 				636E3ACB21C0036B00679137 /* MapstopPageContentViewController.swift in Sources */,
 				636E3AB321C0036B00679137 /* ModelSelectionDelegate.swift in Sources */,
+				6316DCB42261E4490053D408 /* TourDownloadViewHelper.swift in Sources */,
+				6316DCB32261E4490053D408 /* TourDownloadDialogBuilder.swift in Sources */,
 				636E3AB221C0036B00679137 /* MapViewController.swift in Sources */,
+				6316DCAA2261E3B00053D408 /* AvailableTours.swift in Sources */,
 				636E3B0921C0062100679137 /* UrlSchemes.swift in Sources */,
 				636E3A8021BFFACB00679137 /* AppDelegate.swift in Sources */,
 				636E3AC221C0036B00679137 /* ReadingModeTabBarController.swift in Sources */,
 				636E3ACE21C0036B00679137 /* TourDownloadTableViewCell.swift in Sources */,
 				636E3AFF21C0060700679137 /* Mapstop.swift in Sources */,
+				6316DCAD2261E3BB0053D408 /* AreaSortUtil.swift in Sources */,
 				636E3AF921C0060700679137 /* Mediaitem.swift in Sources */,
 				636E3B0D21C0062100679137 /* DatabaseHelper.swift in Sources */,
 				636E3B0121C0060700679137 /* Area.swift in Sources */,
+				6316DCAF2261E3D20053D408 /* IndoorTourViewController.swift in Sources */,
 				636E3AF821C0060700679137 /* PersistableGeopoint.swift in Sources */,
 				636E3AFC21C0060700679137 /* Tour.swift in Sources */,
 				636E3AEB21C005E400679137 /* MapstopOnMapCalloutDetailView.swift in Sources */,
 				636E3ACA21C0036B00679137 /* TourDownloadViewController.swift in Sources */,
+				6316DCA82261E3B00053D408 /* Scene.swift in Sources */,
 				636E3B0A21C0062100679137 /* HtmlContentCompletion.swift in Sources */,
+				6316DCA92261E3B00053D408 /* AreaDownloadStatus.swift in Sources */,
 				636E3AEA21C005E400679137 /* PlaceOnMapAnnotationView.swift in Sources */,
 				636E3AFB21C0060700679137 /* LexiconEntry.swift in Sources */,
 				636E3AFE21C0060700679137 /* Place.swift in Sources */,
@@ -425,6 +469,7 @@
 				636E3AE821C005E400679137 /* MapstopOnMap.swift in Sources */,
 				636E3ACD21C0036B00679137 /* ReadingModeBackButtonProtocols.swift in Sources */,
 				636E3ACC21C0036B00679137 /* MapstopPageViewController.swift in Sources */,
+				6316DCB52261E4490053D408 /* TourDownloadAreaSelectionViewController.swift in Sources */,
 				636E3B0021C0060700679137 /* Page.swift in Sources */,
 				636E3AC821C0036B00679137 /* NavDrawerTableViewCell.swift in Sources */,
 				636E3AB621C0036B00679137 /* ReadingModeLexiconViewController.swift in Sources */,

@@ -11,6 +11,7 @@ public class Tour : Record {
         case Tour = "tour"
         case PublicTransportTour = "public-transport-tour"
         case BikeTour = "bike-tour"
+        case IndoorTour = "indoor-tour"
 
         var representation: String {
             get {
@@ -19,6 +20,7 @@ public class Tour : Record {
                 case .Tour: return "Spaziergang"
                 case .PublicTransportTour: return "ÖPNV-Tour"
                 case .BikeTour: return "Fahrrad-Tour"
+                case .IndoorTour: return "Katalog-Tour"
                 }
             }
         }
@@ -77,8 +79,14 @@ public class Tour : Record {
     }
 
     var coordinates: [CLLocationCoordinate2D] {
-        return trackCoordinates + trackCoordinates
+        if (self.isIndoorTour) {
+            return [mapstops.first!.coordinate]
+        } else {
+            return placeCoordinates + trackCoordinates
+        }
     }
+
+    var scenes: Array<Scene> = Array()
 
     // point of creation in the backend's db assumed to be in GMT+2
     var createdAt: Date = Date()
@@ -92,6 +100,12 @@ public class Tour : Record {
     // a tour might have Lexicon entries associated during installation
     // the connection to those is however not persisted
     var lexiconEntries: [LexiconEntry] = Array()
+
+    var isIndoorTour: Bool  {
+        get {
+            return self.type == .IndoorTour
+        }
+    }
 
     // MARK: Record interface
 

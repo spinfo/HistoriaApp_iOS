@@ -79,6 +79,15 @@ class MainDao {
         }
     }
 
+    public func getTourCount() -> Int {
+        do {
+            return try self.dbQueue.inDatabase({ db in try Tour.fetchCount(db )})
+        } catch {
+            log.error("Unable to retrieve a tour count.")
+            return 0
+        }
+    }
+
     public func getTourCount(forAreaWithId id: Int64) -> Int  {
         do {
             return try self.dbQueue.inDatabase({ db in
@@ -87,6 +96,18 @@ class MainDao {
         } catch {
             log.error("Unable to retrieve a tour count for area \(id)")
             return 0
+        }
+    }
+
+
+    public func getTourIds(inAreaWithId id: Int64) -> Set<Int64> {
+        do {
+            return try self.dbQueue.inDatabase({ db in
+                return try Set(Int64.fetchAll(db, Tour.select(Column("id")).filter((Column("area_id") == id))))
+            })
+        } catch {
+            log.error("Unable to retrieve a list of installed tours in area with id: \(id)")
+            return []
         }
     }
 
@@ -190,6 +211,19 @@ class MainDao {
         }
     }
 
+    public func getMediaitems(inTourWithId id: Int64) -> [Mediaitem] {
+        do {
+            return try dbQueue.inDatabase({ db in
+                let mapstopIds = try Int64.fetchAll(db, Mapstop.select(Column("id")).filter(Column("tour_id") == id))
+                let pageIds = try Int64.fetchAll(db, Page.select(Column("id")).filter(mapstopIds.contains(Column("mapstop_id"))))
+                return try Mediaitem.filter(pageIds.contains(Column("page_id"))).fetchAll(db)
+            })
+        } catch {
+            log.error("Unable to retrieve mediaitems for tour (id: '\(id)'): \(error)")
+            return []
+        }
+    }
+
     public func getLexicon() -> Lexicon {
         return Lexicon(entries: getAllLexiconEntries())
     }
@@ -213,6 +247,24 @@ class MainDao {
         } catch {
             log.error("Unable to retrieve lexicon entry for (id: '\(id)'): \(error)")
             return nil
+        }
+    }
+
+    public func determineInstallStatus(forRecord record: TourRecord) -> TourRecord.InstallStatus {
+        do {
+            return try dbQueue.inDatabase({ db in
+                let version = try Int64.fetchOne(db, Tour.select(Column("version")).filter(Column("id") == record.tourId))
+                if (version == nil) {
+                    return .notInstalled
+                } else if (version! < Int64(record.version)) {
+                    return .updateAvailable
+                } else {
+                    return .upToDate
+                }
+            })
+        } catch {
+            log.error("Unable to determine the install status for tour record: \(error)")
+            return .notInstalled
         }
     }
 
@@ -258,6 +310,16 @@ class MainDao {
             }
         }
 
+        for scene: Scene in tour.scenes {
+            try scene.insertOrUpdate(db)
+
+            // insert scene coordinates after deleting all the old ones belonging to the same scene
+            try SceneCoordinate.filter(Column("scene_id") == scene.id).deleteAll(db)
+            for coord: SceneCoordinate in scene.coordinates {
+                try coord.insert(db)
+            }
+        }
+
         // update the tour track by removing all old coordinates and re-inserting the new ones
         if (tour.track != nil && tour.track!.count > 0) {
             try PersistableGeopoint.filter(Column("tour_id") == tour.id).deleteAll(db)
@@ -265,14 +327,34 @@ class MainDao {
                 point.tour = tour
                 try point.insert(db)
             }
-        } else {
-            log.warning("Installing a tour without a track should never happen.")
         }
-
         // save the tour's lexicon entries
         for entry in tour.lexiconEntries {
             try entry.insertOrUpdate(db)
         }
+    }
+
+    public func deleteTour(withId id: Int64) -> Bool {
+        do {
+            let tour = try unsafeGetTour(id: id)
+            let _ = try dbQueue.inDatabase({ db in
+                try Tour.deleteOne(db, key: id)
+            })
+            try unsafeDeleteAreaIfItIsNotConnectedToAnyTours(areaId: tour.areaId)
+            return true
+        } catch {
+            log.error("Error on deleting a tour: \(error).")
+            return false
+        }
+    }
+
+    private func unsafeDeleteAreaIfItIsNotConnectedToAnyTours(areaId: Int64) throws {
+        try dbQueue.inDatabase({ db in
+            let count = try Tour.filter(Column("area_id") == areaId).fetchCount(db)
+            if (count == 0) {
+                try Area.deleteOne(db, key: areaId)
+            }
+         })
     }
 
     // MARK: Private unsafe fetches
@@ -293,7 +375,7 @@ class MainDao {
 
     private func unsafeGetTours(inAreaWithId id: Int64) throws -> [Tour] {
         return try self.dbQueue.inDatabase({ db in
-            return try Tour.filter(Column("area_id") == id).fetchAll(db)
+            return try Tour.filter(Column("area_id") == id).order([Column("version").desc]).fetchAll(db)
         })
     }
 
@@ -321,9 +403,56 @@ class MainDao {
         })
     }
 
+    private func unsafeSetAssociationsForMappingOnIndoorTour(_ tour: Tour) throws {
+        tour.scenes = try unsafeGetScenes(tourId: tour.id)
+
+        var mapstopsById = [Int64: Mapstop]()
+        tour.mapstops.forEach( { m in mapstopsById[m.id] = m} )
+
+        for scene in tour.scenes {
+            let coordinates = try unsafeGetSceneCoordinates(sceneId: scene.id)
+            for coord in coordinates {
+                guard let mapstop = mapstopsById.removeValue(forKey: coord.mapstopId) else {
+                    log.error("Coordinate has no mapstop in tour. mapstop_id: \(coord.mapstopId)")
+                    continue
+                }
+                linkSceneToMapstopAndCoordinate(scene: scene, mapstop: mapstop, coord: coord)
+            }
+        }
+
+        tour.mapstops.sort(by: { (m1, m2) in return m1.isBeforeInSceneOrPosition(to: m2) })
+
+        if (mapstopsById.count != 0) {
+            log.error("Found mapstops in indoor tour without coordinate representation.")
+        }
+    }
+
+    private func unsafeGetScenes(tourId: Int64) throws -> [Scene] {
+        return try dbQueue.inDatabase({ db in
+            return try Scene.filter(Column("tour_id") == tourId).order(Column("pos")).fetchAll(db)
+        })
+    }
+
+    private func unsafeGetSceneCoordinates(sceneId: Int64) throws -> [SceneCoordinate] {
+        return try dbQueue.inDatabase({ db in
+            return try SceneCoordinate.filter(Column("scene_id") == sceneId).fetchAll(db)
+        })
+    }
+
+    private func linkSceneToMapstopAndCoordinate(scene: Scene, mapstop: Mapstop, coord: SceneCoordinate) {
+        guard (coord.sceneId == scene.id && coord.mapstopId == mapstop.id) else {
+            log.error("Ids do not match: \(coord.sceneId) != \(scene.id) || \(coord.mapstopId) != \(mapstop.id)")
+            return
+        }
+        coord.scene = scene
+        coord.mapstop = mapstop
+        mapstop.sceneCoordinate = coord
+        mapstop.scene = scene
+        scene.coordinates.append(coord)
+        scene.mapstops.append(mapstop)
+    }
+
     // set associations needed for map display on the given tour
-    // NOTE: Very, very problematic. We should be able to at least fetch
-    //      this without the loop over the mapstops
     private func unsafeSetAssociationsForMapping(on tour: Tour) throws {
         tour.mapstops = try unsafeGetMapstops(forTour: tour.id)
 
@@ -331,6 +460,10 @@ class MainDao {
             mapstop.place = try unsafeGetPlace(id: mapstop.placeId)
         }
         tour.track = try unsafeGetTrack(tourId: tour.id)
+
+        if (tour.type == .IndoorTour) {
+            try unsafeSetAssociationsForMappingOnIndoorTour(tour)
+        }
     }
 
     private func unsafeSetAssociationsForMapping(on tours: [Tour]) throws {
@@ -338,11 +471,9 @@ class MainDao {
     }
 }
 
-// Our own extension to GRDB Records
 fileprivate extension Record {
 
     // Insert or update a record in the databse based on it's primary key
-    // NOTE: Not very efficient, but should be seldom needed (on tour install mainly)
     func insertOrUpdate(_ db: Database) throws {
         if try self.exists(db) {
             try self.update(db)

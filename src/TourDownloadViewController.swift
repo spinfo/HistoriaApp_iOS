@@ -3,37 +3,18 @@ import UIKit
 
 import XCGLogger
 
-class TourDownloadViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class TourDownloadViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, DialogPresentationDelegate {
 
-    private var tourRecords = Array<TourRecord>()
+    var tourRecords: [TourRecord]!
 
     @IBOutlet weak var tableView: UITableView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.title = "Touren laden"
-
-        // retrieve a list of tour records from the server
-        self.performUrlRequest(UrlSchemes.availableToursUri) { data in
-
-            let recordsYaml = String(data: data, encoding: .utf8)
-            guard recordsYaml != nil else {
-                log.error("Unable to parse response for tour record request.")
-                return
-            }
-            let records = ServerResponseReader.parseTourRecordsYAML(recordsYaml!)
-            guard records != nil && records!.count > 0 else {
-                log.error("Empty or nil response on tour record parsing.")
-                return
-            }
-            // update our data and reload the table on the main thread
-            DispatchQueue.main.async {
-                self.tourRecords = records!
-                self.tableView.reloadData()
-            }
+        if (tourRecords.count > 0) {
+            title = String(format: "Magazin: %@", tourRecords[0].areaName)
         }
-
     }
 
     override func didReceiveMemoryWarning() {
@@ -53,9 +34,10 @@ class TourDownloadViewController: UIViewController, UITableViewDataSource, UITab
 
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TourDownloadTableViewCell", for: indexPath) as! TourDownloadTableViewCell
-
         let record = tourRecords[indexPath.row]
         cell.setTourRecord(record)
+        cell.setInstallStatus(MainDao().determineInstallStatus(forRecord: record))
+        cell.dialogPresentationDelegate = self
         return cell
     }
 
@@ -66,42 +48,11 @@ class TourDownloadViewController: UIViewController, UITableViewDataSource, UITab
             log.error("Can't get cell at \(indexPath)")
             return
         }
-        cell.toggleTourDownload()
+        cell.toggle()
     }
 
-    // MARK: -- Private methods
-
-    // convenience method to perform http(s) url GET requests and deal with basic errors
-    // provides the caller with a hook to just deal with the returned data
-    private func performUrlRequest(_ urlString: String, dataHandler: @escaping ((Data) -> Void)) {
-        guard let url = URL(string: urlString) else {
-            log.error("Not a valid url: '\(urlString)'")
-            return
-        }
-        let urlRequest = URLRequest(url: url)
-        let session = URLSession.shared
-
-        let task = session.dataTask(with: urlRequest) { data, response, error in
-            // check for errors
-            guard error == nil else {
-                log.error("Error on retrieving '\(urlString)': \(error!)")
-                return
-            }
-            // check for a 200 OK response
-            let httpResponse = response as? HTTPURLResponse
-            guard (httpResponse != nil && httpResponse?.statusCode == 200) else {
-                log.error("Bad response on request for '\(urlString)': \(response!)")
-                return
-            }
-            // check for a non-empty data response
-            guard data != nil && data?.count != 0 else {
-                log.error("Request for '\(urlString)' returned empty: \(data!)")
-                return
-            }
-            // call the provided data handler on the data we got from the request
-            dataHandler(data!)
-        }
-        task.resume()
+    // MARK: -- DialogPresentationDelegate
+    func present(dialog: UIAlertController) {
+        self.present(dialog, animated: true, completion: nil)
     }
-
 }

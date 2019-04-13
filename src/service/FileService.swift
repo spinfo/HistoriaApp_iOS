@@ -42,7 +42,7 @@ class FileService {
             return nil
         }
         // Save to db or fail
-        if DatabaseHelper.save(tour: tour) {
+        if DatabaseHelper.save(tour: tour, withVersion: Int64(tourRecord.version)) {
             return tour
         } else {
             log.error("Tour could not be saved to db.")
@@ -51,23 +51,42 @@ class FileService {
         }
     }
 
+    public class func removeTour(withId id: Int64) -> Bool {
+        let dao = MainDao()
+        let mediaitems = dao.getMediaitems(inTourWithId: id)
+        let dbDeleteWasOk = dao.deleteTour(withId: id)
+        if (dbDeleteWasOk) {
+            mediaitems.forEach({ m in
+                removeFile(atBase: m.basename)
+            })
+            if (dao.getTourCount() == 0) {
+                installExampleTours()
+            }
+            return true
+        }
+        return false
+    }
+
 
     // installs the example tour included in the app's assets
-    public class func installExampleTour() -> Tour? {
+    public class func installExampleTours() {
+        let _ = installTourFromAssets(assetName: "ExampleTour", fakeId: 105, fakeVersion: 1546518297)
+        let _ = installTourFromAssets(assetName: "ExampleIndoorTour", fakeId: 106, fakeVersion: 1546518273)
+    }
 
+    private class func installTourFromAssets(assetName: String, fakeId: Int64, fakeVersion: Int) -> Tour? {
         // read the example tour's zip file as binary data from the assets
-        let data = getExampleTourData()
+        let data = getAssetData(assetName: assetName)
 
         // write the zip file into a temporary container
         guard let tempUrl = FileService.writeToTempFile(data) else {
             return nil
         }
 
-        // we need a fake tour record to install the example (tourId and version
-        // are 0 per convention for the example)
+        // we need a fake tour record to install the example
         let record = TourRecord()
-        record.tourId = 0
-        record.version = 0
+        record.tourId = fakeId
+        record.version = fakeVersion
         return installTour(fromZipFile: tempUrl, tourRecord: record)
     }
 
@@ -86,6 +105,27 @@ class FileService {
     // return the file url with the given basename from our documents folder
     public class func getFile(atBase base: String) -> URL? {
         return getDocumentsFolder().appendingPathComponent(base)
+    }
+
+    public class func getFileData(atBase base: String) -> Data? {
+        return FileManager.default.contents(atPath: getFile(atBase: base)!.absoluteString)
+    }
+
+    public class func removeFile(atBase base: String) {
+        guard let url = getFile(atBase: base) else {
+            log.error("Unable to delete file. Can't build url from base: \(base)")
+            return
+        }
+        var isDir = ObjCBool(true)
+        let exists = FileManager.default.fileExists(atPath: url.path, isDirectory: &isDir)
+        let deletable = FileManager.default.isDeletableFile(atPath: url.path)
+        guard (exists && !isDir.boolValue && deletable) else {
+            log.error("Will not delete file that is a directory \(isDir.boolValue), does not exist \(exists) or is not deletable \(deletable) from path: \(url.path)")
+            return
+        }
+        do { try FileManager.default.removeItem(at: url) } catch {
+            log.error("Could not delete file, reason: \(error)")
+        }
     }
     
     // return a url to the map style, unpack that file from the assets if necessary
@@ -118,11 +158,6 @@ class FileService {
             fileURLWithPath: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!,
             isDirectory: true
         )
-    }
-    
-    // read the example tour asset and return it's data
-    private class func getExampleTourData() -> Data {
-        return getAssetData(assetName: "ExampleTour")
     }
 
     // convenience function to read asset data and emit a fatal error if the asset is not present

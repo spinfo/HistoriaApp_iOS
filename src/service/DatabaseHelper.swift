@@ -10,9 +10,9 @@ class DatabaseHelper {
 
     private static var theQueue: DatabaseQueue?
 
-    // TODO: Move to Dao
-    public class func save(tour: Tour) -> Bool {
+    public class func save(tour: Tour, withVersion version: Int64) -> Bool {
         do {
+            tour.version = version
             let dbQueue = getQueue()!
             try dbQueue.inDatabase({ db in
                 try MainDao().safeInstallTour(tour, in: db)
@@ -56,10 +56,7 @@ class DatabaseHelper {
                 log.error("Could not create tables: \(error)")
                 return false
             }
-            guard let _ = FileService.installExampleTour() else {
-                log.error("Error on installing the example tour.")
-                return false
-            }
+            FileService.installExampleTours()
         }
 
         do {
@@ -176,6 +173,36 @@ class DatabaseHelper {
             try db.alter(table: "mapstop") { t in
                 t.add(column: "pos", .integer).defaults(to: 0)
             }
+        })
+
+        migrator.registerMigration("v3", migrate: { db in
+            log.info("Applying database migration to: v3")
+
+            try db.create(table: "scene", body: { t in
+                t.column("id", .integer).primaryKey(onConflict: .replace, autoincrement: false)
+                t.column("pos", .integer)
+                t.column("tour_id", .integer).references("tour", onDelete: .cascade)
+                t.column("name", .text)
+                t.column("title", .text)
+                t.column("description", .text)
+                t.column("excerpt", .text)
+                t.column("src", .text)
+            })
+
+            try db.create(table: "scene_coordinate", body: {t in
+                t.column("id", .integer).primaryKey(onConflict: .replace, autoincrement: false)
+                t.column("x", .double)
+                t.column("y", .double)
+                t.column("scene_id", .integer).references("scene", onDelete: .cascade)
+                t.column("mapstop_id", .integer).references("mapstop", onDelete: .cascade)
+            })
+
+            try db.alter(table: "mapstop") { t in
+                t.add(column: "scene_id", .integer)
+                t.add(column: "scene_coordinate_id", .integer)
+                t.add(column: "scene_type", .text).defaults(to: 0)
+            }
+
         })
 
         try migrator.migrate(dbQueue)
