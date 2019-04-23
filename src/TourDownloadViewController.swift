@@ -53,6 +53,11 @@ class TourDownloadViewController: UIViewController, UITableViewDataSource, UITab
 
     // MARK: -- DialogPresentationDelegate
     func present(dialog: UIAlertController) {
+        if let presentationController = dialog.popoverPresentationController {
+            presentationController.sourceView = self.view
+            presentationController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.height, width: 0, height: 0)
+            presentationController.permittedArrowDirections = []
+        }
         self.present(dialog, animated: true, completion: nil)
     }
 }
