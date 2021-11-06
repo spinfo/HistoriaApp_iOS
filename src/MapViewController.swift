@@ -103,7 +103,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, ModelSelectionDele
     // MARK: -- Map Interaction (and MKMapViewDelegate)
 
     private func setupTileRenderer() {
-        let template = "http://tile.openstreetmap.com/{z}/{x}/{y}.png"
+        let template = "https://tile.openstreetmap.org/{z}/{x}/{y}.png"
         let overlay = MKTileOverlay(urlTemplate: template)
         overlay.canReplaceMapContent = true
         mapView.add(overlay, level: .aboveLabels)
