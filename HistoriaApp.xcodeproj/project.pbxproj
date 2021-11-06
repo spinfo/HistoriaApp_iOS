@@ -404,6 +404,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -736,7 +737,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "de.uni-koeln.historia";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "0ce23f57-915f-41b2-b886-41c7113ddda8";
-				PROVISIONING_PROFILE_SPECIFIER = "de.uni-koeln.historia.distribution";
+				PROVISIONING_PROFILE_SPECIFIER = "de-uni-koeln-historia";
 				SWIFT_INCLUDE_PATHS = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(inherited)";
 				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = "";
@@ -774,7 +775,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "de.uni-koeln.historia";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "c7dec34c-1535-4080-95fd-01a5afc7e801";
-				PROVISIONING_PROFILE_SPECIFIER = "de.uni-koeln.historia.distribution";
+				PROVISIONING_PROFILE_SPECIFIER = "de-uni-koeln-historia";
 				SWIFT_INCLUDE_PATHS = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(inherited)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
