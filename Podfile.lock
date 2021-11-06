@@ -30,7 +30,7 @@ DEPENDENCIES:
   - Yams (~> 1.0.0)
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  trunk:
     - GRDB.swift
     - MMDrawerController
     - ObjcExceptionBridging
@@ -48,4 +48,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: f16afd028272b56b20fbc244943f68ada66c1f02
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.10.1
